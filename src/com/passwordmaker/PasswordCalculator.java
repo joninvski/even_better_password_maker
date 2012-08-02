@@ -38,7 +38,7 @@ public class PasswordCalculator implements OnDismissListener {
 
 	public PasswordCalculator(Context aContext) {
 		this.ctx=aContext;
-		
+
 		webview=new WebView(this.ctx);
 		WebSettings ws=webview.getSettings();
 		ws.setJavaScriptEnabled(true);
@@ -46,7 +46,7 @@ public class PasswordCalculator implements OnDismissListener {
 		ws.setLightTouchEnabled(true);
 		ws.setTextSize(TextSize.SMALLER);
 		CookieManager.setAcceptFileSchemeCookies(true);
-		
+
 		webview.addJavascriptInterface(new wvc(), "wvc");
 		webview.loadUrl("file:///android_asset/pwm.html");
 
@@ -55,14 +55,14 @@ public class PasswordCalculator implements OnDismissListener {
 		dialog.setContentView(webview,new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		dialog.setOnDismissListener(this);
 	}
-	
+
 	class wvc{
 		public void updatePW(final String aPW){
 			setPassword(aPW);
 		}
 	}
 
-	/** 
+	/**
 	 * Show the original profile-configuration-dialog
 	 */
 	public void showConfDialog(){
