@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_get_password">Could not get password. Try again, please.</string>
+    <string name="app_name">PasswordMaker</string>
+    <string name="copiedtoclip">The password has been copied to the clipboard.</string>
+    <string name="urlnotfound">"The URL could not be opened. Perhaps it doesn't exist."</string>
+    <string name="copy">Copy</string>
+    <string name="go">Go</string>
+    <string name="update">Update</string>
+    <string name="mpw">Master-Password</string>
+    <string name="url">URL</string>
+    <string name="act_send">Generate password</string>
+    <string name="redo">Passwordcalculation in progress. Please try again.</string>
+<string name="modProfile">Choose or modify profile</string>
+
+<string name="emptyFields">Clear fields on exit</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PasswordMaker</string>
+    <string name="copiedtoclip">Das Passwort wurde in die Zwischenablage kopiert.</string>
+    <string name="urlnotfound">&quot;Der URL konnte nicht geöffnet werden.&quot;</string>
+    <string name="copy">Kopieren</string>
+    <string name="go">Go</string>
+    <string name="update">Zeigen</string>
+    <string name="mpw">Masterpasswort</string>
+    <string name="url">URL</string>
+    <string name="act_send">Passwort generieren</string>
+    <string name="redo">Password wird gerade berechnnet. Bitte nochmal versuchen.</string>
+<string name="modProfile">Profil anpassen oder auswählen</string>
+<string name="could_not_get_password">Das Passwort konnte nicht generiert werden. Bitte versuchen Sie es nochmal.</string>
+<string name="emptyFields">Felder beim verlassen leeren</string>
+</resources>
