@@ -25,7 +25,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import org.daveware.passwordmaker.PasswordMaker;
-//import com.passwordmaker.PasswordCalculator;
+import org.daveware.passwordmaker.Account;
+import org.daveware.passwordmaker.AlgorithmType;
+import org.daveware.passwordmaker.CharacterSets;
+import org.daveware.passwordmaker.LeetType;
+import org.daveware.passwordmaker.LeetLevel;
+import org.daveware.passwordmaker.SecureCharArray;
 
 public class PwMaker extends Activity implements View.OnClickListener{
     protected EditText edDomain;
@@ -36,7 +41,9 @@ public class PwMaker extends Activity implements View.OnClickListener{
     protected CheckBox cbEmptyFields;
     protected TextView tvPW;
     protected Dialog dialog;
-    private PasswordCalculator pwc; 
+    protected PasswordMaker pwc;
+    protected Account account;
+    protected SecureCharArray master;
 
     /** Called when the activity is first created. */
     @Override
@@ -50,7 +57,20 @@ public class PwMaker extends Activity implements View.OnClickListener{
 
         tvPW=(TextView) findViewById(R.id.textPW);
 
-        pwc=new PasswordCalculator(this);
+        pwc=new PasswordMaker();
+        
+//        if(edPW.getText().length()>0){
+//            master = new SecureCharArray(edPW.getText().toString());
+//        }
+
+        try{
+            account = new Account("","","google.com", "", AlgorithmType.SHA256, false, true, 12, CharacterSets.BASE_93_SET, LeetType.NONE, LeetLevel.LEVEL1, "", "", "", false);
+        }
+        catch(Exception e)
+        {
+
+        }
+
         CookieSyncManager.createInstance(this);
 
         edDomain=(EditText) findViewById(R.id.editDomain);
@@ -78,98 +98,79 @@ public class PwMaker extends Activity implements View.OnClickListener{
 
         switch (v.getId()) {
             case R.id.btnProfile:
-                pwc.showConfDialog();
                 break;
             case R.id.btnUpdate:
-                if(setCredentials())
-                    if((pw=pwc.getPassword())!= "")
-                        tvPW.setText(pw);
                 break;
             case R.id.btnCopy:
                 if(setCredentials()){
-                    if((pw=pwc.getPassword())!= ""){
-                        tvPW.setText(pw);
-                        copyPwToClipboard(pw);
-                    }
                 }
                 break;
             case R.id.btnGo:
                 if(setCredentials()){
-                    if((pw=pwc.getPassword())!= ""){
-                        tvPW.setText(pw);
-                        copyPwToClipboard(pw);
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        String link = edDomain.getText().toString();
-                        Uri u = Uri.parse(link);
-                        i.setData(u);
-                        try {
-                            startActivity(i);
-                        } 
-                        catch (ActivityNotFoundException e) {
-                            // http://?
-                            u = Uri.parse("http://" + link);
-                            i.setData(u);
-                            try {
-                                startActivity(i);
-                            } 
-                            catch (ActivityNotFoundException e2) {
-                                Toast.makeText(this, R.string.urlnotfound, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }			
-                }
+                    //                    if((pw=pwc.getPassword())!= ""){
+                    //                        tvPW.setText(pw);
+                    //                        copyPwToClipboard(pw);
+                    //                        Intent i = new Intent(Intent.ACTION_VIEW);
+                    //                        String link = edDomain.getText().toString();
+                    //                        Uri u = Uri.parse(link);
+                    //                        i.setData(u);
+                    //                        try {
+                    //                            startActivity(i);
+                    //                        } 
+                    }
 
                 break;
-        }
-    }
-
-    private boolean setCredentials(){
-        boolean res=false;
-
-        if (edDomain.getText().length()>0 && edPW.getText().length()>0)
-            if(
-                    pwc.setURL(edDomain.getText().toString())
-                    &&	pwc.setMasterPassword(edPW.getText().toString())
-              )
-                res=true;
-
-        return res;
-    }
-
-    private void copyPwToClipboard(String pw) {
-        ClipboardManager cb = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        cb.setText(pw);
-        Toast.makeText(this, R.string.copiedtoclip, Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    protected void onResume() {
-        CookieSyncManager.getInstance().startSync();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        CookieSyncManager.getInstance().startSync();
-        if(cbEmptyFields.isChecked()){
-            pwc.setMasterPassword("");
-            pwc.setURL("");
-            edPW.setText("");
-            edDomain.setText("");
-            tvPW.setText("");
+                }
         }
 
-        super.onPause();
-    }
+        private boolean setCredentials(){
+            //        boolean res=false;
 
-    @Override
-    protected void onStop() {
-        SharedPreferences settings=getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("emptyFields", cbEmptyFields.isChecked());
-        editor.commit();
+            //        if (edDomain.getText().length()>0 && edPW.getText().length()>0)
+            //            if(
+            //                    pwc.setURL(edDomain.getText().toString())
+            //                    &&	pwc.setMasterPassword(edPW.getText().toString())
+            //              )
+            //                res=true;
 
-        super.onStop();
+            //        return res;
+            return true;
+        }
+
+        //    private void copyPwToClipboard(String pw) {
+        //        ClipboardManager cb = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        //        cb.setText(pw);
+        //        Toast.makeText(this, R.string.copiedtoclip, Toast.LENGTH_SHORT).show();
+        //    }
+
+
+        @Override
+        protected void onResume() {
+            CookieSyncManager.getInstance().startSync();
+            super.onResume();
+        }
+
+        @Override
+        protected void onPause() {
+            CookieSyncManager.getInstance().startSync();
+            //        if(cbEmptyFields.isChecked()){
+            //            pwc.setMasterPassword("");
+            //            pwc.setURL("");
+            //            edPW.setText("");
+            //            edDomain.setText("");
+            //            tvPW.setText("");
+            //        }
+
+            super.onPause();
+        }
+
+        @Override
+        protected void onStop() {
+            SharedPreferences settings=getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("emptyFields", cbEmptyFields.isChecked());
+            editor.commit();
+
+            super.onStop();
+        }
     }
-}

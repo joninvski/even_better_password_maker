@@ -56,7 +56,7 @@ public class PasswordMaker {
         int remainders_count = 0;
         int dividend_length;
         int i, j;
-        
+
         int outputPosition = 0;
         SecureCharArray output = new SecureCharArray();
 
