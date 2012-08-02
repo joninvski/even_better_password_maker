@@ -19,7 +19,7 @@ android:textSize="18sp"
 android:id="@+id/editDomain"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
-android:text="http://"
+android:text="@string/http"
 android:inputType="textUri"
 android:textSize="18sp"
 >
@@ -54,8 +54,6 @@ android:id="@+id/widget34"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal"
-android:layout_alignParentTop="true"
-android:layout_centerHorizontal="true"
 >
 <Button
 android:id="@+id/btnUpdate"
