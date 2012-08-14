@@ -27,6 +27,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.daveware.passwordmaker.Account.UrlComponents;
+import android.util.Log;  
 
 /**
  * This class is used to generate passwords from a master password and an account.
@@ -46,7 +47,7 @@ public class PasswordMaker {
      * @return The mapped string.
      * @throws Exception On odd length!?
      */
-    public SecureCharArray rstr2any(char[] input, String encoding, boolean trim) 
+    public static SecureCharArray rstr2any(char[] input, String encoding, boolean trim) 
             throws Exception {
         int length = input.length;
         int divisor;
@@ -127,6 +128,7 @@ public class PasswordMaker {
             output.resize(full_length, false);
         
         for (i = full_length - 1; i >= 0; i--) {
+            Log.i("PwMaker", "CHAR: " + encoding.charAt(remainders[i]));
             output.setCharAt(outputPosition++, encoding.charAt(remainders[i]));
         }
 
@@ -134,7 +136,7 @@ public class PasswordMaker {
     }
 
 
-	public final String getModifiedInputText(final String inputText, final Account account) {
+	public static final String getModifiedInputText(final String inputText, final Account account) {
 		final Set<UrlComponents> uriComponents = account.getUrlComponents();
 		if (uriComponents.isEmpty()) {
 		    if(account.isDefault())
@@ -192,7 +194,7 @@ public class PasswordMaker {
      * @return A SecureCharArray with the hashed data.
      * @throws Exception if something bad happened.
      */
-    public SecureCharArray makePassword(SecureCharArray masterPassword, Account account, final String inputText)
+    public static SecureCharArray makePassword(SecureCharArray masterPassword, Account account, final String inputText)
             throws Exception
     {
         LeetLevel leetLevel = account.getLeetLevel();
@@ -269,7 +271,7 @@ public class PasswordMaker {
      * @return A SecureCharArray with the hashed data.
      * @throws Exception if something bad happened.
      */
-    public SecureCharArray makePassword(SecureCharArray masterPassword, Account account)
+    public static SecureCharArray makePassword(SecureCharArray masterPassword, Account account)
             throws Exception
     {
     	return makePassword(masterPassword, account, account.getUrl());
@@ -284,7 +286,7 @@ public class PasswordMaker {
      * @return A suitable hash.
      * @throws Exception if we ran out of donuts.
      */
-    private SecureCharArray hashTheData(SecureCharArray masterPassword, SecureCharArray data, Account account)
+    private static SecureCharArray hashTheData(SecureCharArray masterPassword, SecureCharArray data, Account account)
             throws Exception
     {
         SecureCharArray output                  = new SecureCharArray();
@@ -342,7 +344,7 @@ public class PasswordMaker {
      * @return A SecureCharArray of the hash.
      * @throws Exception if something bad happened.
      */
-    private SecureCharArray runAlgorithm(SecureCharArray masterPassword, SecureCharArray data, Account account)
+    private static SecureCharArray runAlgorithm(SecureCharArray masterPassword, SecureCharArray data, Account account)
             throws Exception
     {
         SecureCharArray output = null;
