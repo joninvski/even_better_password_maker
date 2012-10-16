@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PasswordMaker</string>
+    <string name="app_name">EvenBetterPasswordMaker</string>
     <string name="copy">Copy</string>
     <string name="go">Go</string>
     <string name="update">Update</string>
