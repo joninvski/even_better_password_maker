@@ -100,6 +100,9 @@ public class PwMaker extends Activity implements View.OnClickListener{
 
         switch (v.getId()) {
             case R.id.btnProfile:
+                Log.i("PwMaker", "Clicket the btnProfile");
+                Intent myIntent = new Intent(PwMaker.this, PwUpdate.class);
+                PwMaker.this.startActivity(myIntent);
                 break;
             case R.id.btnUpdate:
                 try{
