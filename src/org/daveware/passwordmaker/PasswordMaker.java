@@ -18,7 +18,6 @@
 package org.daveware.passwordmaker;
 
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

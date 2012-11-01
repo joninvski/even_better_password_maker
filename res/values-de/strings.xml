@@ -7,6 +7,7 @@
     <string name="mpw">Masterpasswort</string>
     <string name="url">URL</string>
     <string name="act_send">Passwort generieren</string>
+    <string name="http">http://</string>
 <string name="modProfile">Profil anpassen oder auswählen</string>
 <string name="emptyFields">Felder beim verlassen leeren</string>
 </resources>
