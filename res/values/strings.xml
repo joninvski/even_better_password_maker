@@ -13,4 +13,14 @@
 
     <string name="http">http://</string>
 
+    <string name="profile_protocol">Protocol</string>
+
+    <string name="profile_subdomain">Subdomain</string>
+
+    <string name="profile_domain">Domain</string>
+
+    <string name="profile_port">Port, path, anchor, query parameters</string>
+
+    <string name="profile_hash_algorithm">Hash Algorithm</string>
+
 </resources>
