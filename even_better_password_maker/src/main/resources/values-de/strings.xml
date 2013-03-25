@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PasswordMaker</string>
+    <string name="copy">Kopieren</string>
+    <string name="go">Go</string>
+    <string name="update">Zeigen</string>
+    <string name="mpw">Masterpasswort</string>
+    <string name="url">URL</string>
+    <string name="act_send">Passwort generieren</string>
+    <string name="http">http://</string>
+<string name="modProfile">Profil anpassen oder auswählen</string>
+<string name="emptyFields">Felder beim verlassen leeren</string>
+</resources>
