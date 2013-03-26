@@ -49,7 +49,7 @@
         android:textSize="18sp"
         >
     </TextView>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/widget34"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -60,6 +60,7 @@
             android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:text="@string/update"
+            android:background="?android:attr/selectableItemBackground"
             >
         </Button>
         <Button
@@ -67,6 +68,7 @@
             android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:text="@string/copy"
+            android:background="?android:attr/selectableItemBackground"
             >
         </Button>
         <Button
@@ -74,6 +76,7 @@
             android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:text="@string/go"
+            android:background="?android:attr/selectableItemBackground"
             >
         </Button>
     </LinearLayout>

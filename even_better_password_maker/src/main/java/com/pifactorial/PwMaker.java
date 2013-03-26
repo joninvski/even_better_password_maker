@@ -91,7 +91,6 @@ public class PwMaker extends Activity implements View.OnClickListener {
 	}
 
 	public void onClick(View v) {
-		String pw;
 
 		switch (v.getId()) {
 		case R.id.btnProfile:

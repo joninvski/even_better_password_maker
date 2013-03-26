@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/profile_name_label"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/profile_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Teste" >
+        android:text="@string/profile_default_name" >
 
-        <requestFocus />
+        <requestFocus
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </EditText>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Small Text"
+        android:text="@string/profile_url_components_label"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <CheckBox
@@ -67,6 +74,7 @@
 
     <Spinner
         android:id="@+id/spinner1"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
