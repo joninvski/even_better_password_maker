@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">EvenBetterPasswordMaker</string>
     <string name="copy">Copy</string>
@@ -11,16 +11,16 @@
     <string name="modProfile">Choose or modify profile</string>
     <string name="emptyFields">Clear fields on exit</string>
     <string name="http">http://</string>
-    <string name="profile_protocol">Protocol</string>
-    <string name="profile_subdomain">Subdomain</string>
-    <string name="profile_domain">Domain</string>
-    <string name="profile_port">Port, path, anchor, query parameters</string>
-    <string name="profile_hash_algorithm">Hash Algorithm</string>
-    <string name="profile_name_label">Profile Name</string>
-    <string name="profile_default_name">default</string>
-    <string name="profile_url_components_label">Url components</string>
+    <string name="profile_protocol" translatable="false">Protocol</string>
+    <string name="profile_subdomain" translatable="false">Subdomain</string>
+    <string name="profile_domain" translatable="false">Domain</string>
+    <string name="profile_port" translatable="false">Port, path, anchor, query parameters</string>
+    <string name="profile_hash_algorithm" translatable="false">Hash Algorithm</string>
+    <string name="profile_name_label" translatable="false">Profile Name</string>
+    <string name="profile_default_name" translatable="false">default</string>
+    <string name="profile_url_components_label" translatable="false">Url components</string>
 
-    <string-array name="hash_algorithms_string_array">
+    <string-array name="hash_algorithms_string_array" translatable="false">
         <item>MD5</item>
         <item>SHA-256</item>
     </string-array>

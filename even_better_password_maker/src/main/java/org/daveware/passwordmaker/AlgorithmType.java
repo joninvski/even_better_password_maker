@@ -17,6 +17,8 @@
  */
 package org.daveware.passwordmaker;
 
+import java.util.Locale;
+
 /**
  * Object representing an algorithm type.
  * 
@@ -120,8 +122,8 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
         
         // Search the list of registered algorithms
         for(AlgorithmType algoType : TYPES) {
-            String name = algoType.rdfName.toLowerCase();
-            String hmacName = algoType.rdfHmacName.toLowerCase();
+            String name = algoType.rdfName.toLowerCase(Locale.US);
+            String hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
             
             if(str.compareTo(name)==0 || str.compareTo(hmacName)==0)
                 return algoType;

@@ -22,7 +22,6 @@
         <requestFocus
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </EditText>
 
     <TextView
@@ -56,7 +55,6 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_domain"
             android:textSize="@dimen/Small" />
-
     </LinearLayout>
 
     <CheckBox
@@ -75,6 +73,7 @@
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:entries="@array/hash_algorithms_string_array" />
 
 </LinearLayout>
