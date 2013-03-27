@@ -33,5 +33,8 @@
         <string name="cb_pass_characters_uppercase">uppercase</string>
         <string name="cb_pass_characters_number">numbers</string>
         <string name="cb_pass_characters_symbols">symbols</string>
+        <string name="et_pass_costum_characters_hint">costum</string>
+        <string name="bt_detail_profile_save">Save</string>
+        <string name="bt_detail_profile_cancel">Cancel</string>
 
 </resources>

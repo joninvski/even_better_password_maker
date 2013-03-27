@@ -1,87 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget33"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    >
-    <TextView
-        android:id="@+id/widget11"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/url"
-        android:textSize="18sp"
-        >
-    </TextView>
-    <EditText
-        android:id="@+id/editDomain"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/http"
-        android:inputType="textUri"
-        android:textSize="18sp"
-        >
-    </EditText>
-    <TextView
-        android:id="@+id/widget12"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/mpw"
-        android:textSize="18sp"
-        >
-    </TextView>
-    <EditText
-        android:id="@+id/editPW"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:inputType="textPassword"
-        android:textSize="18sp"
-        >
-    </EditText>
-    <TextView
-        android:id="@+id/textPW"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
-        >
-    </TextView>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent" >
+
     <LinearLayout
-        android:id="@+id/widget34"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <Button
-            android:id="@+id/btnUpdate"
-            android:layout_width="100sp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/widget33"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/update"
-            android:background="?android:attr/selectableItemBackground"
-            >
-        </Button>
-        <Button
-            android:id="@+id/btnCopy"
-            android:layout_width="100sp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/widget11"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/url"
+                android:textSize="18sp" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/editDomain"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textUri"
+                android:text="@string/http"
+                android:textSize="18sp" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/widget12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mpw"
+                android:textSize="18sp" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/editPW"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text=""
+                android:textSize="18sp" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textPW"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text=""
+                android:textSize="18sp" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/copy"
-            android:background="?android:attr/selectableItemBackground"
-            >
-        </Button>
-        <Button
-            android:id="@+id/btnGo"
-            android:layout_width="100sp"
-            android:layout_height="wrap_content"
-            android:text="@string/go"
-            android:background="?android:attr/selectableItemBackground"
-            >
-        </Button>
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnProfile"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="@string/modProfile" />
+
+            <LinearLayout
+                android:id="@+id/widget34"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/update" />
+
+                <Button
+                    android:id="@+id/btnCopy"
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/copy" />
+
+                <Button
+                    android:id="@+id/btnGo"
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/go" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/emptyFieldsCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/emptyFields" />
+        </LinearLayout>
     </LinearLayout>
 
-
-    <Button android:layout_height="wrap_content" android:id="@+id/btnProfile" android:onClick="onClick" android:layout_width="fill_parent" android:text="@string/modProfile"></Button>
-    <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emptyFields" android:checked="true" android:id="@+id/emptyFieldsCB"></CheckBox>
-</LinearLayout>
+</ScrollView>
