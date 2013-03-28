@@ -37,6 +37,6 @@
     <string name="et_pass_costum_characters_hint">costum</string>
     <string name="bt_detail_profile_save">Save</string>
     <string name="bt_detail_profile_cancel">Cancel</string>
-    <string name="text_show_password_hint">Click to show pass</string>
+    <string name="text_show_password_hint">Click to show/hide</string>
 
 </resources>

@@ -9,29 +9,31 @@
 
 package com.pifactorial;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.webkit.CookieSyncManager;
-import android.widget.CheckBox;
-import android.widget.TextView;
-import android.widget.EditText;
-import android.widget.Button;
-import android.view.View;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
-import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Account;
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.CharacterSets;
-import org.daveware.passwordmaker.LeetType;
 import org.daveware.passwordmaker.LeetLevel;
+import org.daveware.passwordmaker.LeetType;
+import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.SecureCharArray;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.webkit.CookieSyncManager;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
-	private static final String TAG = "EntryActivity";
+	private static final String TAG = "EvenBetterPassMaker";
+
+	private Boolean visible;
 
 	protected EditText etURL;
 	protected EditText etMasterPass;
@@ -52,6 +54,9 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		Log.i(TAG, "Creating Entry Activity");
+
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		String text = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -62,9 +67,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
 		pwc = new PasswordMaker();
 
-		Log.i(TAG, "To Remove");
-		Log.i(TAG, "Pass written: " + etMasterPass.getText());
-
+		visible = false;
 		try {
 			account = new Account("", "", "google.com", "",
 					AlgorithmType.SHA256, false, true, 12,
@@ -82,32 +85,33 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		btnGo = (Button) findViewById(R.id.btnGo);
 		btnGo.setOnClickListener(this);
 
-		btnCopy = (Button) findViewById(R.id.btnCopy);
+		btnCopy = (Button) findViewById(R.id.btnShow);
 		btnCopy.setOnClickListener(this);
 
-		cbEmptyFields = (CheckBox) findViewById(R.id.emptyFieldsCB);
-		//findViewById(R.id.btnProfile).setOnClickListener(this);
+		// cbEmptyFields = (CheckBox) findViewById(R.id.emptyFieldsCB);
+		// findViewById(R.id.btnProfile).setOnClickListener(this);
 
 		if (text != null) {
 			etURL.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
 			etMasterPass.requestFocus();
 		}
 
-		SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		cbEmptyFields.setChecked(settings.getBoolean("emptyFields", true));
+		/*
+		 * SharedPreferences settings = getPreferences(MODE_PRIVATE);
+		 * cbEmptyFields.setChecked(settings.getBoolean("emptyFields", true));
+		 */
 	}
 
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		/*case R.id.btnProfile:
-			Log.i(TAG, "Button profile");
-			
-			Intent myIntent = new Intent(EntryActivity.this,
-					UpdateActivity.class);
-			EntryActivity.this.startActivity(myIntent);
-			break;
-			*/
+		/*
+		 * case R.id.btnProfile: Log.i(TAG, "Button profile");
+		 * 
+		 * Intent myIntent = new Intent(EntryActivity.this,
+		 * UpdateActivity.class); EntryActivity.this.startActivity(myIntent);
+		 * break;
+		 */
 		/*
 		 * case R.id.btnUpdate: try { if (etMasterPass.getText().length() > 0) {
 		 * Log.i(TAG, "Got the password: " + etMasterPass.getText().toString());
@@ -118,14 +122,35 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		 * 
 		 * break;
 		 */
-		case R.id.btnCopy:
+		case R.id.btnShow:
 			Log.i(TAG, "Button copy");
 			break;
-		case R.id.textResultPass:
-			Log.i(TAG, "Button pass");
-			break;
+
 		case R.id.btnGo:
 			Log.i(TAG, "Button go");
+			break;
+		case R.id.textResultPass:
+
+			Log.i(TAG, "Button output password");
+			Log.i(TAG, "Current password: " + etMasterPass.getText().toString());
+			account.setUrl(etURL.getText().toString());
+			Log.i(TAG, "Current url: " + account.getUrl());
+
+			// Toggle the visible variable
+			visible = !visible;
+
+			if (visible) {
+				try {
+					master = new SecureCharArray(etMasterPass.getText()
+							.toString());
+					SecureCharArray result = PasswordMaker.makePassword(master,
+							account);
+					textOutputPass.setText(new String(result.getData()));
+				} catch (Exception e) {
+				}
+			} else {
+				textOutputPass.setText("");
+			}
 			break;
 		}
 	}
@@ -151,11 +176,12 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
 	@Override
 	protected void onStop() {
-		SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putBoolean("emptyFields", cbEmptyFields.isChecked());
-		editor.commit();
-
+		/*
+		 * SharedPreferences settings = getPreferences(MODE_PRIVATE);
+		 * SharedPreferences.Editor editor = settings.edit();
+		 * editor.putBoolean("emptyFields", cbEmptyFields.isChecked());
+		 * editor.commit();
+		 */	
 		super.onStop();
 	}
 }

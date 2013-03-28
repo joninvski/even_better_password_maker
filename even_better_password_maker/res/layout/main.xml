@@ -3,12 +3,14 @@
     android:id="@+id/scrollView1"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    >
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:scrollbars="vertical" >
 
         <LinearLayout
             android:id="@+id/body"
@@ -20,8 +22,11 @@
                 android:id="@+id/labelURL"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="6dp"
                 android:text="@string/url"
-                android:textSize="18sp" >
+                android:textSize="23sp" >
+
             </TextView>
 
             <EditText
@@ -37,8 +42,11 @@
                 android:id="@+id/labelMasterPass"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="12dp"
                 android:text="@string/mpw"
-                android:textSize="18sp" >
+                android:textSize="23sp" >
+
             </TextView>
 
             <EditText
@@ -62,46 +70,31 @@
                 android:paddingTop="20dp"
                 android:textIsSelectable="false"
                 android:textSize="30sp" />
-
-            <CheckBox
-                android:id="@+id/emptyFieldsCB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/emptyFields" />
-
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/footer"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:id="@+id/linlayoutButtons"
-            android:layout_width="fill_parent"
+        <Button
+            android:id="@+id/btnShow"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="100sp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_weight="1"
+            android:text="@string/copy" />
 
-            <Button
-                android:id="@+id/btnCopy"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/copy" />
-
-            <Button
-                android:id="@+id/btnGo"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/go" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnGo"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/go" />
     </LinearLayout>
 
 </RelativeLayout>
