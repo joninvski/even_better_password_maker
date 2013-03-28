@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class DetailProfileFrag extends Fragment {
 
-    private static final String TAG = "MyActivity";
+    private static final String TAG = "DetailProfileFrag";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -29,14 +29,21 @@ import org.daveware.passwordmaker.LeetType;
 import org.daveware.passwordmaker.LeetLevel;
 import org.daveware.passwordmaker.SecureCharArray;
 
-public class PwMaker extends Activity implements View.OnClickListener {
-	protected EditText edDomain;
-	protected EditText edPW;
+public class EntryActivity extends Activity implements View.OnClickListener {
+
+	private static final String TAG = "EntryActivity";
+
+	protected EditText etURL;
+	protected EditText etMasterPass;
+	protected TextView textOutputPass;
+
+	/* TODO - Clean these buttons */
 	protected Button btnGo;
 	protected Button btnUpdate;
 	protected Button btnCopy;
 	protected CheckBox cbEmptyFields;
-	protected TextView tvPW;
+
+	/* What the hell is this? */
 	protected Dialog dialog;
 	protected PasswordMaker pwc;
 	protected Account account;
@@ -48,16 +55,15 @@ public class PwMaker extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		String text = intent.getStringExtra(Intent.EXTRA_TEXT);
-
 		setContentView(R.layout.main);
 
-		tvPW = (TextView) findViewById(R.id.textPW);
-		edPW = (EditText) findViewById(R.id.editPW);
+		textOutputPass = (TextView) findViewById(R.id.textResultPass);
+		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
 
 		pwc = new PasswordMaker();
 
-		Log.i("PwMaker", "Here");
-		Log.i("PwMaker", "edpPW: " + edPW.getText());
+		Log.i(TAG, "To Remove");
+		Log.i(TAG, "Pass written: " + etMasterPass.getText());
 
 		try {
 			account = new Account("", "", "google.com", "",
@@ -70,20 +76,21 @@ public class PwMaker extends Activity implements View.OnClickListener {
 
 		CookieSyncManager.createInstance(this);
 
-		edDomain = (EditText) findViewById(R.id.editDomain);
-		edPW = (EditText) findViewById(R.id.editPW);
+		etURL = (EditText) findViewById(R.id.etURL);
+		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
+
 		btnGo = (Button) findViewById(R.id.btnGo);
 		btnGo.setOnClickListener(this);
-		btnUpdate = (Button) findViewById(R.id.btnUpdate);
-		btnUpdate.setOnClickListener(this);
+
 		btnCopy = (Button) findViewById(R.id.btnCopy);
 		btnCopy.setOnClickListener(this);
+
 		cbEmptyFields = (CheckBox) findViewById(R.id.emptyFieldsCB);
-		findViewById(R.id.btnProfile).setOnClickListener(this);
+		//findViewById(R.id.btnProfile).setOnClickListener(this);
 
 		if (text != null) {
-			edDomain.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
-			edPW.requestFocus();
+			etURL.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+			etMasterPass.requestFocus();
 		}
 
 		SharedPreferences settings = getPreferences(MODE_PRIVATE);
@@ -93,28 +100,32 @@ public class PwMaker extends Activity implements View.OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btnProfile:
-			Log.i("PwMaker", "Clicket the btnProfile");
-			Intent myIntent = new Intent(PwMaker.this, PwUpdate.class);
-			PwMaker.this.startActivity(myIntent);
+		/*case R.id.btnProfile:
+			Log.i(TAG, "Button profile");
+			
+			Intent myIntent = new Intent(EntryActivity.this,
+					UpdateActivity.class);
+			EntryActivity.this.startActivity(myIntent);
 			break;
-		case R.id.btnUpdate:
-			try {
-				if (edPW.getText().length() > 0) {
-					Log.i("PwMaker", "Got the password: "
-							+ edPW.getText().toString());
-					master = new SecureCharArray(edPW.getText().toString());
-					SecureCharArray result = PasswordMaker.makePassword(master,
-							account);
-					tvPW.setText(new String(result.getData()));
-				}
-			} catch (Exception e) {
-			}
-			break;
+			*/
+		/*
+		 * case R.id.btnUpdate: try { if (etMasterPass.getText().length() > 0) {
+		 * Log.i(TAG, "Got the password: " + etMasterPass.getText().toString());
+		 * master = new SecureCharArray(etMasterPass.getText() .toString());
+		 * SecureCharArray result = PasswordMaker.makePassword(master, account);
+		 * textOutputPass.setText(new String(result.getData())); } } catch
+		 * (Exception e) { }
+		 * 
+		 * break;
+		 */
 		case R.id.btnCopy:
+			Log.i(TAG, "Button copy");
+			break;
+		case R.id.textResultPass:
+			Log.i(TAG, "Button pass");
 			break;
 		case R.id.btnGo:
-			Log.i("PwMaker", "Button go");
+			Log.i(TAG, "Button go");
 			break;
 		}
 	}

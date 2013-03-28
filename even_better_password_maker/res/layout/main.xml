@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/widget33"
+            android:id="@+id/body"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/widget11"
+                android:id="@+id/labelURL"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/url"
@@ -25,7 +25,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/editDomain"
+                android:id="@+id/etURL"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textUri"
@@ -34,7 +34,7 @@
             </EditText>
 
             <TextView
-                android:id="@+id/widget12"
+                android:id="@+id/labelMasterPass"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/mpw"
@@ -42,7 +42,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/editPW"
+                android:id="@+id/etMasterPass"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -51,59 +51,17 @@
             </EditText>
 
             <TextView
-                android:id="@+id/textPW"
+                android:id="@+id/textResultPass"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text=""
-                android:textSize="18sp" >
-            </TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/btnProfile"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:hint="@string/text_show_password_hint"
                 android:onClick="onClick"
-                android:text="@string/modProfile" />
-
-            <LinearLayout
-                android:id="@+id/widget34"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/btnUpdate"
-                    style="?android:attr/buttonBarStyle"
-                    android:layout_width="100sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/update" />
-
-                <Button
-                    android:id="@+id/btnCopy"
-                    style="?android:attr/buttonBarStyle"
-                    android:layout_width="100sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/copy" />
-
-                <Button
-                    android:id="@+id/btnGo"
-                    style="?android:attr/buttonBarStyle"
-                    android:layout_width="100sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/go" />
-            </LinearLayout>
+                android:paddingBottom="10dp"
+                android:paddingTop="20dp"
+                android:textIsSelectable="false"
+                android:textSize="30sp" />
 
             <CheckBox
                 android:id="@+id/emptyFieldsCB"
@@ -111,7 +69,39 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/emptyFields" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/linlayoutButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnCopy"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/copy" />
+
+            <Button
+                android:id="@+id/btnGo"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/go" />
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>
