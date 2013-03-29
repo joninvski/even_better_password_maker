@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pifactorial"
     android:versionCode="1"
-    android:versionName="1.0.0-SNAPSHOT" >
+    android:versionName="1.0.0-SNAPSHOT"
+     >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -20,8 +21,8 @@
         android:uiOptions="splitActionBarWhenNarrow"
         >
         <activity
-            android:name=".PwMaker"
-            android:label="@string/app_name" >
+            android:name="EntryActivity"
+            android:label="" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,9 +37,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="PwUpdate"
+            android:name="UpdateActivity"
             android:exported="false"
-            android:label="@string/app_name" >
+            android:label="Update Profile" >
             <intent-filter>
                 <action android:name="com.pifactorial.UPDATE" />
 
