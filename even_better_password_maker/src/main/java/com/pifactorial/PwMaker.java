@@ -17,6 +17,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -146,5 +148,12 @@ public class PwMaker extends Activity implements View.OnClickListener {
 		editor.commit();
 
 		super.onStop();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
 	}
 }
