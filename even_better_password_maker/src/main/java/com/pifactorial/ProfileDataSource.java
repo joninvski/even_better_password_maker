@@ -3,7 +3,7 @@ package com.pifactorial;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.daveware.passwordmaker.Account;
+import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.AlgorithmType;
 
 import android.content.ContentValues;
@@ -36,7 +36,7 @@ public class ProfileDataSource {
 	    dbHelper.close();
 	  }
 
-	  public Account createAccount(String name, String algorithm) {
+	  public Profile createAccount(String name, String algorithm) {
 	    ContentValues values = new ContentValues();
 	    values.put(ProfileSqLiteHelper.COLUMN_ALGORITHM, algorithm);
 	    values.put(ProfileSqLiteHelper.COLUMN_NAME, name);
@@ -48,13 +48,13 @@ public class ProfileDataSource {
 	        allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId, null,
 	        null, null, null);
 	    cursor.moveToFirst();
-	    Account newAccount = cursorToAccount(cursor);
+	    Profile newAccount = cursorToAccount(cursor);
 	    cursor.close();
 	    
 	    return newAccount;
 	  }
 
-	  public void deleteComment(Account account) {
+	  public void deleteComment(Profile account) {
 	    long id = Long.parseLong(account.getName());
 	    System.out.println("Comment deleted with id: " + id);
 	    database.delete(ProfileSqLiteHelper.TABLE_PROFILES, ProfileSqLiteHelper.COLUMN_ID
@@ -66,15 +66,15 @@ public class ProfileDataSource {
 			        allColumns, null, null, null, null, null);
 	  }
 	  
-	  public List<Account> getAllComments() {
-	    List<Account> comments = new ArrayList<Account>();
+	  public List<Profile> getAllComments() {
+	    List<Profile> comments = new ArrayList<Profile>();
 
 	    Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
 	        allColumns, null, null, null, null, null);
 
 	    cursor.moveToFirst();
 	    while (!cursor.isAfterLast()) {
-	      Account comment = cursorToAccount(cursor);
+	      Profile comment = cursorToAccount(cursor);
 	      comments.add(comment);
 	      cursor.moveToNext();
 	    }
@@ -83,8 +83,8 @@ public class ProfileDataSource {
 	    return comments;
 	  }
 
-	  private Account cursorToAccount(Cursor cursor) {
-	    Account account = new Account();
+	  private Profile cursorToAccount(Cursor cursor) {
+	    Profile account = new Profile();
 	    account.setName(Long.toString(cursor.getLong(0)));
 	    
 	    try {

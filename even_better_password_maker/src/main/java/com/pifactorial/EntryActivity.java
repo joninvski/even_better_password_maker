@@ -1,6 +1,6 @@
 package com.pifactorial;
 
-import org.daveware.passwordmaker.Account;
+import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.CharacterSets;
 import org.daveware.passwordmaker.LeetLevel;
@@ -97,7 +97,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 	
 	private void createDefaultProfile(){
 		/* Create with enums */
-		Account account = new Account("", "", "",
+		Profile account = new Profile("", "", "",
 				AlgorithmType.SHA256, false, true, 12,
 				CharacterSets.ALPHANUMERIC, LeetType.NONE,
 				LeetLevel.LEVEL1, "", "", "", false);

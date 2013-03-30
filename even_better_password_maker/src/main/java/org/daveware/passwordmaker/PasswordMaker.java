@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.daveware.passwordmaker.Account.UrlComponents;
+import org.daveware.passwordmaker.Profile.UrlComponents;
 import android.util.Log;
 
 /**
@@ -118,7 +118,7 @@ public class PasswordMaker {
 	}
 
 	public static final String getModifiedInputText(final String inputText,
-			final Account account) {
+			final Profile account) {
 		final Set<UrlComponents> uriComponents = account.getUrlComponents();
 		if (uriComponents.isEmpty()) {
 			return "";
@@ -183,7 +183,7 @@ public class PasswordMaker {
 	 *             if something bad happened.
 	 */
 	public static SecureCharArray makePassword(SecureCharArray masterPassword,
-			Account account, final String inputText) throws Exception {
+			Profile account, final String inputText) throws Exception {
 		LeetLevel leetLevel = account.getLeetLevel();
 		// int count = 0;
 		int length = account.getLength();
@@ -272,7 +272,7 @@ public class PasswordMaker {
 	 *             if we ran out of donuts.
 	 */
 	private static SecureCharArray hashTheData(SecureCharArray masterPassword,
-			SecureCharArray data, Account account) throws Exception {
+			SecureCharArray data, Profile account) throws Exception {
 		SecureCharArray output = new SecureCharArray();
 		SecureCharArray secureIteration = new SecureCharArray();
 		SecureCharArray intermediateOutput = null;
@@ -335,7 +335,7 @@ public class PasswordMaker {
 	 *             if something bad happened.
 	 */
 	private static SecureCharArray runAlgorithm(SecureCharArray masterPassword,
-			SecureCharArray data, Account account) throws Exception {
+			SecureCharArray data, Profile account) throws Exception {
 		SecureCharArray output = null;
 		SecureCharArray digestChars = null;
 		SecureByteArray masterPasswordBytes = null;

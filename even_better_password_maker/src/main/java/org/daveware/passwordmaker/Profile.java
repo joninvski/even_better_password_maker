@@ -22,20 +22,17 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * Represents an account. This object also functions as a parent account for
- * which it can have any number of child accounts.
+ * Represents an profile. This object also functions as a parent profile for
+ * which it can have any number of child profiles.
  * 
  * @author Dave Marotti
  */
-public final class Account {
+public final class Profile {
 
 	public enum UrlComponents {
 		Protocol, Subdomain, Domain, PortPathAnchorQuery
 	}
-
-	public static String ROOT_ACCOUNT_URI = "http://passwordmaker.mozdev.org/accounts";
-	public static String DEFAULT_ACCOUNT_URI = "http://passwordmaker.mozdev.org/defaults";
-
+	
 	public static int DEFAULT_LENGTH = 8;
 
 	private String name = "";
@@ -50,15 +47,15 @@ public final class Account {
 	private String suffix = "";
 	private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
 
-	public Account() {
+	public Profile() {
 
 	}
 
-	public Account(String name) {
+	public Profile(String name) {
 		this.name = name;
 	}
 
-	public Account(String name, String url, String username) {
+	public Profile(String name, String url, String username) {
 		this.name = name;
 		this.username = username;
 	}
@@ -77,7 +74,7 @@ public final class Account {
 	 * @param prefix
 	 * @param suffix
 	 */
-	public Account(String name, String username, AlgorithmType algorithm,
+	public Profile(String name, String username, AlgorithmType algorithm,
 			int length, String characterSet, LeetType leetType,
 			LeetLevel leetLevel, String modifier, String prefix, String suffix)
 			throws Exception {
@@ -94,15 +91,15 @@ public final class Account {
 	}
 
 	/**
-	 * Copies the settings (not including children or ID) from another account.
+	 * Copies the settings (not including children or ID) from another profile
 	 * 
 	 * LEAVE THIS FUNCTION HERE so it's easy to see if new members are ever
 	 * added so I don't forget to update it.
 	 * 
 	 * @param a
-	 *            The other account to copy from.
+	 *            The other profile to copy from.
 	 */
-	public void copySettings(Account a) {
+	public void copySettings(Profile a) {
 		this.name = a.name;
 		this.username = a.username;
 		this.algorithm = a.algorithm;
@@ -274,7 +271,7 @@ public final class Account {
 	}
 
 	/**
-	 * Clears the UrlComponents used with this account
+	 * Clears the UrlComponents used with this profile
 	 */
 	public final void clearUrlComponents() {
 		this.urlComponents.clear();
@@ -304,20 +301,20 @@ public final class Account {
 	 * used. This set is unmodifiable. Use the helper functions to set or modify
 	 * the set.
 	 * 
-	 * @return the url components specified for this account (may be empty)
+	 * @return the url components specified for this profile (may be empty)
 	 */
 	public final Set<UrlComponents> getUrlComponents() {
 		return Collections.unmodifiableSet(urlComponents);
 	}
 
 	/**
-	 * Implements the Comparable<Account> interface, this is based on the name.
+	 * Implements the Comparable<Profile> interface, this is based on the name.
 	 * 
 	 * @param o
-	 *            The other account to compare to.
-	 * @return this.name.compareTo(otherAccount.name);
+	 *            The other profile to compare to.
+	 * @return this.name.compareTo(otherProfile.name);
 	 */
-	public int compareTo(Account o) {
+	public int compareTo(Profile o) {
 
 		// First ignore case, if they equate, use case.
 		int result = name.compareToIgnoreCase(o.name);
