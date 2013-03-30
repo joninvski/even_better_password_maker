@@ -124,7 +124,7 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 	 *             upon invalid algorithm string.
 	 */
 	public static AlgorithmType fromRdfString(String str) throws Exception {
-		str = str.toLowerCase(Locale.US);
+		String lower_str = str.toLowerCase(Locale.US);
 
 		// default
 		if (str.length() == 0)
@@ -136,31 +136,10 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 			String hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
 			Log.i("ME", "Comparing: " + name + ' ' + hmacName + ' ' + str);
 
-			if (str.compareTo(name) == 0 || str.compareTo(hmacName) == 0)
+			if (lower_str.compareTo(name) == 0 || lower_str.compareTo(hmacName) == 0) {
 				return algoType;
-
+			}
 		}
-
-		// TODO: full support for all invalid types should be present as well as
-		// allowing the account to exist and be modified.
-		if (str.compareTo("hmac-sha256") == 0)
-			throw new IncompatibleException(
-					"Original hmac-sha1 implementation has been detected, "
-							+ "this is not compatibile with PasswordMakerJE due to a bug in the original "
-							+ "javascript version. It is recommended that you update this account to use "
-							+ "\"HMAC-SHA256\" in the PasswordMaker settings.");
-		if (str.compareTo("md5-v0.6") == 0)
-			throw new IncompatibleException(
-					"Original md5-v0.6 implementation has been detected, "
-							+ "this is not compatibile with PasswordMakerJE due to a bug in the original "
-							+ "javascript version. It is recommended that you update this account to use "
-							+ "\"MD5\" in the PasswordMaker settings.");
-		if (str.compareTo("hmac-md5-v0.6") == 0)
-			throw new IncompatibleException(
-					"Original hmac-md5-v0.6 implementation has been detected, "
-							+ "this is not compatibile with PasswordMakerJE due to a bug in the original "
-							+ "javascript version. It is recommended that you update this account to use "
-							+ "\"HMAC-MD5\" in the PasswordMaker settings.");
 
 		throw new Exception(String.format("Invalid algorithm type '%1s'", str));
 	}
