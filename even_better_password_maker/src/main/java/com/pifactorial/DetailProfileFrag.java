@@ -15,37 +15,47 @@ public class DetailProfileFrag extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.v(TAG, "Simple create");
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.v(TAG, "Activity");
-
+    	Log.v(TAG, "Detail Profile created");
+    	super.onCreate(savedInstanceState);
+        
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.detail_profile, container, false);
         Log.v(TAG, "ViewCreated");
+    	View view = inflater.inflate(R.layout.detail_profile, container, false);
         return view;
     }
 
+    
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.v(TAG, "Activity");
+    }
+
+  
     public void setText(String item) {
         Log.v(TAG, "Set Text = " + item);
         TextView view = (TextView) getView().findViewById(R.id.profile_name);
         view.setText(item);
-
     }
 
+    @Override
+    public void onStop() {
+    	super.onStop();
+    };
+    
     public int getShownIndex() {
-        return getArguments().getInt("index", 0);
+        Log.v(TAG, "Get shown index = ");
+
+    	return getArguments().getInt("index", 0);
     }
 
     public static DetailProfileFrag newInstance(int index) {
-        DetailProfileFrag f = new DetailProfileFrag();
+        Log.v(TAG, "New instance = ");
+
+    	DetailProfileFrag f = new DetailProfileFrag();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
@@ -53,5 +63,5 @@ public class DetailProfileFrag extends Fragment {
         f.setArguments(args);
 
         return f;
-    }
+    }    
 }

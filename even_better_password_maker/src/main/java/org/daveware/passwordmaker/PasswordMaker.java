@@ -372,7 +372,6 @@ public class PasswordMaker {
                 digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
             }
 
-
             output = rstr2any(digestChars.getData(), account.getCharacterSet(), account.isTrim());
         } catch(Exception e) {
             if(output!=null)

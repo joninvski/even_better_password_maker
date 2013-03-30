@@ -18,7 +18,6 @@
 package org.daveware.passwordmaker;
 
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Random;
@@ -30,7 +29,7 @@ import java.util.Set;
  * 
  * @author Dave Marotti
  */
-public final class Account implements Comparable<Account> {
+public final class Account {
 	
 	public enum UrlComponents {
 		Protocol, Subdomain, Domain, PortPathAnchorQuery
@@ -59,10 +58,7 @@ public final class Account implements Comparable<Account> {
     private String        id                = "";
     private boolean       autoPop           = false;
     private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
-    
-    private ArrayList<AccountPatternData> patterns = new ArrayList<AccountPatternData>();
-    private ArrayList<Account> children     = new ArrayList<Account>();
-    
+      
     private boolean       isAFolder         = false;
     
     public Account() {
@@ -151,10 +147,6 @@ public final class Account implements Comparable<Account> {
         this.sha256Bug    = a.sha256Bug;
         this.isAFolder    = a.isAFolder;
         this.autoPop      = a.autoPop;
-        this.patterns.clear();
-        for(AccountPatternData data : a.getPatterns()) {
-            this.patterns.add(new AccountPatternData(data));
-        }
         
         // The documentation says EnumSet.copyOf() will fail on empty sets.
         if(a.urlComponents.isEmpty()==false)
@@ -499,67 +491,6 @@ public final class Account implements Comparable<Account> {
 	public final Set<UrlComponents> getUrlComponents() {
 		return Collections.unmodifiableSet(urlComponents);
 	}
-    
-    /**
-     * Gets a list of the child accounts. This list is modifiable.
-     * @return The list of accounts (may be empty).
-     */
-    public ArrayList<Account> getChildren() {
-        return children;
-    }
-    
-    /**
-     * Gets the count of all children (of children of children...).
-     * @return The total number of all descendants.
-     */
-    public int getNestedChildCount() {
-        ArrayList<Account> stack = new ArrayList<Account>();
-        int size = 0;
-        
-        stack.add(this);
-        while(stack.size()>0) {
-            Account current = stack.get(0);
-            stack.remove(0);
-            for(Account child : current.getChildren()) {
-                size++;
-                if(child.hasChildren())
-                    stack.add(child);
-            }
-        }
-        
-        return size;
-    }
-    
-    
-    
-    /**
-     * Gets a specifically indexed child.
-     * @param index The index of the child to get.
-     * @return The child at the index.
-     * @throws IndexOutOfBoundsException upon invalid index.
-     */
-    public Account getChild(int index) throws IndexOutOfBoundsException {
-        if(index<0 || index >= children.size())
-            throw new IndexOutOfBoundsException("Illegal child index, " + index);
-        return children.get(index);
-    }
-    
-    public boolean hasChildren() {
-        return children.size() > 0;
-    }
-    
-    /**
-     * Tests if an account is a direct child of this account.
-     * @param account
-     * @return
-     */
-    public boolean hasChild(Account account) {
-        for(Account child : children) {
-            if(child.equals(account))
-                return true;
-        }
-        return false;
-    }
 
     /**
      * Implements the Comparable<Account> interface, this is based first on if the
@@ -599,22 +530,8 @@ public final class Account implements Comparable<Account> {
         return thatAccount.id.compareTo(this.id)==0;
     }
 
-    /**
-     * @return the patterns
-     */
-    public ArrayList<AccountPatternData> getPatterns() {
-        return patterns;
-    }
-
-    /**
-     * @param patterns the patterns to set
-     */
-    public void setPatterns(ArrayList<AccountPatternData> patterns) {
-        this.patterns = patterns;
-    }
-    
     @Override
     public String toString() {
-    	return this.name;
+    	return this.name + " " + this.algorithm;
     }
 }

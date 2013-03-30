@@ -9,6 +9,8 @@
 
 package com.pifactorial;
 
+import java.util.List;
+
 import org.daveware.passwordmaker.Account;
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.CharacterSets;
@@ -19,22 +21,35 @@ import org.daveware.passwordmaker.SecureCharArray;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ListActivity;
+import android.content.ClipData;
+import android.content.ClipData.Item;
+import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieSyncManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
 	private static final String TAG = "EvenBetterPassMaker";
 
+	private ProfileDataSource datasource;
+	
 	private Boolean visible;
 
 	protected EditText etURL;
@@ -42,7 +57,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 	protected TextView textOutputPass;
 
 	/* TODO - Clean these buttons */
-	protected Button btnGo;
+	protected Item btnGo;
 	protected Button btnUpdate;
 	protected Button btnCopy;
 	protected CheckBox cbEmptyFields;
@@ -56,13 +71,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
 		Log.i(TAG, "Creating Entry Activity");
-
 		super.onCreate(savedInstanceState);
-		Intent intent = getIntent();
-		String text = intent.getStringExtra(Intent.EXTRA_TEXT);
 		setContentView(R.layout.main);
+		Log.i(TAG, "Creating Entry Activity2");
 
 		textOutputPass = (TextView) findViewById(R.id.textResultPass);
 		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
@@ -70,6 +82,29 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		pwc = new PasswordMaker();
 
 		visible = false;
+
+		datasource = new ProfileDataSource(this);
+		datasource.open();
+
+		Log.i(TAG, "Creating Entry Activity2.5");
+		Cursor cursor = datasource.getAllCommentsCursor();
+		
+		for(String s : cursor.getColumnNames()){
+			Log.i(TAG, s);			
+		}
+		SimpleCursorAdapter adapter =
+				  new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, new String[]{"name"}, new int[] {android.R.id.text1}, 0);
+				
+		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+		
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(adapter);
+		
+		Log.i(TAG, "Creating Entry Activity2.7");
+
+		/*
 		try {
 			account = new Account("", "", "google.com", "",
 					AlgorithmType.SHA256, false, true, 12,
@@ -78,61 +113,30 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		} catch (Exception e) {
 
 		}
+		Log.i(TAG, "Creating Entry Activity3");
 
-		CookieSyncManager.createInstance(this);
+		this.getActionBar().setDisplayShowTitleEnabled(false);
 
+		
+		Log.i(TAG, "Creating Entry Activity4");
 		etURL = (EditText) findViewById(R.id.etURL);
 		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
 
-		btnGo = (Button) findViewById(R.id.btnGo);
-		btnGo.setOnClickListener(this);
-
-		btnCopy = (Button) findViewById(R.id.btnShow);
-		btnCopy.setOnClickListener(this);
-
-		// cbEmptyFields = (CheckBox) findViewById(R.id.emptyFieldsCB);
-		// findViewById(R.id.btnProfile).setOnClickListener(this);
-
+		Log.i(TAG, "Creating Entry Activity6");
 		if (text != null) {
 			etURL.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
 			etMasterPass.requestFocus();
 		}
 
-		/*
-		 * SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		 * cbEmptyFields.setChecked(settings.getBoolean("emptyFields", true));
+		Log.i(TAG, "Creating Entry Activity7");
 		 */
 	}
 
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		/*
-		 * case R.id.btnProfile: Log.i(TAG, "Button profile");
-		 * 
-		 * Intent myIntent = new Intent(EntryActivity.this,
-		 * UpdateActivity.class); EntryActivity.this.startActivity(myIntent);
-		 * break;
-		 */
-		/*
-		 * case R.id.btnUpdate: try { if (etMasterPass.getText().length() > 0) {
-		 * Log.i(TAG, "Got the password: " + etMasterPass.getText().toString());
-		 * master = new SecureCharArray(etMasterPass.getText() .toString());
-		 * SecureCharArray result = PasswordMaker.makePassword(master, account);
-		 * textOutputPass.setText(new String(result.getData())); } } catch
-		 * (Exception e) { }
-		 * 
-		 * break;
-		 */
-		case R.id.btnShow:
-			Log.i(TAG, "Button copy");
-			break;
 
-		case R.id.btnGo:
-			Log.i(TAG, "Button go");
-			break;
 		case R.id.textResultPass:
-
 			Log.i(TAG, "Button output password");
 			Log.i(TAG, "Current password: " + etMasterPass.getText().toString());
 			account.setUrl(etURL.getText().toString());
@@ -157,33 +161,53 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		}
 	}
 
-	// private void copyPwToClipboard(String pw) {
-	// ClipboardManager cb = (ClipboardManager)
-	// getSystemService(CLIPBOARD_SERVICE);
-	// cb.setText(pw);
-	// Toast.makeText(this, R.string.copiedtoclip, Toast.LENGTH_SHORT).show();
-	// }
-
 	@Override
 	protected void onResume() {
-		CookieSyncManager.getInstance().startSync();
 		super.onResume();
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.actionBtnGo:
+			Log.i(TAG, "Button go");
+			datasource.createAccount("HONAS " + Integer.toString(datasource.getAllComments().size()), "MD5");
+			break;
+			
+		case R.id.actionBtnCopy:
+			Log.i(TAG, "Clicked item Copy");
+			ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+			ClipData clip = ClipData.newPlainText("Copied Text",
+					textOutputPass.getText());
+			clipboard.setPrimaryClip(clip);
+			break;
+		case R.id.actionBtnAbout:
+			Log.i(TAG, "Clicked item 4");
+			break;
+		case R.id.actionBtnProfiles:
+			Log.i(TAG, "Clicked item 4");
+
+			Intent myIntent = new Intent(EntryActivity.this,
+					UpdateActivity.class);
+			EntryActivity.this.startActivity(myIntent);
+			break;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+
+	@Override
 	protected void onPause() {
-		CookieSyncManager.getInstance().startSync();
+		Log.i(TAG, "on Pausing");
 		super.onPause();
 	}
 
 	@Override
 	protected void onStop() {
-		/*
-		 * SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		 * SharedPreferences.Editor editor = settings.edit();
-		 * editor.putBoolean("emptyFields", cbEmptyFields.isChecked());
-		 * editor.commit();
-		 */	
+		Log.i(TAG, "on Stopping");
 		super.onStop();
 	}
 
@@ -191,6 +215,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 }

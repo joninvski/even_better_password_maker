@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pifactorial"
     android:versionCode="1"
-    android:versionName="1.0.0-SNAPSHOT"
-     >
+    android:versionName="1.0.0-SNAPSHOT" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -17,12 +16,11 @@
     <application
         android:allowBackup="True"
         android:icon="@drawable/pwm"
-        android:label="" 
-        android:uiOptions="splitActionBarWhenNarrow"
-        >
+        android:label="Even Better Password Maker"
+        android:uiOptions="splitActionBarWhenNarrow" >
         <activity
             android:name="EntryActivity"
-            android:label="" >
+            android:label="Even Better Password Maker" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

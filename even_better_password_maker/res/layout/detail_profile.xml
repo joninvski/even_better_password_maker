@@ -134,13 +134,6 @@
                 android:text="@string/cb_pass_characters_symbols" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/et_pass_costum_characters_hint" />
-
         <LinearLayout
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
@@ -151,22 +144,6 @@
             android:paddingLeft="2dip"
             android:paddingRight="2dip"
             android:paddingTop="0dip" >
-
-            <Button
-                android:id="@+id/button2"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/bt_detail_profile_cancel" />
-
-            <Button
-                android:id="@+id/button1"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/bt_detail_profile_save" />
         </LinearLayout>
     </LinearLayout>
 

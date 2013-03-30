@@ -1,100 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    >
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:scrollbars="vertical" >
-
-        <LinearLayout
-            android:id="@+id/body"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/labelURL"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="6dp"
-                android:text="@string/url"
-                android:textSize="23sp" >
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/etURL"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textUri"
-                android:text="@string/http"
-                android:textSize="18sp" >
-            </EditText>
-
-            <TextView
-                android:id="@+id/labelMasterPass"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="12dp"
-                android:text="@string/mpw"
-                android:textSize="23sp" >
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/etMasterPass"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:text=""
-                android:textSize="18sp" >
-            </EditText>
-
-            <TextView
-                android:id="@+id/textResultPass"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:gravity="center"
-                android:hint="@string/text_show_password_hint"
-                android:onClick="onClick"
-                android:paddingBottom="10dp"
-                android:paddingTop="20dp"
-                android:textIsSelectable="false"
-                android:textSize="30sp" />
-        </LinearLayout>
-    </ScrollView>
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/footer"
+        android:id="@+id/body"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/btnShow"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="100sp"
+        <TextView
+            android:id="@+id/labelURL"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/copy" />
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/url"
+            android:textSize="23sp" >
+        </TextView>
 
-        <Button
-            android:id="@+id/btnGo"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="100sp"
+        <EditText
+            android:id="@+id/etURL"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/go" />
+            android:inputType="textUri"
+            android:text="@string/http"
+            android:textSize="18sp" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/labelMasterPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="12dp"
+            android:text="@string/mpw"
+            android:textSize="23sp" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/etMasterPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:text=""
+            android:textSize="18sp" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textResultPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:hint="@string/text_show_password_hint"
+            android:onClick="onClick"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
+            android:textIsSelectable="false"
+            android:textSize="30sp" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>
