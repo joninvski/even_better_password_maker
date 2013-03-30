@@ -48,9 +48,7 @@ public final class Account {
 	private String modifier = "";
 	private String prefix = "";
 	private String suffix = "";
-	private boolean sha256Bug = false;
 	private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
-
 
 	public Account() {
 
@@ -78,12 +76,11 @@ public final class Account {
 	 * @param modifier
 	 * @param prefix
 	 * @param suffix
-	 * @param sha256Bug
 	 */
 	public Account(String name, String username, AlgorithmType algorithm,
 			int length, String characterSet, LeetType leetType,
-			LeetLevel leetLevel, String modifier, String prefix, String suffix,
-			boolean sha256Bug) throws Exception {
+			LeetLevel leetLevel, String modifier, String prefix, String suffix)
+			throws Exception {
 		this.name = name;
 		this.username = username;
 		this.algorithm = algorithm;
@@ -94,7 +91,6 @@ public final class Account {
 		this.modifier = modifier;
 		this.prefix = prefix;
 		this.suffix = suffix;
-		this.sha256Bug = sha256Bug;
 	}
 
 	/**
@@ -117,7 +113,6 @@ public final class Account {
 		this.modifier = a.modifier;
 		this.prefix = a.prefix;
 		this.suffix = a.suffix;
-		this.sha256Bug = a.sha256Bug;
 
 		// The documentation says EnumSet.copyOf() will fail on empty sets.
 		if (a.urlComponents.isEmpty() == false)
@@ -279,21 +274,6 @@ public final class Account {
 	}
 
 	/**
-	 * @return the sha256Bug
-	 */
-	public boolean isSha256Bug() {
-		return sha256Bug;
-	}
-
-	/**
-	 * @param sha256Bug
-	 *            the sha256Bug to set
-	 */
-	public void setSha256Bug(boolean sha256Bug) {
-		this.sha256Bug = sha256Bug;
-	}
-
-	/**
 	 * Clears the UrlComponents used with this account
 	 */
 	public final void clearUrlComponents() {
@@ -331,10 +311,10 @@ public final class Account {
 	}
 
 	/**
-	 * Implements the Comparable<Account> interface, this is based
-	 *  on the name.
+	 * Implements the Comparable<Account> interface, this is based on the name.
 	 * 
-	 * @param o The other account to compare to.
+	 * @param o
+	 *            The other account to compare to.
 	 * @return this.name.compareTo(otherAccount.name);
 	 */
 	public int compareTo(Account o) {
