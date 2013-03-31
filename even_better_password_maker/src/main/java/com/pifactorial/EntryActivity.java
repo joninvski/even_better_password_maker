@@ -1,15 +1,8 @@
 package com.pifactorial;
 
 import org.daveware.passwordmaker.Profile;
-import org.daveware.passwordmaker.AlgorithmType;
-import org.daveware.passwordmaker.CharacterSets;
-import org.daveware.passwordmaker.LeetLevel;
-import org.daveware.passwordmaker.LeetType;
-import org.daveware.passwordmaker.PasswordMaker;
-import org.daveware.passwordmaker.SecureCharArray;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipData.Item;
 import android.content.ClipboardManager;
@@ -52,13 +45,12 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		Log.i(TAG, "Creating Entry Activity");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		Log.i(TAG, "View created");
 
 		// Let's get the window controls
 		textOutputPass = (TextView) findViewById(R.id.textResultPass);
 		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
-
 
 		visible = false;
 
@@ -66,15 +58,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		datasource.open();
 
 		Log.i(TAG, "Creating Entry Activity2.5");
-		Cursor cursor = datasource.getAllCommentsCursor();
+		Cursor cursor = datasource.getAllProfilesCursor();
 
-		for (String s : cursor.getColumnNames()) {
-			Log.i(TAG, s);
-		}
-
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_spinner_item, cursor,
-				new String[] { "name" }, new int[] { android.R.id.text1 }, 0);
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
+                new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
 
 		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
 
@@ -92,16 +79,16 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
 
 		Log.i(TAG, "Creating Entry Activity6");
-
 	}
-	
-	private void createDefaultProfile(){
+
+	private void createDefaultProfile() {
 		/* Create with enums */
-		Profile account = new Profile("", "", "",
-				AlgorithmType.SHA256, false, true, 12,
-				CharacterSets.ALPHANUMERIC, LeetType.NONE,
-				LeetLevel.LEVEL1, "", "", "", false);
-		datasource.createAccount(name, algorithm);
+		/*
+		 * Profile account = new Profile("", "", "", AlgorithmType.SHA256,
+		 * false, true, 12, CharacterSets.ALPHANUMERIC, LeetType.NONE,
+		 * LeetLevel.LEVEL1, "", "", "", false); datasource.createAccount(name,
+		 * algorithm);
+		 */
 	}
 
 	public void onClick(View v) {
@@ -112,7 +99,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
 			Log.i(TAG, "Button output password");
 			Log.i(TAG, "Current password: " + etMasterPass.getText().toString());
-			
 
 			// Toggle the visible variable
 			visible = !visible;
@@ -121,13 +107,15 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 				try {
 					Log.i(TAG, "Creating Entry Activity3");
 
-					master = new SecureCharArray(etMasterPass.getText()
-							.toString());
-					SecureCharArray result = PasswordMaker.makePassword(master,
-							account);
-					textOutputPass.setText(new String(result.getData()));
+					/*
+					 * master = new SecureCharArray(etMasterPass.getText()
+					 * .toString()); SecureCharArray result =
+					 * PasswordMaker.makePassword(master, account);
+					 * textOutputPass.setText(new String(result.getData()));
+					 */
 				} catch (Exception e) {
 				}
+
 			} else {
 				textOutputPass.setText("");
 			}
@@ -146,10 +134,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 		switch (item.getItemId()) {
 		case R.id.actionBtnGo:
 			Log.i(TAG, "Button go");
-			datasource.createAccount(
-					"HONAS "
-							+ Integer.toString(datasource.getAllComments()
-									.size()), "MD5");
+			datasource.insertProfile(new Profile("JAKIM"));
 			break;
 
 		case R.id.actionBtnCopy:

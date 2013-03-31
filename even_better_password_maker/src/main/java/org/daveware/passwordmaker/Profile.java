@@ -1,17 +1,17 @@
 /*
  * PasswordMaker Java Edition - One Password To Rule Them All
  * Copyright (C) 2011 Dave Marotti
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,308 +24,318 @@ import java.util.Set;
 /**
  * Represents an profile. This object also functions as a parent profile for
  * which it can have any number of child profiles.
- * 
+ *
  * @author Dave Marotti
  */
 public final class Profile {
 
-	public enum UrlComponents {
-		Protocol, Subdomain, Domain, PortPathAnchorQuery
-	}
-	
-	public static int DEFAULT_LENGTH = 8;
+    public enum UrlComponents {
+        Protocol, Subdomain, Domain, PortPathAnchorQuery
+    }
 
-	private String name = "";
-	private String username = "";
-	private AlgorithmType algorithm = AlgorithmType.MD5;
-	private int length = 8;
-	private String characterSet = CharacterSets.BASE_93_SET;
-	private LeetType leetType = LeetType.NONE;
-	private LeetLevel leetLevel = LeetLevel.LEVEL1;
-	private String modifier = "";
-	private String prefix = "";
-	private String suffix = "";
-	private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
+    public static int DEFAULT_LENGTH = 8;
 
-	public Profile() {
+    private String name = "";
+    private String username = "";
+    private AlgorithmType algorithm = AlgorithmType.MD5;
+    private int length = 8;
+    private String characterSet = CharacterSets.BASE_93_SET;
+    private LeetType leetType = LeetType.NONE;
+    private LeetLevel leetLevel = LeetLevel.LEVEL1;
+    private String modifier = "";
+    private String prefix = "";
+    private String suffix = "";
+    private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
 
-	}
+    public Profile() {
+    }
 
-	public Profile(String name) {
-		this.name = name;
-	}
+    public Profile(String name) {
+        this.name = name;
+    }
 
-	public Profile(String name, String url, String username) {
-		this.name = name;
-		this.username = username;
-	}
+    public Profile(String name, String url, String username) {
+        this.name = name;
+        this.username = username;
+    }
 
-	/**
-	 * Constructor which allows all members.
-	 * 
-	 * @param name
-	 * @param username
-	 * @param algorithm
-	 * @param length
-	 * @param characterSet
-	 * @param leetType
-	 * @param leetLevel
-	 * @param modifier
-	 * @param prefix
-	 * @param suffix
-	 */
-	public Profile(String name, String username, AlgorithmType algorithm,
-			int length, String characterSet, LeetType leetType,
-			LeetLevel leetLevel, String modifier, String prefix, String suffix)
-			throws Exception {
-		this.name = name;
-		this.username = username;
-		this.algorithm = algorithm;
-		this.length = length;
-		this.characterSet = characterSet;
-		this.leetType = leetType;
-		this.leetLevel = leetLevel;
-		this.modifier = modifier;
-		this.prefix = prefix;
-		this.suffix = suffix;
-	}
+    /**
+     * Constructor which allows all members.
+     *
+     * @param name
+     * @param username
+     * @param algorithm
+     * @param length
+     * @param characterSet
+     * @param leetType
+     * @param leetLevel
+     * @param modifier
+     * @param prefix
+     * @param suffix
+     */
+    public Profile(String name, String username, AlgorithmType algorithm,
+            int length, String characterSet, LeetType leetType,
+            LeetLevel leetLevel, String modifier, String prefix, String suffix)
+            throws Exception {
+        this.name = name;
+        this.username = username;
+        this.algorithm = algorithm;
+        this.length = length;
+        this.characterSet = characterSet;
+        this.leetType = leetType;
+        this.leetLevel = leetLevel;
+        this.modifier = modifier;
+        this.prefix = prefix;
+        this.suffix = suffix;
+    }
 
-	/**
-	 * Copies the settings (not including children or ID) from another profile
-	 * 
-	 * LEAVE THIS FUNCTION HERE so it's easy to see if new members are ever
-	 * added so I don't forget to update it.
-	 * 
-	 * @param a
-	 *            The other profile to copy from.
-	 */
-	public void copySettings(Profile a) {
-		this.name = a.name;
-		this.username = a.username;
-		this.algorithm = a.algorithm;
-		this.length = a.length;
-		this.characterSet = a.characterSet;
-		this.leetType = a.leetType;
-		this.leetLevel = a.leetLevel;
-		this.modifier = a.modifier;
-		this.prefix = a.prefix;
-		this.suffix = a.suffix;
+    /**
+     * Copies the settings (not including children or ID) from another profile
+     *
+     * LEAVE THIS FUNCTION HERE so it's easy to see if new members are ever
+     * added so I don't forget to update it.
+     *
+     * @param a
+     *            The other profile to copy from.
+     */
+    public void copySettings(Profile a) {
+        this.name = a.name;
+        this.username = a.username;
+        this.algorithm = a.algorithm;
+        this.length = a.length;
+        this.characterSet = a.characterSet;
+        this.leetType = a.leetType;
+        this.leetLevel = a.leetLevel;
+        this.modifier = a.modifier;
+        this.prefix = a.prefix;
+        this.suffix = a.suffix;
 
-		// The documentation says EnumSet.copyOf() will fail on empty sets.
-		if (a.urlComponents.isEmpty() == false)
-			this.urlComponents = EnumSet.copyOf(a.urlComponents);
-		else
-			this.urlComponents = defaultUrlComponents();
-	}
+        // The documentation says EnumSet.copyOf() will fail on empty sets.
+        if (a.urlComponents.isEmpty() == false)
+            this.urlComponents = EnumSet.copyOf(a.urlComponents);
+        else
+            this.urlComponents = defaultUrlComponents();
+    }
 
-	/**
-	 * Gets the default set of UrlComponents (empty set).
-	 * 
-	 * @return
-	 */
-	private static EnumSet<UrlComponents> defaultUrlComponents() {
-		return EnumSet.noneOf(UrlComponents.class);
-	}
+    /**
+     * Gets the default set of UrlComponents (empty set).
+     *
+     * @return
+     */
+    private static EnumSet<UrlComponents> defaultUrlComponents() {
+        return EnumSet.noneOf(UrlComponents.class);
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String s) {
-		name = s;
-	}
+    public void setName(String s) {
+        name = s;
+    }
 
-	/**
-	 * @return the algorithm
-	 */
-	public AlgorithmType getAlgorithm() {
-		return algorithm;
-	}
+    /**
+     * @return the algorithm
+     */
+    public AlgorithmType getAlgorithm() {
+        return algorithm;
+    }
 
-	/**
-	 * @param algorithm
-	 *            the algorithm to set
-	 */
-	public void setAlgorithm(AlgorithmType algorithm) {
-		this.algorithm = algorithm;
-	}
+    /**
+     * @param algorithm
+     *            the algorithm to set
+     */
+    public void setAlgorithm(AlgorithmType algorithm) {
+        this.algorithm = algorithm;
+    }
 
-	/**
-	 * @return the length
-	 */
-	public int getLength() {
-		return length;
-	}
+    /**
+     * @return the length
+     */
+    public int getLength() {
+        return length;
+    }
 
-	/**
-	 * @param length
-	 *            the length to set
-	 */
-	public void setLength(int length) {
-		this.length = length;
-	}
+    /**
+     * @param length
+     *            the length to set
+     */
+    public void setLength(int length) {
+        this.length = length;
+    }
 
-	/**
-	 * @return the characterSet
-	 */
-	public String getCharacterSet() {
-		return characterSet;
-	}
+    /**
+     * @return the characterSet
+     */
+    public String getCharacterSet() {
+        return characterSet;
+    }
 
-	/**
-	 * @param characterSet
-	 *            the characterSet to set
-	 */
-	public void setCharacterSet(String characterSet) {
-		this.characterSet = characterSet;
-	}
+    /**
+     * @param characterSet
+     *            the characterSet to set
+     */
+    public void setCharacterSet(String characterSet) {
+        this.characterSet = characterSet;
+    }
 
-	/**
-	 * @return the leetType
-	 */
-	public LeetType getLeetType() {
-		return leetType;
-	}
+    /**
+     * @return the leetType
+     */
+    public LeetType getLeetType() {
+        return leetType;
+    }
 
-	/**
-	 * @param leetType
-	 *            the leetType to set
-	 */
-	public void setLeetType(LeetType leetType) {
-		this.leetType = leetType;
-	}
+    /**
+     * @param leetType
+     *            the leetType to set
+     */
+    public void setLeetType(LeetType leetType) {
+        this.leetType = leetType;
+    }
 
-	/**
-	 * @return the leetLevel
-	 */
-	public LeetLevel getLeetLevel() {
-		return leetLevel;
-	}
+    /**
+     * @return the leetLevel
+     */
+    public LeetLevel getLeetLevel() {
+        return leetLevel;
+    }
 
-	/**
-	 * @param leetLevel
-	 *            the leetLevel to set
-	 */
-	public void setLeetLevel(LeetLevel leetLevel) {
-		this.leetLevel = leetLevel;
-	}
+    /**
+     * @param leetLevel
+     *            the leetLevel to set
+     */
+    public void setLeetLevel(LeetLevel leetLevel) {
+        this.leetLevel = leetLevel;
+    }
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * @param username
+     *            the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**
-	 * @return the modifier
-	 */
-	public String getModifier() {
-		return modifier;
-	}
+    /**
+     * @return the modifier
+     */
+    public String getModifier() {
+        return modifier;
+    }
 
-	/**
-	 * @param modifier
-	 *            the modifier to set
-	 */
-	public void setModifier(String modifier) {
-		this.modifier = modifier;
-	}
+    /**
+     * @param modifier
+     *            the modifier to set
+     */
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
 
-	/**
-	 * @return the prefix
-	 */
-	public String getPrefix() {
-		return prefix;
-	}
+    /**
+     * @return the prefix
+     */
+    public String getPrefix() {
+        return prefix;
+    }
 
-	/**
-	 * @param prefix
-	 *            the prefix to set
-	 */
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+    /**
+     * @param prefix
+     *            the prefix to set
+     */
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
-	/**
-	 * @return the suffix
-	 */
-	public String getSuffix() {
-		return suffix;
-	}
+    /**
+     * @return the suffix
+     */
+    public String getSuffix() {
+        return suffix;
+    }
 
-	/**
-	 * @param suffix
-	 *            the suffix to set
-	 */
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
-	}
+    /**
+     * @param suffix
+     *            the suffix to set
+     */
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
 
-	/**
-	 * Clears the UrlComponents used with this profile
-	 */
-	public final void clearUrlComponents() {
-		this.urlComponents.clear();
-	}
+    /**
+     * Clears the UrlComponents used with this profile
+     */
+    public final void clearUrlComponents() {
+        this.urlComponents.clear();
+    }
 
-	/**
-	 * @param urlComponent
-	 *            - Add a component of the url to be used as the input text for
-	 *            the generated password
-	 */
-	public final void addUrlComponent(UrlComponents urlComponent) {
-		this.urlComponents.add(urlComponent);
-	}
+    /**
+     * @param urlComponent
+     *            - Add a component of the url to be used as the input text for
+     *            the generated password
+     */
+    public final void addUrlComponent(UrlComponents urlComponent) {
+        this.urlComponents.add(urlComponent);
+    }
 
-	/**
-	 * @param urlComponents
-	 *            - the Components to use of the url as the input text for the
-	 *            generated password
-	 */
-	public final void setUrlComponents(Set<UrlComponents> urlComponents) {
-		this.urlComponents.clear();
-		this.urlComponents.addAll(urlComponents);
-	}
+    /**
+     * @param urlComponents
+     *            - the Components to use of the url as the input text for the
+     *            generated password
+     */
+    public final void setUrlComponents(Set<UrlComponents> urlComponents) {
+        this.urlComponents.clear();
+        this.urlComponents.addAll(urlComponents);
+    }
 
-	/**
-	 * If the urlComponents field is empty then the entire getUrl field will be
-	 * used. This set is unmodifiable. Use the helper functions to set or modify
-	 * the set.
-	 * 
-	 * @return the url components specified for this profile (may be empty)
-	 */
-	public final Set<UrlComponents> getUrlComponents() {
-		return Collections.unmodifiableSet(urlComponents);
-	}
+    /**
+     * If the urlComponents field is empty then the entire getUrl field will be
+     * used. This set is unmodifiable. Use the helper functions to set or modify
+     * the set.
+     *
+     * @return the url components specified for this profile (may be empty)
+     */
+    public final Set<UrlComponents> getUrlComponents() {
+        return Collections.unmodifiableSet(urlComponents);
+    }
 
-	/**
-	 * Implements the Comparable<Profile> interface, this is based on the name.
-	 * 
-	 * @param o
-	 *            The other profile to compare to.
-	 * @return this.name.compareTo(otherProfile.name);
-	 */
-	public int compareTo(Profile o) {
+    /**
+     * Implements the Comparable<Profile> interface, this is based on the name.
+     *
+     * @param o
+     *            The other profile to compare to.
+     * @return this.name.compareTo(otherProfile.name);
+     */
+    public int compareTo(Profile o) {
 
-		// First ignore case, if they equate, use case.
-		int result = name.compareToIgnoreCase(o.name);
-		if (result == 0)
-			return name.compareTo(o.name);
-		else
-			return result;
-	}
+        // First ignore case, if they equate, use case.
+        int result = name.compareToIgnoreCase(o.name);
+        if (result == 0)
+            return name.compareTo(o.name);
+        else
+            return result;
+    }
 
-	@Override
-	public String toString() {
-		return this.name + " " + this.algorithm;
-	}
+    @Override
+    public String toString() {
+        return this.name + " " + this.algorithm;
+    }
+
+    public static Profile getDefaultProfile() {
+        try {
+            return new Profile("Default", "", AlgorithmType.MD5, 8,
+                    CharacterSets.BASE_93_SET, LeetType.NONE, LeetLevel.LEVEL1,
+                    "", "", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
