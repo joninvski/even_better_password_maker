@@ -22,17 +22,17 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_SUFFIX                        = "suffix";
 
     // URL COMPONENTS
-    public static final String COLUMN_URL_COMPONENT_PROTOCOL        = "url_comp_protocol"
-    public static final String COLUMN_URL_COMPONENT_SUBDOMAIN       = "url_comp_subdomain"
-    public static final String COLUMN_URL_COMPONENT_DOMAIN          = "url_comp_domain"
-    public static final String COLUMN_URL_COMPONENT_PORT_PARAMETERS = "url_comp_port"
+    public static final String COLUMN_URL_COMPONENT_PROTOCOL        = "url_comp_protocol";
+    public static final String COLUMN_URL_COMPONENT_SUBDOMAIN       = "url_comp_subdomain";
+    public static final String COLUMN_URL_COMPONENT_DOMAIN          = "url_comp_domain";
+    public static final String COLUMN_URL_COMPONENT_PORT_PARAMETERS = "url_comp_port";
 
     // CHARACTER SET
-    public static final String COLUMN_CHAR_SET_UPPERCASE            = "char_set_upper"
-    public static final String COLUMN_CHAR_SET_LOWERCASE            = "char_set_lower"
-    public static final String COLUMN_CHAR_SET_NUMBERS              = "char_set_numbers"
-    public static final String COLUMN_CHAR_SET_SYMBOLS              = "char_set_symbols"
-    public static final String COLUMN_CHAR_SET_COSTUM               = "char_set_costum"
+    public static final String COLUMN_CHAR_SET_UPPERCASE            = "char_set_upper";
+    public static final String COLUMN_CHAR_SET_LOWERCASE            = "char_set_lower";
+    public static final String COLUMN_CHAR_SET_NUMBERS              = "char_set_numbers";
+    public static final String COLUMN_CHAR_SET_SYMBOLS              = "char_set_symbols";
+    public static final String COLUMN_CHAR_SET_COSTUM               = "char_set_costum";
 
 	private static final String DATABASE_NAME = "profiles.db";
 	private static final int DATABASE_VERSION = 1;
@@ -53,11 +53,11 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_URL_COMPONENT_PROTOCOL        + " boolean not null, "
 			+ COLUMN_URL_COMPONENT_SUBDOMAIN       + " boolean not null, "
 			+ COLUMN_URL_COMPONENT_DOMAIN          + " boolean not null, "
-			+ COLUMN_URL_COMPONENT_PORT_PARAMETERS + " boolean not null "
-			+ COLUMN_CHAR_SET_UPPERCASE            + " boolean not null "
-			+ COLUMN_CHAR_SET_LOWERCASE            + " boolean not null "
-			+ COLUMN_CHAR_SET_NUMBERS              + " boolean not null "
-			+ COLUMN_CHAR_SET_SYMBOLS              + " boolean not null "
+			+ COLUMN_URL_COMPONENT_PORT_PARAMETERS + " boolean not null, "
+			+ COLUMN_CHAR_SET_UPPERCASE            + " boolean not null, "
+			+ COLUMN_CHAR_SET_LOWERCASE            + " boolean not null, "
+			+ COLUMN_CHAR_SET_NUMBERS              + " boolean not null, "
+			+ COLUMN_CHAR_SET_SYMBOLS              + " boolean not null, "
 			+ COLUMN_CHAR_SET_COSTUM               + " text not null "
 			+ ");";
 

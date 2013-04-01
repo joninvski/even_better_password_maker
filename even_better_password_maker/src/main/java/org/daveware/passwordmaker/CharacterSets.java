@@ -28,11 +28,16 @@ public class CharacterSets {
     public static String SPECIAL_CHARS = "`~!@#$%^&*()_-+={}|[]\\:\";'<>?,./";
     public static String HEX = "0123456789abcdef";
     public static String NUMERIC = "0123456789";
-
+    
+    public static String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+    
     public static String [] CHARSETS = {
         BASE_93_SET,
         ALPHANUMERIC,
         ALPHA,
+        UPPERCASE,
+        LOWERCASE,
         HEX,
         NUMERIC,
         SPECIAL_CHARS
