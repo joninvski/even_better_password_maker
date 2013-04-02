@@ -1,6 +1,13 @@
-/*
+
+/* 
+ * This class was adapted from the project
+ * 
  * PasswordMaker Java Edition - One Password To Rule Them All
  * Copyright (C) 2011 Dave Marotti
+ *
+ * Url: https://code.google.com/p/passwordmaker-je/
+ *
+ * License
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.daveware.passwordmaker;
 
 import java.util.Collections;
@@ -22,10 +30,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * Represents an profile. This object also functions as a parent profile for
- * which it can have any number of child profiles.
- * 
- * @author Dave Marotti
+ * Represents a profile for rules to generate passwords
  */
 public final class Profile {
 
@@ -35,18 +40,18 @@ public final class Profile {
 
 	public static int DEFAULT_LENGTH = 8;
 
-	private String name = "";
-	private String username = "";
-	private AlgorithmType algorithm = AlgorithmType.MD5;
-	private int length = 8;
-	private String characterSet = CharacterSets.BASE_93_SET;
-	private LeetType leetType = LeetType.NONE;
-	private LeetLevel leetLevel = LeetLevel.LEVEL1;
-	private String modifier = "";
-	private String prefix = "";
-	private String suffix = "";
+	private String name                          = "";
+	private String username                      = "";
+	private AlgorithmType algorithm              = AlgorithmType.MD5;
+	private int length                           = 8;
+	private String characterSet                  = CharacterSets.BASE_93_SET;
+	private LeetType leetType                    = LeetType.NONE;
+	private LeetLevel leetLevel                  = LeetLevel.LEVEL1;
+	private String modifier                      = "";
+	private String prefix                        = "";
+	private String suffix                        = "";
 	private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
-	private String costumChars = "";
+	private String costumChars                   = "";
 
 	public Profile() {
 	}
