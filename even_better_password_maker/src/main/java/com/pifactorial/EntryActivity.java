@@ -1,5 +1,6 @@
 package com.pifactorial;
 
+import org.daveware.passwordmaker.PasswordGenerationException;
 import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.SecureCharArray;
@@ -10,6 +11,7 @@ import android.content.ClipData.Item;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -93,21 +95,24 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
                 if (visible) {
                     try {
-                        Log.i(TAG, "Creating Entry Activity3");
+                        Log.i(TAG, "Creating Entry Activity3 " + etMasterPass.getText().toString());
 
                         // Get spinner profile
-                        String profileName = spinner.getSelectedItem().toString();
-                        Profile profile = datasource.getProfileByName(profileName);
+                        SQLiteCursor profileName = (SQLiteCursor) spinner.getSelectedItem();
+                        Profile profile = datasource.cursorToAccount(profileName);
 
                         // Use the profile and master password to get the generated password
-                        SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString()); 
+                        SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
+                        Log.e(TAG, "Generating password now --> " + master.toString());
                         SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
 
+                        Log.e(TAG, "Password generated --> " + result);
+                        
                         // Show the generated password
                         textOutputPass.setText(new String(result.getData()));
 
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error in generating the new password");
+                    } catch (PasswordGenerationException e) {
+                        Log.e(TAG, "Error in generating the new password" + e.getMessage());
                     }
 
                 } else {

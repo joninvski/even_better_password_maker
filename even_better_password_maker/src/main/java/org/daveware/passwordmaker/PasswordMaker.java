@@ -110,7 +110,6 @@ public class PasswordMaker {
 			output.resize(full_length, false);
 
 		for (i = full_length - 1; i >= 0; i--) {
-			Log.i("PwMaker", "CHAR: " + encoding.charAt(remainders[i]));
 			output.setCharAt(outputPosition++, encoding.charAt(remainders[i]));
 		}
 
@@ -183,9 +182,13 @@ public class PasswordMaker {
 	 *             if something bad happened.
 	 */
 	public static SecureCharArray makePassword(SecureCharArray masterPassword,
-			Profile account, final String inputText) throws Exception {
+			Profile account, final String inputText)
+			throws PasswordGenerationException {
+		Log.d("PwMaker", "Making password with url  " + inputText
+				+ " masterPassword: " + masterPassword + " and profile: "
+				+ account.toString());
+
 		LeetLevel leetLevel = account.getLeetLevel();
-		// int count = 0;
 		int length = account.getLength();
 		SecureCharArray output = null;
 		SecureCharArray data = null;
@@ -247,7 +250,7 @@ public class PasswordMaker {
 		} catch (Exception e) {
 			if (output != null)
 				output.erase();
-			throw e;
+			throw new PasswordGenerationException(e);
 		} finally {
 			// not really needed... but here for completeness
 			if (data != null)

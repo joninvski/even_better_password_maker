@@ -99,7 +99,7 @@ public class ProfileDataSource {
         return profiles;
     }
 
-    private Profile cursorToAccount(Cursor cursor) {
+    public Profile cursorToAccount(Cursor cursor) {
         Profile account = new Profile();
         account.setName(Long.toString(cursor.getLong(0)));
 
