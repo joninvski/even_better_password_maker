@@ -1,6 +1,8 @@
 package com.pifactorial;
 
+import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Profile;
+import org.daveware.passwordmaker.SecureCharArray;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -23,160 +25,152 @@ import android.widget.TextView;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
-	private static final String TAG = "EvenBetterPassMaker";
+    private static final String TAG = "EvenBetterPassMaker";
 
-	private ProfileDataSource datasource;
+    private ProfileDataSource datasource;
 
-	private Boolean visible;
+    private Boolean visible;
 
-	protected EditText etURL;
-	protected EditText etMasterPass;
-	protected TextView textOutputPass;
+    protected EditText etURL;
+    protected EditText etMasterPass;
+    protected TextView textOutputPass;
+    protected Spinner spinner;
 
-	/* TODO - Clean these buttons */
-	protected Item btnGo;
-	protected Button btnUpdate;
-	protected Button btnCopy;
-	protected CheckBox cbEmptyFields;
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "Creating Entry Activity");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        Log.i(TAG, "View created");
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		Log.i(TAG, "Creating Entry Activity");
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+        // Let's get the window controls
+        textOutputPass = (TextView) findViewById(R.id.textResultPass);
+        etURL = (EditText) findViewById(R.id.etURL);
+        etMasterPass = (EditText) findViewById(R.id.etMasterPass);
 
-		Log.i(TAG, "View created");
+        // Set the action bar to don't show the app title
+        this.getActionBar().setDisplayShowTitleEnabled(false);
 
-		// Let's get the window controls
-		textOutputPass = (TextView) findViewById(R.id.textResultPass);
-		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
+        // Master password should always start as not visible
+        visible = false;
 
-		visible = false;
+        // Create a data source to get profiles
+        datasource = new ProfileDataSource(this);
+        datasource.open();
 
-		datasource = new ProfileDataSource(this);
-		datasource.open();
+        // Check if there is no profile
+        if(datasource.getAllProfiles().size() < 1) {
+            Profile defaultProfile = Profile.getDefaultProfile();
+            datasource.insertProfile(defaultProfile);
+        }
 
-		Log.i(TAG, "Creating Entry Activity2.5");
-		Cursor cursor = datasource.getAllProfilesCursor();
-
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
+        Log.i(TAG, "Populating spinner with stored profiles");
+        // Populate a spinner with the profiles
+        Cursor cursor = datasource.getAllProfilesCursor();
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
                 new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
+        spinner = (Spinner) findViewById(R.id.spinner1);
 
-		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner.setAdapter(adapter);
+        Log.i(TAG, "Finished creating entry activity");
+    }
 
-		Log.i(TAG, "Creating Entry Activity2.7");
+    public void onClick(View v) {
+        switch (v.getId()) {
 
-		this.getActionBar().setDisplayShowTitleEnabled(false);
+            case R.id.textResultPass:
 
-		Log.i(TAG, "Creating Entry Activity4");
-		etURL = (EditText) findViewById(R.id.etURL);
-		etMasterPass = (EditText) findViewById(R.id.etMasterPass);
+                Log.i(TAG, "Clicked on text output password");
+                Log.i(TAG, "Current password: " + etMasterPass.getText().toString());
 
-		Log.i(TAG, "Creating Entry Activity6");
-	}
+                // Toggle the visible variable
+                visible = !visible;
 
-	private void createDefaultProfile() {
-		/* Create with enums */
-		/*
-		 * Profile account = new Profile("", "", "", AlgorithmType.SHA256,
-		 * false, true, 12, CharacterSets.ALPHANUMERIC, LeetType.NONE,
-		 * LeetLevel.LEVEL1, "", "", "", false); datasource.createAccount(name,
-		 * algorithm);
-		 */
-	}
+                if (visible) {
+                    try {
+                        Log.i(TAG, "Creating Entry Activity3");
 
-	public void onClick(View v) {
+                        // Get spinner profile
+                        String profileName = spinner.getSelectedItem().toString();
+                        Profile profile = datasource.getProfileByName(profileName);
 
-		switch (v.getId()) {
+                        // Use the profile and master password to get the generated password
+                        SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString()); 
+                        SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
 
-		case R.id.textResultPass:
+                        // Show the generated password
+                        textOutputPass.setText(new String(result.getData()));
 
-			Log.i(TAG, "Button output password");
-			Log.i(TAG, "Current password: " + etMasterPass.getText().toString());
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error in generating the new password");
+                    }
 
-			// Toggle the visible variable
-			visible = !visible;
+                } else {
+                    textOutputPass.setText("");
+                }
+                break;
+        }
+    }
 
-			if (visible) {
-				try {
-					Log.i(TAG, "Creating Entry Activity3");
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
-					/*
-					 * master = new SecureCharArray(etMasterPass.getText()
-					 * .toString()); SecureCharArray result =
-					 * PasswordMaker.makePassword(master, account);
-					 * textOutputPass.setText(new String(result.getData()));
-					 */
-				} catch (Exception e) {
-				}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.actionBtnGo:
+                Log.i(TAG, "Button go");
+                datasource.insertProfile(new Profile("JAKIM"));
+                break;
 
-			} else {
-				textOutputPass.setText("");
-			}
-			break;
-		}
-	}
+            case R.id.actionBtnCopy:
+                Log.i(TAG, "Clicked item Copy");
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Copied Text",
+                        textOutputPass.getText());
+                clipboard.setPrimaryClip(clip);
+                break;
+            case R.id.actionBtnAbout:
+                Log.i(TAG, "Clicked item 4");
+                break;
+            case R.id.actionBtnProfiles:
+                Log.i(TAG, "Clicked item 4");
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
+                Intent myIntent = new Intent(EntryActivity.this,
+                        UpdateActivity.class);
+                EntryActivity.this.startActivity(myIntent);
+                break;
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.actionBtnGo:
-			Log.i(TAG, "Button go");
-			datasource.insertProfile(new Profile("JAKIM"));
-			break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 
-		case R.id.actionBtnCopy:
-			Log.i(TAG, "Clicked item Copy");
-			ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-			ClipData clip = ClipData.newPlainText("Copied Text",
-					textOutputPass.getText());
-			clipboard.setPrimaryClip(clip);
-			break;
-		case R.id.actionBtnAbout:
-			Log.i(TAG, "Clicked item 4");
-			break;
-		case R.id.actionBtnProfiles:
-			Log.i(TAG, "Clicked item 4");
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "on Pausing");
+        super.onPause();
+    }
 
-			Intent myIntent = new Intent(EntryActivity.this,
-					UpdateActivity.class);
-			EntryActivity.this.startActivity(myIntent);
-			break;
+    @Override
+    protected void onStop() {
+        Log.i(TAG, "on Stopping");
+        super.onStop();
+    }
 
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
-
-	@Override
-	protected void onPause() {
-		Log.i(TAG, "on Pausing");
-		super.onPause();
-	}
-
-	@Override
-	protected void onStop() {
-		Log.i(TAG, "on Stopping");
-		super.onStop();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

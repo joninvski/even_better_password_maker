@@ -112,4 +112,16 @@ public class ProfileDataSource {
         }       
         return account;
     }
+
+    public Profile getProfileByName(String profileName) throws ProfileNotFound {
+        List<Profile> listProfiles = getAllProfiles();
+
+        for(Profile p : listProfiles)
+        {
+            if(p.getName().equalsIgnoreCase(profileName)){
+                return p;
+            }
+        }
+        throw new ProfileNotFound("Profile with name " + profileName + " was not found");
+    }
 } 
