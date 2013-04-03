@@ -129,7 +129,7 @@ public final class Profile {
 	 * @return
 	 */
 	private static EnumSet<UrlComponents> defaultUrlComponents() {
-		return EnumSet.noneOf(UrlComponents.class);
+		return EnumSet.of(UrlComponents.Domain);
 	}
 
 	public String getName() {
@@ -336,18 +336,18 @@ public final class Profile {
 
 	@Override
 	public String toString() {
-		return this.name + ": " + this.algorithm + "\n" 
-            + this.username + "\n"
-            + this.algorithm + "\n"
-            + Integer.toString(this.length) + "\n"
-            + this.characterSet + "\n"
-            + this.leetType + "\n"
-            + this.leetLevel + "\n"
-            + this.modifier + "\n"
-            + this.prefix + "\n"
-            + this.suffix + "\n"
-            + this.urlComponents  + "\n"
-            + this.costumChars;
+		return this.name + ": "              + this.algorithm                 + "\n"
+                         + "Username: "      + this.username                  + "\n"
+                         + "Alghorithm: "    + this.algorithm                 + "\n"
+                         + "Lenght: "        + Integer.toString(this.length) + "\n"
+                         + "CharacterSet: "  + this.characterSet              + "\n"
+                         + "LeetType: "      + this.leetType                  + "\n"
+                         + "LeetLevel: "     + this.leetLevel                 + "\n"
+                         + "Modifier: "      + this.modifier                  + "\n"
+                         + "Prefix: "        + this.prefix                    + "\n"
+                         + "Suffix: "        + this.suffix                    + "\n"
+                         + "UrlComponents: " + this.urlComponents             + "\n"
+                         + "CostumChars: "   + this.costumChars;
 	}
 
 	public static Profile getDefaultProfile() {

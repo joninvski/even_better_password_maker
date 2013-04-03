@@ -95,11 +95,11 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
                 if (visible) {
                     try {
-                        Log.i(TAG, "Creating Entry Activity3 " + etMasterPass.getText().toString());
-
                         // Get spinner profile
                         SQLiteCursor profileName = (SQLiteCursor) spinner.getSelectedItem();
                         Profile profile = datasource.cursorToAccount(profileName);
+
+                        Log.i(TAG, "Profile fetched \n" + profile.toString());
 
                         // Use the profile and master password to get the generated password
                         SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());

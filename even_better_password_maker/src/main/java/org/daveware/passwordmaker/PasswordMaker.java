@@ -184,8 +184,8 @@ public class PasswordMaker {
 	public static SecureCharArray makePassword(SecureCharArray masterPassword,
 			Profile account, final String inputText)
 			throws PasswordGenerationException {
-		Log.d("PwMaker", "Making password with url  " + inputText
-				+ " masterPassword: " + masterPassword + " and profile: "
+		Log.d("PwMaker", "Making password with:\n\t url " + inputText
+				+ "\n\tmasterPassword: " + masterPassword + "\n\tand profile: "
 				+ account.toString());
 
 		LeetLevel leetLevel = account.getLeetLevel();
@@ -283,6 +283,10 @@ public class PasswordMaker {
 		int count = 0;
 		int length = account.getLength();
 
+		Log.d("PwMaker2", "Hashing the data with:\n\t url " + data
+				+ "\n\tmasterPassword: " + masterPassword + "\n\tand profile: "
+				+ account.toString());
+
 		try {
 			while (output.size() < length) {
 				if (count == 0) {
@@ -345,6 +349,7 @@ public class PasswordMaker {
 		SecureByteArray dataBytes = null;
 
 		try {
+            //TODO See if this is working
 			masterPasswordBytes = new SecureByteArray(masterPassword.getData());
 			dataBytes = new SecureByteArray(data.getData());
 
