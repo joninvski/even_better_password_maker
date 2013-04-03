@@ -17,12 +17,15 @@
  */
 package org.daveware.passwordmaker;
 
-import java.security.MessageDigest;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.daveware.passwordmaker.Profile.UrlComponents;
+
 import android.util.Log;
 
 /**
@@ -349,13 +352,16 @@ public class PasswordMaker {
 		SecureByteArray dataBytes = null;
 
 		try {
-            //TODO See if this is working
 			masterPasswordBytes = new SecureByteArray(masterPassword.getData());
 			dataBytes = new SecureByteArray(data.getData());
 
-			MessageDigest md = MessageDigest.getInstance(account.getAlgorithm()
-					.getName(), "BC");
-			digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
+            Mac mac;
+            String algoName = "HMAC" + account.getAlgorithm().getName();
+            mac = Mac.getInstance(algoName, "BC");
+            mac.init(new SecretKeySpec(masterPasswordBytes.getData(), algoName));
+            mac.reset();
+            mac.update(dataBytes.getData());
+            digestChars = new SecureCharArray(mac.doFinal());
 
 			output = rstr2any(digestChars.getData(), account.getCharacterSet());
 		} catch (Exception e) {

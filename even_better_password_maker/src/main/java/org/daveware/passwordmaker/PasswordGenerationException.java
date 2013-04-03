@@ -2,7 +2,12 @@ package org.daveware.passwordmaker;
 
 public class PasswordGenerationException extends Exception {
 
-	public PasswordGenerationException(Throwable t){
-		super(t);
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    public PasswordGenerationException(Throwable t){
+        super(t);
+    }
 }
