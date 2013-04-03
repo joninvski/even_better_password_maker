@@ -336,7 +336,18 @@ public final class Profile {
 
 	@Override
 	public String toString() {
-		return this.name + " " + this.algorithm;
+		return this.name + ": " + this.algorithm + "\n" 
+            + this.username + "\n"
+            + this.algorithm + "\n"
+            + Integer.toString(this.length) + "\n"
+            + this.characterSet + "\n"
+            + this.leetType + "\n"
+            + this.leetLevel + "\n"
+            + this.modifier + "\n"
+            + this.prefix + "\n"
+            + this.suffix + "\n"
+            + this.urlComponents  + "\n"
+            + this.costumChars;
 	}
 
 	public static Profile getDefaultProfile() {
