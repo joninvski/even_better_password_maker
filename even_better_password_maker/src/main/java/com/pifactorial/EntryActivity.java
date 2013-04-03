@@ -88,7 +88,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             case R.id.textResultPass:
 
                 Log.i(TAG, "Clicked on text output password");
-                Log.i(TAG, "Current password: " + etMasterPass.getText().toString());
 
                 // Toggle the visible variable
                 visible = !visible;
@@ -98,14 +97,12 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                         // Get spinner profile
                         SQLiteCursor profileName = (SQLiteCursor) spinner.getSelectedItem();
                         Profile profile = datasource.cursorToAccount(profileName);
-
                         Log.i(TAG, "Profile fetched \n" + profile.toString());
 
                         // Use the profile and master password to get the generated password
                         SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
                         Log.e(TAG, "Generating password now --> " + master.toString());
                         SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
-
                         Log.e(TAG, "Password generated --> " + result);
                         
                         // Show the generated password

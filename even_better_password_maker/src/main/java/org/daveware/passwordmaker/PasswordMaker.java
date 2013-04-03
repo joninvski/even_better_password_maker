@@ -26,8 +26,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.daveware.passwordmaker.Profile.UrlComponents;
 
-import android.util.Log;
-
 /**
  * This class is used to generate passwords from a master password and an
  * account.
@@ -187,9 +185,6 @@ public class PasswordMaker {
 	public static SecureCharArray makePassword(SecureCharArray masterPassword,
 			Profile account, final String inputText)
 			throws PasswordGenerationException {
-		Log.d("PwMaker", "Making password with:\n\t url " + inputText
-				+ "\n\tmasterPassword: " + masterPassword + "\n\tand profile: "
-				+ account.toString());
 
 		LeetLevel leetLevel = account.getLeetLevel();
 		int length = account.getLength();
@@ -285,10 +280,6 @@ public class PasswordMaker {
 		SecureCharArray interIntermediateOutput = null;
 		int count = 0;
 		int length = account.getLength();
-
-		Log.d("PwMaker2", "Hashing the data with:\n\t url " + data
-				+ "\n\tmasterPassword: " + masterPassword + "\n\tand profile: "
-				+ account.toString());
 
 		try {
 			while (output.size() < length) {

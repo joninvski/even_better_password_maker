@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.daveware.passwordmaker.Profile;
-import org.daveware.passwordmaker.AlgorithmType;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,7 +19,24 @@ public class ProfileDataSource {
     private SQLiteDatabase database;
     private ProfileSqLiteHelper dbHelper;
     private String[] allColumns = { ProfileSqLiteHelper.COLUMN_ID,
-        ProfileSqLiteHelper.COLUMN_ALGORITHM, ProfileSqLiteHelper.COLUMN_NAME };
+        ProfileSqLiteHelper.COLUMN_NAME,
+        ProfileSqLiteHelper.COLUMN_USERNAME,
+        ProfileSqLiteHelper.COLUMN_ALGORITHM,
+        ProfileSqLiteHelper.COLUMN_LENGTH,
+        ProfileSqLiteHelper.COLUMN_LEET_TYPE,
+        ProfileSqLiteHelper.COLUMN_LEET_LEVEL,
+        ProfileSqLiteHelper.COLUMN_MODIFIER,
+        ProfileSqLiteHelper.COLUMN_PREFIX,
+        ProfileSqLiteHelper.COLUMN_SUFFIX,
+        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,
+        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,
+        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN,
+        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,
+        ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE,
+        ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE,
+        ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS,
+        ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS,
+        ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM };
 
     public ProfileDataSource(Context context) {
         dbHelper = new ProfileSqLiteHelper(context);
@@ -38,31 +54,44 @@ public class ProfileDataSource {
         // Prepare the contentor to insert values
         ContentValues values = new ContentValues();
 
-        values.put(ProfileSqLiteHelper.COLUMN_NAME,                           profile.getName());
-        values.put(ProfileSqLiteHelper.COLUMN_USERNAME,                       profile.getUsername());
-        values.put(ProfileSqLiteHelper.COLUMN_ALGORITHM,                      profile.getAlgorithm().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_LENGTH,                         Integer.toString(profile.getLength()));
-        values.put(ProfileSqLiteHelper.COLUMN_LEET_TYPE,                      profile.getLeetType().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_LEET_LEVEL,                     profile.getLeetLevel().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_MODIFIER,                       profile.getModifier());
-        values.put(ProfileSqLiteHelper.COLUMN_PREFIX,                         profile.getPrefix());
-        values.put(ProfileSqLiteHelper.COLUMN_SUFFIX,                         profile.getSuffix());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,         profile.getUrlCompomentProtocol().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,        profile.getUrlComponentSubDomain().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN,           profile.getUrlComponentDomain().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,  profile.getUrlComponentPortParameters().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE,             profile.getCharSetUppercase().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE,             profile.getCharSetLowercase().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS,               profile.getCharSetNumbers().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS,               profile.getCharSetSymbols().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM,                profile.getCharSerCostum().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_NAME, profile.getName());
+        values.put(ProfileSqLiteHelper.COLUMN_USERNAME, profile.getUsername());
+        values.put(ProfileSqLiteHelper.COLUMN_ALGORITHM, profile.getAlgorithm()
+                .toString());
+        values.put(ProfileSqLiteHelper.COLUMN_LENGTH,
+                Integer.toString(profile.getLength()));
+        values.put(ProfileSqLiteHelper.COLUMN_LEET_TYPE, profile.getLeetType()
+                .toString());
+        values.put(ProfileSqLiteHelper.COLUMN_LEET_LEVEL, profile
+                .getLeetLevel().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_MODIFIER, profile.getModifier());
+        values.put(ProfileSqLiteHelper.COLUMN_PREFIX, profile.getPrefix());
+        values.put(ProfileSqLiteHelper.COLUMN_SUFFIX, profile.getSuffix());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL, profile
+                .getUrlCompomentProtocol().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN, profile
+                .getUrlComponentSubDomain().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN, profile
+                .getUrlComponentDomain().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,
+                profile.getUrlComponentPortParameters().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE, profile
+                .getCharSetUppercase().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE, profile
+                .getCharSetLowercase().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS, profile
+                .getCharSetNumbers().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS, profile
+                .getCharSetSymbols().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM, profile
+                .getCharSerCostum().toString());
 
-        long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES, null,
-                values);
+        long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES,
+                null, values);
 
         Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
-                allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
+                allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId,
+                null, null, null, null);
         cursor.moveToFirst();
         Profile newAccount = cursorToAccount(cursor);
         cursor.close();
@@ -73,13 +102,13 @@ public class ProfileDataSource {
     public void deleteProfile(Profile account) {
         long id = Long.parseLong(account.getName());
         System.out.println("Profile deleted with id: " + id);
-        database.delete(ProfileSqLiteHelper.TABLE_PROFILES, ProfileSqLiteHelper.COLUMN_ID
-                + " = " + id, null);
+        database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
+                ProfileSqLiteHelper.COLUMN_ID + " = " + id, null);
     }
 
     public Cursor getAllProfilesCursor() {
-        return database.query(ProfileSqLiteHelper.TABLE_PROFILES,
-                allColumns, null, null, null, null, null);
+        return database.query(ProfileSqLiteHelper.TABLE_PROFILES, allColumns,
+                null, null, null, null, null);
     }
 
     public List<Profile> getAllProfiles() {
@@ -101,15 +130,24 @@ public class ProfileDataSource {
 
     public Profile cursorToAccount(Cursor cursor) {
         Profile account = new Profile();
-        account.setName(Long.toString(cursor.getLong(0)));
 
+        // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,         profile.getUrlCompomentProtocol().toString());
+        // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,        profile.getUrlComponentSubDomain().toString());
+
+        account.setName(cursor.getString(0));
+        account.setUsername(cursor.getString(1));
         try {
-            AlgorithmType algorithmType = AlgorithmType.fromRdfString(cursor.getString(1));
-            account.setAlgorithm(algorithmType);
+            account.setAlgorithm(cursor.getString(2));
+            account.setLength(cursor.getInt(3));
+            account.setLeetType(cursor.getString(4));
+            account.setLeetLevel(cursor.getInt(5));
+            account.setModifier(cursor.getString(6));
+            account.setPrefix(cursor.getString(7));
+            account.setSuffix(cursor.getString(8));
         } catch (Exception e) {
-            Log.i(TAG, "Algorithm type does not exits with name: " + cursor.getString(1));
             e.printStackTrace();
-        }       
+        }
+
         return account;
     }
 
