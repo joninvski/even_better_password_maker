@@ -134,16 +134,16 @@ public class ProfileDataSource {
         // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,         profile.getUrlCompomentProtocol().toString());
         // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,        profile.getUrlComponentSubDomain().toString());
 
-        account.setName(cursor.getString(0));
-        account.setUsername(cursor.getString(1));
         try {
-            account.setAlgorithm(cursor.getString(2));
-            account.setLength(cursor.getInt(3));
-            account.setLeetType(cursor.getString(4));
-            account.setLeetLevel(cursor.getInt(5));
-            account.setModifier(cursor.getString(6));
-            account.setPrefix(cursor.getString(7));
-            account.setSuffix(cursor.getString(8));
+            account.setName(cursor.getString(1));
+            account.setUsername(cursor.getString(2));
+            account.setAlgorithm(cursor.getString(3));
+            account.setLength(cursor.getInt(4));
+            account.setLeetType(cursor.getString(5));
+            account.setLeetLevel(cursor.getInt(6));
+            account.setModifier(cursor.getString(7));
+            account.setPrefix(cursor.getString(8));
+            account.setSuffix(cursor.getString(9));
         } catch (Exception e) {
             e.printStackTrace();
         }

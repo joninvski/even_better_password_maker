@@ -136,15 +136,14 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             case R.id.actionBtnCopy:
                 Log.i(TAG, "Clicked item Copy");
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Copied Text",
-                        textOutputPass.getText());
+                ClipData clip = ClipData.newPlainText("Copied Text", textOutputPass.getText());
                 clipboard.setPrimaryClip(clip);
                 break;
             case R.id.actionBtnAbout:
-                Log.i(TAG, "Clicked item 4");
+                Log.i(TAG, "Clicked About");
                 break;
             case R.id.actionBtnProfiles:
-                Log.i(TAG, "Clicked item 4");
+                Log.i(TAG, "Clicked Profiles");
 
                 Intent myIntent = new Intent(EntryActivity.this,
                         UpdateActivity.class);

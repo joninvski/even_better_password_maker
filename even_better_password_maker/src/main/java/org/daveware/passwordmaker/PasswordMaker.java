@@ -20,6 +20,7 @@ package org.daveware.passwordmaker;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import android.util.Log;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -192,6 +193,8 @@ public class PasswordMaker {
 		SecureCharArray data = null;
 
 		try {
+            Log.e("HERE", "Make Password" + length);
+            
 			if (account.getCharacterSet().length() < 2)
 				throw new Exception(
 						"Account contains a character set that is too short");
@@ -343,9 +346,11 @@ public class PasswordMaker {
 		SecureByteArray dataBytes = null;
 
 		try {
+            Log.e("HERE", "BEFORE");
 			masterPasswordBytes = new SecureByteArray(masterPassword.getData());
 			dataBytes = new SecureByteArray(data.getData());
 
+            Log.e("HERE", "GOING");
             Mac mac;
             String algoName = "HMAC" + account.getAlgorithm().getName();
             mac = Mac.getInstance(algoName, "BC");
@@ -355,6 +360,7 @@ public class PasswordMaker {
             digestChars = new SecureCharArray(mac.doFinal());
 
 			output = rstr2any(digestChars.getData(), account.getCharacterSet());
+            Log.e("HERE", "OUTPUT");
 		} catch (Exception e) {
 			if (output != null)
 				output.erase();
