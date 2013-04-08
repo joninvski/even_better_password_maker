@@ -10,14 +10,14 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/lbProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_name_label"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
-            android:id="@+id/profile_name"
+            android:id="@+id/etProfileName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -30,7 +30,7 @@
         </EditText>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/lbUrlComponents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_url_components_label"
@@ -41,21 +41,21 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbProtocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_protocol"
                 android:textSize="@dimen/Small" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/cbSubdomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_subdomain"
                 android:textSize="@dimen/Small" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/cbDomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_domain"
@@ -63,39 +63,39 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/checkBox4"
+            android:id="@+id/cbPortPath"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_port" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/lbHashAlgorithm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_hash_algorithm"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/spAlgorithms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/hash_algorithms_string_array" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/lbPasswordLenght"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_password_length" />
 
         <EditText
-            android:id="@+id/password_size"
+            android:id="@+id/etPassLenght"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/lbPasswordCharacters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_pass_characters" />
@@ -105,13 +105,13 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox5"
+                android:id="@+id/cbLowercase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_lowercase" />
 
             <CheckBox
-                android:id="@+id/checkBox6"
+                android:id="@+id/cbUpperCase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_uppercase" />
@@ -122,13 +122,13 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox7"
+                android:id="@+id/cbNumbers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_number" />
 
             <CheckBox
-                android:id="@+id/checkBox8"
+                android:id="@+id/cbSymbols"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_symbols" />

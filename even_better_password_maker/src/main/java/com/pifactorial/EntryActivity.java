@@ -7,7 +7,6 @@ import org.daveware.passwordmaker.SecureCharArray;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.content.ClipData.Item;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,8 +17,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -72,7 +69,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         Cursor cursor = datasource.getAllProfilesCursor();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
                 new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
-        spinner = (Spinner) findViewById(R.id.spinner1);
+        spinner = (Spinner) findViewById(R.id.spAlgorithms);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
