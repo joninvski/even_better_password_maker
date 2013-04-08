@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class DetailProfileFrag extends Fragment {
 
-	private static final String TAG = "DetailProfileFrag";
+	private static final String TAG = DetailProfileFrag.class.getName();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

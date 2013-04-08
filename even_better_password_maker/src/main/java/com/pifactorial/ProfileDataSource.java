@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class ProfileDataSource {
-    private static final String TAG = "ProfileDataSource";
+    private static final String TAG = ProfileDataSource.class.getName();
 
     // Database fields
     private SQLiteDatabase database;

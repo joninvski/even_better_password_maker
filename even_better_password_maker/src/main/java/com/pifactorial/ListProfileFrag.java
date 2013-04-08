@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class ListProfileFrag extends ListFragment {
 
-    private static final String TAG = "MyActivity";
+    private static final String TAG = ListProfileFrag.class.getName();
     boolean mDualPane;
 
     @Override

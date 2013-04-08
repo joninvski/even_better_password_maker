@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
-    private static final String TAG = "EvenBetterPassMaker";
+    private static final String TAG = EntryActivity.class.getName();
 
     private ProfileDataSource datasource;
 
