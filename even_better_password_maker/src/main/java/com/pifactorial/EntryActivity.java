@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
-    private static final String TAG = "EvenBetterPassMaker";
+    private static final String TAG = EntryActivity.class.getName();
 
     private ProfileDataSource datasource;
 
@@ -69,7 +69,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         Cursor cursor = datasource.getAllProfilesCursor();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
                 new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
-        spinner = (Spinner) findViewById(R.id.spinner1);
+        spinner = (Spinner) findViewById(R.id.spAlgorithms);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -10,14 +10,14 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/lbProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_name_label"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
-            android:id="@+id/profile_name"
+            android:id="@+id/etProfileName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -30,7 +30,7 @@
         </EditText>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/lbUrlComponents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_url_components_label"
@@ -69,7 +69,7 @@
             android:text="@string/profile_port" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/lbHashAlgorithm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_hash_algorithm"
@@ -82,20 +82,20 @@
             android:entries="@array/hash_algorithms_string_array" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/lbPasswordLenght"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_password_length" />
 
         <EditText
-            android:id="@+id/password_size"
+            android:id="@+id/etPassLenght"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/lbPasswordCharacters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_pass_characters" />

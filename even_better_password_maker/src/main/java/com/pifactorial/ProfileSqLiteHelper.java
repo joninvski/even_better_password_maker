@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 
-	private static final String TAG = "ProfileSqlLiteHelper";
+	private static final String TAG = ProfileSqLiteHelper.class.getName();
 
 	public static final String TABLE_PROFILES                       = "profiles";
 	public static final String COLUMN_ID                            = "_id";
