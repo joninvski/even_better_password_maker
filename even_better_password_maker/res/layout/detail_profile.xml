@@ -41,21 +41,21 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cb_url_protocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_protocol"
                 android:textSize="@dimen/Small" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/cb_url_subdomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_subdomain"
                 android:textSize="@dimen/Small" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/cb_url_domain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_domain"
@@ -63,7 +63,7 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/checkBox4"
+            android:id="@+id/cb_url_port"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_port" />
@@ -76,7 +76,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/sp_hash_alg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/hash_algorithms_string_array" />
@@ -105,13 +105,13 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox5"
+                android:id="@+id/cb_char_lower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_lowercase" />
 
             <CheckBox
-                android:id="@+id/checkBox6"
+                android:id="@+id/cb_char_upper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_uppercase" />
@@ -122,13 +122,13 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox7"
+                android:id="@+id/cb_char_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_number" />
 
             <CheckBox
-                android:id="@+id/checkBox8"
+                android:id="@+id/cb_char_symbols"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_symbols" />

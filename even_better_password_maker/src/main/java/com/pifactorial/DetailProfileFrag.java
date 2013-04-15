@@ -2,23 +2,37 @@ package com.pifactorial;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.util.Log;
 
 public class DetailProfileFrag extends Fragment {
 
 	private static final String TAG = "DetailProfileFrag";
 
+    protected EditText et_profileName;
+    protected CheckBox cb_urlProtocol;
+    protected CheckBox cb_urlSubdomain;
+    protected CheckBox cb_urlDomain;
+    protected CheckBox cb_urlPort;
+    protected Spinner  sp_hash_alg;
+    protected EditText et_password_lenght;
+    protected CheckBox cb_charLower;
+    protected CheckBox cb_charUpper;
+    protected CheckBox cb_charNumber;
+    protected CheckBox cb_charSymbols;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(TAG, "Detail Profile created");
 		super.onCreate(savedInstanceState);
-
 	}
 
 	@Override
@@ -26,6 +40,19 @@ public class DetailProfileFrag extends Fragment {
 			Bundle savedInstanceState) {
 		Log.v(TAG, "ViewCreated");
 		View view = inflater.inflate(R.layout.detail_profile, container, false);
+
+        et_profileName     = (EditText) view.findViewById(R.id.profile_name);
+        cb_urlProtocol     = (CheckBox) view.findViewById(R.id.cb_url_protocol);
+        cb_urlSubdomain    = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
+        cb_urlDomain       = (CheckBox) view.findViewById(R.id.cb_url_domain);
+        cb_urlPort         = (CheckBox) view.findViewById(R.id.cb_url_port);
+        sp_hash_alg        = (Spinner) view.findViewById(R.id.sp_hash_alg);
+        et_password_lenght = (EditText) view.findViewById(R.id.password_size);
+        cb_charLower       = (CheckBox) view.findViewById(R.id.cb_char_lower);
+        cb_charUpper       = (CheckBox) view.findViewById(R.id.cb_char_upper);
+        cb_charNumber      = (CheckBox) view.findViewById(R.id.cb_char_number);
+        cb_charSymbols     = (CheckBox) view.findViewById(R.id.cb_char_symbols);
+
 		return view;
 	}
 
@@ -52,7 +79,7 @@ public class DetailProfileFrag extends Fragment {
 		return getArguments().getInt("index", 0);
 	}
 
-	public static DetailProfileFrag newInstance(int index) {
+	public DetailProfileFrag newProfile(int index) {
 		Log.v(TAG, "New instance = ");
 
 		DetailProfileFrag f = new DetailProfileFrag();

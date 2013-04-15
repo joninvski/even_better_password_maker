@@ -51,6 +51,8 @@ public class ProfileDataSource {
     }
 
     public Profile insertProfile(Profile profile) {
+        Log.d(TAG, "Inserting new profile");
+
         // Prepare the contentor to insert values
         ContentValues values = new ContentValues();
 
