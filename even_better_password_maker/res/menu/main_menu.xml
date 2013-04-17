@@ -4,22 +4,22 @@
     <group android:id="@+id/group1" >
         <item
             android:id="@+id/actionBtnCopy"
-            android:title="Copy"
+            android:title="@string/buttonCopy"
             android:showAsAction="ifRoom">
         </item>
         <item
             android:id="@+id/actionBtnGo"
-            android:title="Go"
+            android:title="@string/buttonGo"
             android:showAsAction="ifRoom">
         </item>
         <item
             android:id="@+id/actionBtnProfiles"
-            android:title="Profiles"
+            android:title="@string/buttonProfiles"
             android:showAsAction="collapseActionView">
         </item>
         <item
             android:id="@+id/actionBtnAbout"
-            android:title="About"
+            android:title="@string/buttonAbout"
             android:showAsAction="collapseActionView">
             <menu>
                 <item android:id="@+id/item1" android:title="teste"/>
