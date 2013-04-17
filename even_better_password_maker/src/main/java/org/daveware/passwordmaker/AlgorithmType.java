@@ -34,14 +34,11 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 	public static final AlgorithmType MD5 = new AlgorithmType(2, "MD5",
 			"HMAC-MD5", "md5", "hmac-md5", true);
 	public static final AlgorithmType SHA1 = new AlgorithmType(3, "SHA1",
-			"HMAC-SHA1", "sha1", "hmac-sha1", true);
+			"HMAC-SHA1", "sha-1", "hmac-sha1", true);
 	public static final AlgorithmType RIPEMD160 = new AlgorithmType(4,
-			"RIPEMD160", "HMAC-RIPEMD160", "rmd160", "hmac-rmd160", true);
+			"RIPEMD160", "HMAC-RIPEMD160", "ripemd160", "hmac-rmd160", true);
 	public static final AlgorithmType SHA256 = new AlgorithmType(5, "SHA256",
-			"HMAC-SHA256", "sha256", "hmac-sha256-fixed", true);
-
-	// TODO: MD6, SHA384, SHA512?
-	// Any of the weird ones?
+			"HMAC-SHA256", "sha-256", "hmac-sha256-fixed", true);
 
 	private static final AlgorithmType[] TYPES = { MD4, MD5, SHA1, RIPEMD160,
 			SHA256 };
@@ -134,9 +131,9 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 		for (AlgorithmType algoType : TYPES) {
 			String name = algoType.rdfName.toLowerCase(Locale.US);
 			String hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
-			Log.i("ME", "Comparing: " + name + ' ' + hmacName + ' ' + str);
+			Log.i("ME", "Comparing: " + name + ' ' + hmacName + ' ' + lower_str);
 
-			if (lower_str.compareTo(name) == 0 || lower_str.compareTo(hmacName) == 0) {
+			if (lower_str.equals(name) || lower_str.equals(hmacName)) {
 				return algoType;
 			}
 		}

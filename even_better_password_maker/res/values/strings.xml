@@ -17,7 +17,7 @@
     <string name="profile_port" translatable="false">Port, path, anchor, query parameters</string>
     <string name="profile_hash_algorithm" translatable="false">Hash Algorithm</string>
     <string name="profile_name_label" translatable="false">Profile Name</string>
-    <string name="profile_default_name" translatable="false">default</string>
+    <string name="profile_default_name" translatable="false">Default</string>
     <string name="profile_url_components_label" translatable="false">Url components</string>
 
     <string-array name="hash_algorithms_string_array" translatable="false">

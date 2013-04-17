@@ -101,11 +101,10 @@ public class ProfileDataSource {
         return newAccount;
     }
 
-    public void deleteProfile(Profile account) {
-        long id = Long.parseLong(account.getName());
-        System.out.println("Profile deleted with id: " + id);
+    public void deleteProfile(Profile profile) {
+        String name = profile.getName();
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
-                ProfileSqLiteHelper.COLUMN_ID + " = " + id, null);
+                ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
     }
 
     public Cursor getAllProfilesCursor() {
@@ -153,15 +152,48 @@ public class ProfileDataSource {
         return account;
     }
 
-    public Profile getProfileByName(String profileName) throws ProfileNotFound {
+    public Profile getProfileByName(String profileName) throws ProfileNotFound 
+    {
         List<Profile> listProfiles = getAllProfiles();
 
         for(Profile p : listProfiles)
         {
-            if(p.getName().equalsIgnoreCase(profileName)){
+            if(p.getName().equals(profileName)){
                 return p;
             }
         }
         throw new ProfileNotFound("Profile with name " + profileName + " was not found");
+    }
+
+    public List<SpinnerProfile> getAllLabels()
+    {
+        List<SpinnerProfile> labels = new ArrayList<SpinnerProfile>();
+        Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
+                allColumns, null, null, null, null, null);
+
+        if(cursor.moveToFirst()){
+            do {
+                labels.add ( new SpinnerProfile ( cursor.getString(1) , cursor.getString(2) ) );
+            } while (cursor.moveToNext());
+        }
+
+        // Make sure to close the cursor
+        cursor.close();
+        return labels;
+    }
+
+    /* TODO - Improve this method */
+    public boolean profileExists(String name) {
+        try {
+            getProfileByName(name);
+        } catch (ProfileNotFound e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void replaceProfile(Profile p) {
+        deleteProfile(p);
+        insertProfile(p);
     }
 } 
