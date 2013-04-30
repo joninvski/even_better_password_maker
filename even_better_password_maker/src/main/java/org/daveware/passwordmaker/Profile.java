@@ -377,23 +377,35 @@ public final class Profile {
         return getUrlComponents().contains(UrlComponents.PortPathAnchorQuery);
     }
 
-    public void setUrlCompomentProtocol() {
-        setUrlComponents(UrlComponents.Protocol);
+    public void setUrlCompomentProtocol(boolean isSet) {
+        if(isSet)
+            addUrlComponentProtocol();
+        else
+            removeUrlComponentProtocol();
     }
 
-    public void setUrlComponentSubDomain() {
-        setUrlComponents(UrlComponents.Subdomain);
+    public void setUrlComponentSubDomain(boolean isSet) {
+        if(isSet)
+            addUrlComponentSubDomain();
+        else
+            removeUrlComponentSubDomain();
     }
 
-    public void setUrlComponentDomain() {
-        setUrlComponents(UrlComponents.Domain);
+    public void setUrlComponentDomain(boolean isSet) {
+        if(isSet)
+            addUrlComponentDomain();
+        else
+            removeUrlComponentDomain();
     }
 
-    public void setUrlComponentPortParameters() {
-        setUrlComponents(UrlComponents.PortPathAnchorQuery);
+    public void setUrlComponentPortParameters(boolean isSet) {
+        if(isSet)
+            addUrlComponentPortParameters();
+        else
+            removeUrlComponentPortParameters();
     }
 
-    public Boolean addUrlCompomentProtocol() {
+    public Boolean addUrlComponentProtocol() {
         return this.urlComponents.add(UrlComponents.Protocol);
     }
 
@@ -407,6 +419,22 @@ public final class Profile {
 
     public Boolean addUrlComponentPortParameters() {
         return this.urlComponents.add(UrlComponents.PortPathAnchorQuery);
+    }
+
+    public Boolean removeUrlComponentProtocol() {
+        return this.urlComponents.add(UrlComponents.Protocol);
+    }
+
+    public Boolean removeUrlComponentSubDomain() {
+        return this.urlComponents.remove(UrlComponents.Subdomain);
+    }
+
+    public Boolean removeUrlComponentDomain() {
+        return this.urlComponents.remove(UrlComponents.Domain);
+    }
+
+    public Boolean removeUrlComponentPortParameters() {
+        return this.urlComponents.remove(UrlComponents.PortPathAnchorQuery);
     }
 
     public Boolean getCharSetUppercase() {
@@ -423,6 +451,22 @@ public final class Profile {
 
     public Boolean getCharSetNumbers() {
         return this.characterSet.contains(CharacterSets.NUMERIC);
+    }
+
+    public void addCharSetUppercase(boolean isSet) {
+        characterSet = CharacterSets.UPPERCASE;
+    }
+
+    public void addCharSetLowercase(boolean isSet) {
+        characterSet = CharacterSets.LOWERCASE;
+    }
+
+    public void addCharSetSymbols(boolean isSet) {
+        characterSet = CharacterSets.SPECIAL_CHARS;
+    }
+
+    public void addCharSetNumbers(boolean isSet) {
+        characterSet = CharacterSets.NUMERIC;
     }
 
     public String getCharSerCostum() {
