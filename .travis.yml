@@ -3,10 +3,10 @@ jdk: oraclejdk7
 env:
   matrix:
     # android-16 is always included
-    - ANDROID_SDKS=android-8            ANDROID_TARGET=android-8   ANDROID_ABI=armeabi
-    - ANDROID_SDKS=android-10           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi
+    # - ANDROID_SDKS=android-8            ANDROID_TARGET=android-8   ANDROID_ABI=armeabi
+    # - ANDROID_SDKS=android-10           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi
     - ANDROID_SDKS=sysimg-16            ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
-    - ANDROID_SDKS=android-17,sysimg-17 ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+    # - ANDROID_SDKS=android-17,sysimg-17 ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
 before_install:
   # Install base Android SDK
   - sudo apt-get update -qq
@@ -30,4 +30,4 @@ before_install:
 before_script:
   - ./wait_for_emulator
 
-script: mvn install -Pintegration-tests -Dandroid.device=test
+script: mvn install -Dandroid.device=test
