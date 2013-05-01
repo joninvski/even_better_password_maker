@@ -6,6 +6,9 @@ https://code.google.com/p/passwordmaker-je/
 
 Kudos to the dev of the project
 
+.. image:: https://travis-ci.org/joninvski/even_better_password_maker.png?branch=master
+   :target: http://travis-ci.org/joninvski/even_better_password_maker
+
 Instructions
 ============
 
@@ -25,3 +28,4 @@ Test
 Tests are run each time you run:
 
     mvn3 install
+
