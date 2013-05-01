@@ -41,12 +41,14 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         Log.i(TAG, "Creating Entry Activity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Log.i(TAG, "View created");
+        Log.i(TAG, "Activity created");
 
+        Log.i(TAG, "Fetching views");
         // Let's get the window controls
         textOutputPass = (TextView) findViewById(R.id.textResultPass);
         etURL = (EditText) findViewById(R.id.etURL);
         etMasterPass = (EditText) findViewById(R.id.etMasterPass);
+        Log.i(TAG, "Fetched all views");
 
         // Set the action bar to don't show the app title
         this.getActionBar().setDisplayShowTitleEnabled(false);
@@ -55,8 +57,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         visible = false;
 
         // Create a data source to get profiles
+        Log.i(TAG, "Creating data source");
         datasource = new ProfileDataSource(this);
         datasource.open();
+        Log.i(TAG, "Created data source");
 
         // Check if there is no profile
         if(datasource.getAllProfiles().size() < 1) {

@@ -45,4 +45,5 @@
     <string name="buttonSave">Save</string>
     <string name="buttonDelete">Delete</string>
     <string name="buttonCancel">Delete</string>
+    <string name="plusButton">Add</string>
 </resources>

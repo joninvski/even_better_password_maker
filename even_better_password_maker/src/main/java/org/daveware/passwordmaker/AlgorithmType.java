@@ -129,11 +129,13 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
 		// Search the list of registered algorithms
 		for (AlgorithmType algoType : TYPES) {
-			String name = algoType.rdfName.toLowerCase(Locale.US);
-			String hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
-			Log.i("ME", "Comparing: " + name + ' ' + hmacName + ' ' + lower_str);
+			String lower_name = algoType.name.toLowerCase(Locale.US);
+			String lower_rdfName = algoType.rdfName.toLowerCase(Locale.US);
+			String lower_hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
+			Log.i("ME", "Comparing: " + lower_name + " / " + lower_hmacName + " / " + lower_rdfName + " / " + lower_str);
 
-			if (lower_str.equals(name) || lower_str.equals(hmacName)) {
+			if (lower_str.equals(lower_name) || lower_str.equals(lower_hmacName) || lower_str.equals(lower_rdfName)) {
+			Log.i("ME", "Found algorithm type: " + lower_str);
 				return algoType;
 			}
 		}

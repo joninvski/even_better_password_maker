@@ -1,149 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/lbProfileName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_name_label"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:id="@+id/lbProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_name_label"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
-            android:id="@+id/etProfileName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="@string/profile_default_name" >
+                android:id="@+id/etProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:text="@string/profile_default_name" >
 
             <requestFocus
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
         </EditText>
 
+        <Button
+                android:id="@+id/button1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/plusButton" />
+
+
         <TextView
-            android:id="@+id/lbUrlComponents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_url_components_label"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:id="@+id/lbUrlComponents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_url_components_label"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/cb_url_protocol"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_protocol"
-                android:textSize="@dimen/Small" />
+                    android:id="@+id/cb_url_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_protocol"
+                    android:textSize="@dimen/Small" />
 
             <CheckBox
-                android:id="@+id/cb_url_subdomain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_subdomain"
-                android:textSize="@dimen/Small" />
+                    android:id="@+id/cb_url_subdomain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_subdomain"
+                    android:textSize="@dimen/Small" />
 
             <CheckBox
-                android:id="@+id/cb_url_domain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_domain"
-                android:textSize="@dimen/Small" />
+                    android:id="@+id/cb_url_domain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_domain"
+                    android:textSize="@dimen/Small" />
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/cb_url_port"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_port" />
+                android:id="@+id/cb_url_port"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_port" />
 
         <TextView
-            android:id="@+id/lbHashAlgorithm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_hash_algorithm"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:id="@+id/lbHashAlgorithm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_hash_algorithm"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Spinner
-            android:id="@+id/sp_hash_alg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/hash_algorithms_string_array" />
+                android:id="@+id/sp_hash_alg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/hash_algorithms_string_array" />
 
         <TextView
-            android:id="@+id/lbPasswordLenght"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_password_length" />
+                android:id="@+id/lbPasswordLenght"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_password_length" />
 
         <EditText
-            android:id="@+id/etPassLenght"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
+                android:id="@+id/etPassLenght"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
 
         <TextView
-            android:id="@+id/lbPasswordCharacters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_pass_characters" />
+                android:id="@+id/lbPasswordCharacters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_pass_characters" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/cb_char_lower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_pass_characters_lowercase" />
+                    android:id="@+id/cb_char_lower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cb_pass_characters_lowercase" />
 
             <CheckBox
-                android:id="@+id/cb_char_upper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_pass_characters_uppercase" />
+                    android:id="@+id/cb_char_upper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cb_pass_characters_uppercase" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/cb_char_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_pass_characters_number" />
+                    android:id="@+id/cb_char_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cb_pass_characters_number" />
 
             <CheckBox
-                android:id="@+id/cb_char_symbols"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_pass_characters_symbols" />
+                    android:id="@+id/cb_char_symbols"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cb_pass_characters_symbols" />
         </LinearLayout>
 
         <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:measureWithLargestChild="true"
-            android:orientation="horizontal"
-            android:paddingLeft="2dip"
-            android:paddingRight="2dip"
-            android:paddingTop="0dip" >
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:measureWithLargestChild="true"
+                android:orientation="horizontal"
+                android:paddingLeft="2dip"
+                android:paddingRight="2dip"
+                android:paddingTop="0dip" >
         </LinearLayout>
     </LinearLayout>
 
