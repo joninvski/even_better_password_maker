@@ -102,6 +102,7 @@ public class ProfileDataSource {
     }
 
     public void deleteProfile(Profile profile) {
+        Log.d(TAG, "Deleting profile: " + profile);
         String name = profile.getName();
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
                 ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
@@ -154,11 +155,16 @@ public class ProfileDataSource {
 
     public Profile getProfileByName(String profileName) throws ProfileNotFound 
     {
+        Log.d(TAG, "Searching for profile by name: " + profileName);
         List<Profile> listProfiles = getAllProfiles();
 
         for(Profile p : listProfiles)
         {
+
+            Log.d(TAG, String.format("Comparing %s with %s", p.getName(), profileName));
+
             if(p.getName().equals(profileName)){
+                Log.d(TAG, "Found profile " + p.getName());
                 return p;
             }
         }

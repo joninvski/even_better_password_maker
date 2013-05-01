@@ -29,6 +29,9 @@ import android.util.Log;
  * @author Dave Marotti
  */
 public class AlgorithmType implements Comparable<AlgorithmType> {
+
+    private static final String TAG = AlgorithmType.class.getName();
+
 	public static final AlgorithmType MD4 = new AlgorithmType(1, "MD4",
 			"HMAC-MD4", "md4", "hmac-md4", true);
 	public static final AlgorithmType MD5 = new AlgorithmType(2, "MD5",
@@ -129,11 +132,12 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
 		// Search the list of registered algorithms
 		for (AlgorithmType algoType : TYPES) {
-			String name = algoType.rdfName.toLowerCase(Locale.US);
-			String hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
-			Log.i("ME", "Comparing: " + name + ' ' + hmacName + ' ' + lower_str);
+			String lower_name = algoType.name.toLowerCase(Locale.US);
+			String lower_rdfname = algoType.rdfName.toLowerCase(Locale.US);
+			String lower_hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
+			Log.i(TAG, "Comparing: " + lower_name + " / " + lower_rdfname + " / " + lower_hmacName + " --> " + lower_str);
 
-			if (lower_str.equals(name) || lower_str.equals(hmacName)) {
+			if (lower_str.equals(lower_name) || lower_str.equals(lower_hmacName) || lower_str.equals(lower_rdfname)) {
 				return algoType;
 			}
 		}
