@@ -131,26 +131,38 @@ public class ProfileDataSource {
     }
 
     public Profile cursorToAccount(Cursor cursor) {
-        Profile account = new Profile();
-
-        // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,         profile.getUrlCompomentProtocol().toString());
-        // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,        profile.getUrlComponentSubDomain().toString());
+        Profile profile = new Profile();
 
         try {
-            account.setName(cursor.getString(1));
-            account.setUsername(cursor.getString(2));
-            account.setAlgorithm(cursor.getString(3));
-            account.setLength(cursor.getInt(4));
-            account.setLeetType(cursor.getString(5));
-            account.setLeetLevel(cursor.getInt(6));
-            account.setModifier(cursor.getString(7));
-            account.setPrefix(cursor.getString(8));
-            account.setSuffix(cursor.getString(9));
+            profile.setName(cursor.getString(1));
+            profile.setUsername(cursor.getString(2));
+            profile.setAlgorithm(cursor.getString(3));
+            profile.setLength(cursor.getInt(4));
+            profile.setLeetType(cursor.getString(5));
+            profile.setLeetLevel(cursor.getInt(6));
+            profile.setModifier(cursor.getString(7));
+            profile.setPrefix(cursor.getString(8));
+            profile.setSuffix(cursor.getString(9));
+
+            /* TODO Fill the missing url components */ 
+            // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,         profile.getUrlCompomentProtocol().toString());
+            // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,        profile.getUrlComponentSubDomain().toString());
+
+            /* TODO - Complain to the android team about this */
+            Log.d(TAG, "Cursor 14: " + cursor.getString(14) + " " + cursor.getInt(14));
+            Log.d(TAG, "Cursor 15: " + cursor.getString(15) + " " + cursor.getInt(15));
+            Log.d(TAG, "Cursor 16: " + cursor.getString(16) + " " + cursor.getInt(16));
+            Log.d(TAG, "Cursor 17: " + cursor.getString(17) + " " + cursor.getInt(17));
+            profile.setCharSetUppercase(Boolean.parseBoolean(cursor.getString(14)));
+            profile.setCharSetLowercase(Boolean.parseBoolean(cursor.getString(15)));
+            profile.setCharSetNumbers(Boolean.parseBoolean(cursor.getString(16)));
+            profile.setCharSetSymbols(Boolean.parseBoolean(cursor.getString(17)));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return account;
+        return profile;
     }
 
     public Profile getProfileByName(String profileName) throws ProfileNotFound 

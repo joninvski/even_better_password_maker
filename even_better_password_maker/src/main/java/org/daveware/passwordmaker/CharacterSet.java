@@ -41,22 +41,22 @@ public class CharacterSet {
         this.charset = charset; 
     }
 
-    public CharacterSet(String[] charset) {
-        for (String c : charset)
-            this.charset.concat(c); 
+    public CharacterSet(String[] charset_array) {
+        for (String c : charset_array)
+            charset += c; 
     }
 
     public String getChars() {
         return charset;
     }
 
-    public void join(String charset) {
-        this.charset.concat(charset); 
+    public void join(String new_charset) {
+        charset += new_charset; 
     }
 
-    public void join(String[] charset) {
-        for (String c : charset)
-            this.charset.concat(c); 
+    public void join(String[] charset_array) {
+        for (String c : charset_array)
+            charset += c; 
     }
 
     public static CharacterSet getDefaultCharacterset() {
@@ -68,19 +68,19 @@ public class CharacterSet {
     }
 
     public void setUppercase() {
-        concat(UPPERCASE);
+        append(UPPERCASE);
     }
 
     public void setSpecialChars() {
-        concat(SPECIAL_CHARS);
+        append(SPECIAL_CHARS);
     }
 
     public void setNumbers() {
-        concat(NUMERIC);
+        append(NUMERIC);
     }
 
-    private void concat(String s) {
-        this.charset.concat(s);
+    private void append(String s) {
+        charset += s;
     }
 
     public void removeUppercase() {

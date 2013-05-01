@@ -60,7 +60,9 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
         // Check if there is no profile
         if(datasource.getAllProfiles().size() < 1) {
+            Log.i(TAG, "No profile in DB was found");
             Profile defaultProfile = Profile.getDefaultProfile();
+            Log.i(TAG, "Inserting default profile: " + defaultProfile);
             datasource.insertProfile(defaultProfile);
         }
 
