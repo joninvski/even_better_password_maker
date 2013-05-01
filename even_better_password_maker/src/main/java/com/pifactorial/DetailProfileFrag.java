@@ -53,7 +53,7 @@ public class DetailProfileFrag extends Fragment implements
 
     }
 
-    private void loadProfile() throws ProfileNotFound {
+    private void updateProfileOnGui() throws ProfileNotFound {
         Log.v(TAG, "Going to load profile");
 
         Profile p = datasource.getProfileByName(et_profileName.getText()
@@ -65,11 +65,10 @@ public class DetailProfileFrag extends Fragment implements
         cb_urlSubdomain.setChecked(p.getUrlComponentSubDomain());
         cb_urlDomain.setChecked(p.getUrlComponentDomain());
         cb_urlPort.setChecked(p.getUrlComponentPortParameters());
-        cb_charLower.setChecked(p.getCharSetLowercase());
-        cb_charUpper.setChecked(p.getCharSetUppercase());
-        cb_charNumber.setChecked(p.getCharSetNumbers());
-        ;
-        cb_charSymbols.setChecked(p.getCharSetSymbols());
+        cb_charLower.setChecked(p.hasCharSetLowercase());
+        cb_charUpper.setChecked(p.hasCharSetUppercase());
+        cb_charNumber.setChecked(p.hasCharSetNumbers());
+        cb_charSymbols.setChecked(p.hasCharSetSymbols());
         et_password_lenght.setText(Integer.toString(p.getLength()));
         // int spinnerPosition = spAdap.getItemViewType(p.getName());
         String[] androidStrings = getResources().getStringArray(
@@ -102,7 +101,7 @@ public class DetailProfileFrag extends Fragment implements
 
         // loadSpinnerDataHama(getActivity());
         try {
-            loadProfile();
+            updateProfileOnGui();
         } catch (ProfileNotFound e) {
             e.printStackTrace();
         }
@@ -172,11 +171,10 @@ public class DetailProfileFrag extends Fragment implements
         p.setUrlComponentSubDomain(cb_urlSubdomain.isChecked());
         p.setUrlComponentDomain(cb_urlDomain.isChecked());
         p.setUrlComponentPortParameters(cb_urlPort.isChecked());
-        p.addCharSetLowercase(cb_charLower.isChecked());
-        p.addCharSetUppercase(cb_charUpper.isChecked());
-        p.addCharSetNumbers(cb_charNumber.isChecked());
-        ;
-        p.addCharSetSymbols(cb_charSymbols.isChecked());
+        p.setCharSetLowercase(cb_charLower.isChecked());
+        p.setCharSetUppercase(cb_charUpper.isChecked());
+        p.setCharSetNumbers(cb_charNumber.isChecked());
+        p.setCharSetSymbols(cb_charSymbols.isChecked());
         p.setLength(Integer.parseInt(et_password_lenght.getText().toString()));
 
         String algorithm_string = sp_hash_alg.getSelectedItem().toString();

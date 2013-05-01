@@ -29,11 +29,14 @@ import org.daveware.passwordmaker.Profile.UrlComponents;
 
 /**
  * This class is used to generate passwords from a master password and an
- * account.
+ * profile.
  * 
  * @author Dave Marotti
  */
 public class PasswordMaker {
+
+    private static final String TAG = PasswordMaker.class.getName();
+
 	private static Pattern urlRegex = Pattern
 			.compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
 
@@ -119,8 +122,8 @@ public class PasswordMaker {
 	}
 
 	public static final String getModifiedInputText(final String inputText,
-			final Profile account) {
-		final Set<UrlComponents> uriComponents = account.getUrlComponents();
+			final Profile profile) {
+		final Set<UrlComponents> uriComponents = profile.getUrlComponents();
 		if (uriComponents.isEmpty()) {
 			return "";
 		}
@@ -171,12 +174,12 @@ public class PasswordMaker {
 	}
 
 	/**
-	 * Generates a hash of the master password with settings from the account.
+	 * Generates a hash of the master password with settings from the profile.
 	 * 
 	 * @param masterPassword
 	 *            The password to use as a key for the various algorithms.
-	 * @param account
-	 *            The account with the specific settings for the hash.
+	 * @param profile
+	 *            The profile with the specific settings for the hash.
 	 * @param inputText
 	 *            The text to use as the input into the password maker algorithm
 	 * @return A SecureCharArray with the hashed data.
@@ -184,53 +187,53 @@ public class PasswordMaker {
 	 *             if something bad happened.
 	 */
 	public static SecureCharArray makePassword(SecureCharArray masterPassword,
-			Profile account, final String inputText)
+			Profile profile, final String inputText)
 			throws PasswordGenerationException {
 
-		LeetLevel leetLevel = account.getLeetLevel();
-		int length = account.getLength();
+		LeetLevel leetLevel = profile.getLeetLevel();
+		int length = profile.getLength();
 		SecureCharArray output = null;
 		SecureCharArray data = null;
 
 		try {
-            Log.e("HERE", "Make Password" + length);
+            Log.e(TAG, "Making Password low level" + length);
             
-			if (account.getCharacterSet().length() < 2)
+			if (profile.getCompleteCharacterSet().length() < 2)
 				throw new Exception(
-						"Account contains a character set that is too short");
+						"profile contains a character set that is too short");
 
-			data = new SecureCharArray(getModifiedInputText(inputText, account)
-					+ account.getUsername() + account.getModifier());
+			data = new SecureCharArray(getModifiedInputText(inputText, profile)
+					+ profile.getUsername() + profile.getModifier());
 
 			// Use leet before hashing
-			if (account.getLeetType() == LeetType.BEFORE
-					|| account.getLeetType() == LeetType.BOTH) {
+			if (profile.getLeetType() == LeetType.BEFORE
+					|| profile.getLeetType() == LeetType.BOTH) {
 				LeetEncoder.leetConvert(leetLevel, masterPassword);
 				LeetEncoder.leetConvert(leetLevel, data);
 			}
 
 			// Perform the actual hashing
-			output = hashTheData(masterPassword, data, account);
+			output = hashTheData(masterPassword, data, profile);
 
 			// Use leet after hashing
-			if (account.getLeetType() == LeetType.AFTER
-					|| account.getLeetType() == LeetType.BOTH) {
+			if (profile.getLeetType() == LeetType.AFTER
+					|| profile.getLeetType() == LeetType.BOTH) {
 				LeetEncoder.leetConvert(leetLevel, output);
 			}
 
 			// Apply the prefix
-			if (account.getPrefix().length() > 0) {
+			if (profile.getPrefix().length() > 0) {
 				SecureCharArray prefix = new SecureCharArray(
-						account.getPrefix());
+						profile.getPrefix());
 				output.prepend(prefix);
 				prefix.erase();
 			}
 
 			// Handle the suffix
 			output.resize(length, true);
-			if (account.getSuffix().length() > 0) {
+			if (profile.getSuffix().length() > 0) {
 				SecureCharArray suffix = new SecureCharArray(
-						account.getSuffix());
+						profile.getSuffix());
 
 				// If the suffix is larger than the entire password (not smart),
 				// then
@@ -269,26 +272,26 @@ public class PasswordMaker {
 	 *            You should know by now.
 	 * @param data
 	 *            Not much has changed.
-	 * @param account
+	 * @param profile
 	 *            A donut?
 	 * @return A suitable hash.
 	 * @throws Exception
 	 *             if we ran out of donuts.
 	 */
 	private static SecureCharArray hashTheData(SecureCharArray masterPassword,
-			SecureCharArray data, Profile account) throws Exception {
+			SecureCharArray data, Profile profile) throws Exception {
 		SecureCharArray output = new SecureCharArray();
 		SecureCharArray secureIteration = new SecureCharArray();
 		SecureCharArray intermediateOutput = null;
 		SecureCharArray interIntermediateOutput = null;
 		int count = 0;
-		int length = account.getLength();
+		int length = profile.getLength();
 
 		try {
 			while (output.size() < length) {
 				if (count == 0) {
 					intermediateOutput = runAlgorithm(masterPassword, data,
-							account);
+							profile);
 				} else {
 					// add ye bit'o chaos
 					secureIteration.replace(masterPassword);
@@ -297,7 +300,7 @@ public class PasswordMaker {
 							.toString(count)));
 
 					interIntermediateOutput = runAlgorithm(secureIteration,
-							data, account);
+							data, profile);
 					intermediateOutput.append(interIntermediateOutput);
 					interIntermediateOutput.erase();
 
@@ -332,14 +335,14 @@ public class PasswordMaker {
 	 *            The master password to use as a key.
 	 * @param data
 	 *            The data to be hashed.
-	 * @param account
-	 *            The account with the hash settings to use.
+	 * @param profile
+	 *            The profile with the hash settings to use.
 	 * @return A SecureCharArray of the hash.
 	 * @throws Exception
 	 *             if something bad happened.
 	 */
 	private static SecureCharArray runAlgorithm(SecureCharArray masterPassword,
-			SecureCharArray data, Profile account) throws Exception {
+			SecureCharArray data, Profile profile) throws Exception {
 		SecureCharArray output = null;
 		SecureCharArray digestChars = null;
 		SecureByteArray masterPasswordBytes = null;
@@ -352,14 +355,14 @@ public class PasswordMaker {
 
             Log.e("HERE", "GOING");
             Mac mac;
-            String algoName = "HMAC" + account.getAlgorithm().getName();
+            String algoName = "HMAC" + profile.getAlgorithm().getName();
             mac = Mac.getInstance(algoName, "BC");
             mac.init(new SecretKeySpec(masterPasswordBytes.getData(), algoName));
             mac.reset();
             mac.update(dataBytes.getData());
             digestChars = new SecureCharArray(mac.doFinal());
 
-			output = rstr2any(digestChars.getData(), account.getCharacterSet());
+			output = rstr2any(digestChars.getData(), profile.getCompleteCharacterSet());
             Log.e("HERE", "OUTPUT");
 		} catch (Exception e) {
 			if (output != null)

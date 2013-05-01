@@ -44,7 +44,7 @@ public final class Profile {
     private String username                      = "";
     private AlgorithmType algorithm              = AlgorithmType.MD5;
     private int length                           = 8;
-    private String characterSet                  = CharacterSets.BASE_93_SET;
+    private CharacterSet characterSet            = CharacterSet.getDefaultCharacterset();
     private LeetType leetType                    = LeetType.NONE;
     private LeetLevel leetLevel                  = LeetLevel.LEVEL1;
     private String modifier                      = "";
@@ -80,7 +80,7 @@ public final class Profile {
      * @param suffix
      */
     public Profile(String name, String username, AlgorithmType algorithm,
-            int length, String characterSet, LeetType leetType,
+            int length, CharacterSet characterSet, LeetType leetType,
             LeetLevel leetLevel, String modifier, String prefix, String suffix)
             throws Exception {
         this.name = name;
@@ -173,15 +173,22 @@ public final class Profile {
     /**
      * @return the characterSet
      */
-    public String getCharacterSet() {
+    private CharacterSet getCharacterSet() {
         return characterSet;
+    }
+
+    /**
+     * @return the characterSet
+     */
+    public String getCompleteCharacterSet() {
+        return characterSet.toString().concat(costumChars);
     }
 
     /**
      * @param characterSet
      *            the characterSet to set
      */
-    public void setCharacterSet(String characterSet) {
+    public void setCharacterSet(CharacterSet characterSet) {
         this.characterSet = characterSet;
     }
 
@@ -339,7 +346,7 @@ public final class Profile {
         return this.name + ": "              + this.algorithm                 + "\n"
                          + "Username: "      + this.username                  + "\n"
                          + "Alghorithm: "    + this.algorithm                 + "\n"
-                         + "Lenght: "        + Integer.toString(this.length) + "\n"
+                         + "Lenght: "        + Integer.toString(this.length)  + "\n"
                          + "CharacterSet: "  + this.characterSet              + "\n"
                          + "LeetType: "      + this.leetType                  + "\n"
                          + "LeetLevel: "     + this.leetLevel                 + "\n"
@@ -353,7 +360,7 @@ public final class Profile {
     public static Profile getDefaultProfile() {
         try {
             return new Profile("Default", "", AlgorithmType.MD5, 8,
-                    CharacterSets.BASE_93_SET, LeetType.NONE, LeetLevel.LEVEL1,
+                    CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
                     "", "", "");
         } catch (Exception e) {
             e.printStackTrace();
@@ -437,39 +444,51 @@ public final class Profile {
         return this.urlComponents.remove(UrlComponents.PortPathAnchorQuery);
     }
 
-    public Boolean getCharSetUppercase() {
-        return this.characterSet.contains(CharacterSets.UPPERCASE);
+    public Boolean hasCharSetUppercase() {
+        return this.characterSet.contains(CharacterSet.UPPERCASE);
     }
 
-    public Boolean getCharSetLowercase() {
-        return this.characterSet.contains(CharacterSets.LOWERCASE);
+    public Boolean hasCharSetLowercase() {
+        return this.characterSet.contains(CharacterSet.LOWERCASE);
     }
 
-    public Boolean getCharSetSymbols() {
-        return this.characterSet.contains(CharacterSets.SPECIAL_CHARS);
+    public Boolean hasCharSetSymbols() {
+        return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
     }
 
-    public Boolean getCharSetNumbers() {
-        return this.characterSet.contains(CharacterSets.NUMERIC);
+    public Boolean hasCharSetNumbers() {
+        return this.characterSet.contains(CharacterSet.NUMERIC);
     }
 
-    public void addCharSetUppercase(boolean isSet) {
-        characterSet = CharacterSets.UPPERCASE;
+    public void setCharSetUppercase(boolean isSet) {
+        if(isSet)
+            characterSet.setUppercase();
+        else
+            characterSet.removeUppercase();
     }
 
-    public void addCharSetLowercase(boolean isSet) {
-        characterSet = CharacterSets.LOWERCASE;
+    public void setCharSetLowercase(boolean isSet) {
+        if(isSet)
+            characterSet.setUppercase();
+        else
+            characterSet.removeLowercase();
     }
 
-    public void addCharSetSymbols(boolean isSet) {
-        characterSet = CharacterSets.SPECIAL_CHARS;
+    public void setCharSetSymbols(boolean isSet) {
+        if(isSet)
+            characterSet.setSpecialChars();
+        else
+            characterSet.removeSpecialChars();
     }
 
-    public void addCharSetNumbers(boolean isSet) {
-        characterSet = CharacterSets.NUMERIC;
+    public void setCharSetNumbers(boolean isSet) {
+        if(isSet)
+            characterSet.setNumbers();
+        else
+            characterSet.removeNumbers();
     }
 
-    public String getCharSerCostum() {
+    public String getCharSetCostum() {
         return this.costumChars;
     }
 

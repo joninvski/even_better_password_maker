@@ -78,15 +78,15 @@ public class ProfileDataSource {
         values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,
                 profile.getUrlComponentPortParameters().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE, profile
-                .getCharSetUppercase().toString());
+                .hasCharSetUppercase().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE, profile
-                .getCharSetLowercase().toString());
+                .hasCharSetLowercase().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS, profile
-                .getCharSetNumbers().toString());
+                .hasCharSetNumbers().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS, profile
-                .getCharSetSymbols().toString());
+                .hasCharSetSymbols().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM, profile
-                .getCharSerCostum().toString());
+                .getCharSetCostum().toString());
 
         long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES,
                 null, values);
