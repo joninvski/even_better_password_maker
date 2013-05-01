@@ -1,5 +1,11 @@
 language: java
 jdk: oraclejdk7
+
+# whitelist branch list to test on travis
+branches:
+  only:
+    - master
+    - stable
 env:
   matrix:
     # android-16 is always included
@@ -31,3 +37,4 @@ before_script:
   - ./wait_for_emulator
 
 script: mvn install -Dandroid.device=test
+

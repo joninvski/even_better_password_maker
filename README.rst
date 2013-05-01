@@ -12,9 +12,16 @@ Instructions
 To compile
 ----------
 
-mvn3 install compile
+    mvn3 install compile
 
 To deploy
 ----------
 
-mvn3 install android:deploy
+    mvn3 install android:deploy
+
+Test
+----
+
+Tests are run each time you run:
+
+    mvn3 install
