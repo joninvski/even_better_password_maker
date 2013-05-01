@@ -3,14 +3,14 @@ package com.pifactorial.test;
 import android.test.ActivityInstrumentationTestCase2;
 import com.pifactorial.*;
 
-public class PwMakerActivityTest extends ActivityInstrumentationTestCase2<PwMaker> {
+public class PwMakerActivityTest extends ActivityInstrumentationTestCase2<EntryActivity> {
 
     public PwMakerActivityTest() {
-        super(PwMaker.class); 
+        super(EntryActivity.class); 
     }
 
     public void testActivity() {
-    	PwMaker activity = getActivity();
+    	EntryActivity activity = getActivity();
         assertNotNull(activity);
     }
 }
