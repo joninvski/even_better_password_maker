@@ -7,4 +7,4 @@ before_install:
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
   # only update the sdk for the tools and platform-tools (1,2) and whatever api level
   # you are building for android (run "android list sdk --all --extended | less" to get the full list).
-  - android update sdk --all --filter android-16,tools,platform-tools  --no-ui --force
+  - android update sdk --all --filter "tools","platform-tools","android-16" --no-ui --force
