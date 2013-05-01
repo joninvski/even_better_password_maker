@@ -3,9 +3,9 @@ package com.pifactorial.test;
 import android.test.ActivityInstrumentationTestCase2;
 import com.pifactorial.*;
 
-public class PwMakerActivityTest extends ActivityInstrumentationTestCase2<EntryActivity> {
+public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryActivity> {
 
-    public PwMakerActivityTest() {
+    public EntryActivityTest() {
         super(EntryActivity.class); 
     }
 
