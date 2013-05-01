@@ -200,7 +200,8 @@ public class PasswordMaker {
             
 			if (profile.getCompleteCharacterSet().length() < 2)
 				throw new Exception(
-						"profile contains a character set that is too short");
+						"profile contains a character set that is too short: " + 
+                        profile.getCompleteCharacterSet());
 
 			data = new SecureCharArray(getModifiedInputText(inputText, profile)
 					+ profile.getUsername() + profile.getModifier());

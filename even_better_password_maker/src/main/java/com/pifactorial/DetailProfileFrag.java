@@ -190,17 +190,17 @@ OnItemSelectedListener {
         try {
             p.setAlgorithm(AlgorithmType.fromRdfString(algorithm_string));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         Log.d(TAG, "Saving profile: " + p);
-
         if(datasource.profileExists(p.getName()))
         {
+            Log.d(TAG, "Profile already exists. Replacing it");
             datasource.replaceProfile(p);
         }
         else{
+            Log.d(TAG, "Inserting new profile");
             datasource.insertProfile(p);
         }
 
