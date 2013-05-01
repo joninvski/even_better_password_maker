@@ -66,6 +66,11 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             datasource.insertProfile(defaultProfile);
         }
 
+        updateProfileSpinner();
+    }
+
+    public void updateProfileSpinner()
+    {
         Log.i(TAG, "Populating spinner with stored profiles");
         // Populate a spinner with the profiles
         Cursor cursor = datasource.getAllProfilesCursor();
@@ -103,7 +108,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                         Log.e(TAG, "Generating password now --> " + master.toString());
                         SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
                         Log.e(TAG, "Password generated --> " + result);
-                        
+
                         // Show the generated password
                         textOutputPass.setText(new String(result.getData()));
 
@@ -121,6 +126,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+        updateProfileSpinner();
     }
 
     @Override
