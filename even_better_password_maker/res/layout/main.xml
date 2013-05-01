@@ -24,11 +24,12 @@
         <EditText
             android:id="@+id/etURL"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ems="10"
             android:inputType="textUri"
             android:text="@string/http"
-            android:textSize="18sp" >
-        </EditText>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/labelMasterPass"
@@ -66,7 +67,6 @@
             android:id="@+id/spAlgorithms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 </ScrollView>

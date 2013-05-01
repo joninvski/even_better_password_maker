@@ -18,13 +18,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class DetailProfileFrag extends Fragment implements
-        OnItemSelectedListener {
+OnItemSelectedListener {
 
     private static final String TAG = DetailProfileFrag.class.getName();
 
@@ -39,6 +40,7 @@ public class DetailProfileFrag extends Fragment implements
     protected CheckBox cb_charUpper;
     protected CheckBox cb_charNumber;
     protected CheckBox cb_charSymbols;
+    protected Button bt_profileAdd;
 
     private ProfileDataSource datasource;
 
@@ -88,6 +90,7 @@ public class DetailProfileFrag extends Fragment implements
         super.onCreateView(inflater, container, savedInstanceState);
 
         et_profileName = (EditText) view.findViewById(R.id.etProfileName);
+        bt_profileAdd= (Button) view.findViewById(R.id.btAddProfile);
         cb_urlProtocol = (CheckBox) view.findViewById(R.id.cb_url_protocol);
         cb_urlSubdomain = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
         cb_urlDomain = (CheckBox) view.findViewById(R.id.cb_url_domain);
@@ -99,7 +102,12 @@ public class DetailProfileFrag extends Fragment implements
         cb_charNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
         cb_charSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
 
-        // loadSpinnerDataHama(getActivity());
+        bt_profileAdd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.i(TAG, "Clicked add profile button");
+            }
+        });
+
         try {
             updateProfileOnGui();
         } catch (ProfileNotFound e) {
@@ -110,6 +118,7 @@ public class DetailProfileFrag extends Fragment implements
         Log.v(TAG, "View created");
         return view;
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -152,11 +161,11 @@ public class DetailProfileFrag extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i(TAG, "Some button was pressed");
         switch (item.getItemId()) {
-        case R.id.actionBtnSave:
-            saveProfile();
-            break;
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.actionBtnSave:
+                saveProfile();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
