@@ -1,11 +1,10 @@
 language: java
+jdk: oraclejdk7
 before_install:
   # download the latest android sdk and unzip
-  - wget http://dl.google.com/android/android-sdk_r18-linux.tgz
-  - tar -zxf android-sdk_r18-linux.tgz
+  - wget http://dl.google.com/android/android-sdk_r21.1-linux.tgz
+  - tar -zxf android-sdk_r21.1-linux.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
   # only update the sdk for the tools and platform-tools (1,2) and whatever api level
-  - android update sdk --all --filter "tools","platform-tools" --no-ui --force
-  # New command to get the sdk level. Run "android list sdk --all --extended | less" to get the full option list.
   - android update sdk --all --filter "tools","platform-tools","android-16" --no-ui --force
