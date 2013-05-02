@@ -29,7 +29,7 @@ OnItemSelectedListener {
 
     private static final String TAG = DetailProfileFrag.class.getName();
 
-    protected EditText et_profileName;
+    protected Spinner sp_profiles;
     protected CheckBox cb_urlProtocol;
     protected CheckBox cb_urlSubdomain;
     protected CheckBox cb_urlDomain;
@@ -58,7 +58,7 @@ OnItemSelectedListener {
     private void updateProfileOnGui() throws ProfileNotFound {
         Log.v(TAG, "Going to load profile");
 
-        Profile p = datasource.getProfileByName(et_profileName.getText()
+        Profile p = datasource.getProfileByName(sp_profiles.getSelectedItem()
                 .toString());
 
         Log.v(TAG, "Profile fetched : " + p.toString());
@@ -89,7 +89,7 @@ OnItemSelectedListener {
         View view = inflater.inflate(R.layout.detail_profile, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
 
-        et_profileName = (EditText) view.findViewById(R.id.etProfileName);
+        sp_profiles = (Spinner) view.findViewById(R.id.spProfiles);
         bt_profileAdd= (Button) view.findViewById(R.id.btAddProfile);
         cb_urlProtocol = (CheckBox) view.findViewById(R.id.cb_url_protocol);
         cb_urlSubdomain = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
@@ -129,7 +129,7 @@ OnItemSelectedListener {
 
     public void setText(String item) {
         Log.v(TAG, "Set Text = " + item);
-        TextView view = (TextView) getView().findViewById(R.id.etProfileName);
+        TextView view = (TextView) getView().findViewById(R.id.spProfiles);
         view.setText(item);
     }
 
@@ -175,7 +175,7 @@ OnItemSelectedListener {
         Log.d(TAG, "Clicked the save button");
         Profile p = new Profile();
 
-        p.setName(et_profileName.getText().toString());
+        p.setName(sp_profiles.getSelectedItem().toString());
         p.setUrlCompomentProtocol(cb_urlProtocol.isChecked());
         p.setUrlComponentSubDomain(cb_urlSubdomain.isChecked());
         p.setUrlComponentDomain(cb_urlDomain.isChecked());

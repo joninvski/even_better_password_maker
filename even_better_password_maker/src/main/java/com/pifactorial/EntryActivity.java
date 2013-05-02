@@ -33,7 +33,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     protected EditText etURL;
     protected EditText etMasterPass;
     protected TextView textOutputPass;
-    protected Spinner spinner;
+    protected Spinner spProfiles;
 
     /** Called when the activity is first created. */
     @Override
@@ -45,7 +45,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
         Log.i(TAG, "Fetching views");
         // Let's get the window controls
-        textOutputPass = (TextView) findViewById(R.id.textResultPass);
+        textOutputPass = (TextView) findViewById(R.id.tvResultPass);
         etURL = (EditText) findViewById(R.id.etURL);
         etMasterPass = (EditText) findViewById(R.id.etMasterPass);
         Log.i(TAG, "Fetched all views");
@@ -80,12 +80,12 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         Cursor cursor = datasource.getAllProfilesCursor();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
                 new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
-        spinner = (Spinner) findViewById(R.id.spAlgorithms);
+        spProfiles = (Spinner) findViewById(R.id.spProfiles);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        spProfiles.setAdapter(adapter);
 
         Log.i(TAG, "Finished creating entry activity");
     }
@@ -93,7 +93,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.textResultPass:
+            case R.id.tvResultPass:
 
                 Log.i(TAG, "Clicked on text output password");
 
@@ -103,7 +103,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                 if (visible) {
                     try {
                         // Get spinner profile
-                        SQLiteCursor profileName = (SQLiteCursor) spinner.getSelectedItem();
+                        SQLiteCursor profileName = (SQLiteCursor) spProfiles.getSelectedItem();
                         Profile profile = datasource.cursorToAccount(profileName);
                         Log.i(TAG, "Profile fetched \n" + profile.toString());
 
