@@ -8,6 +8,7 @@ import org.daveware.passwordmaker.Profile;
 import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,8 +65,10 @@ OnItemSelectedListener {
         sp_profiles.setSelection(0);
         Log.v(TAG, "Selection set to 0 ");
 
-        Profile p = datasource.getProfileByName(sp_profiles.getSelectedItem()
-                .toString());
+        SQLiteCursor profileName = (SQLiteCursor) sp_profiles.getSelectedItem();
+        Profile profile = datasource.cursorToAccount(profileName);
+
+        Profile p = datasource.getProfileByName(profile.getName());
 
         Log.v(TAG, "Profile fetched : " + p.toString());
 
@@ -200,7 +203,10 @@ OnItemSelectedListener {
         Log.d(TAG, "Clicked the save button");
         Profile p = new Profile();
 
-        p.setName(sp_profiles.getSelectedItem().toString());
+        SQLiteCursor profileName = (SQLiteCursor) sp_profiles.getSelectedItem();
+        Profile profile = datasource.cursorToAccount(profileName);
+
+        p.setName(profile.getName());
         p.setUrlCompomentProtocol(cb_urlProtocol.isChecked());
         p.setUrlComponentSubDomain(cb_urlSubdomain.isChecked());
         p.setUrlComponentDomain(cb_urlDomain.isChecked());
