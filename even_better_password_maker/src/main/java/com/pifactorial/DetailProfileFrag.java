@@ -7,6 +7,7 @@ import org.daveware.passwordmaker.Profile;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -57,6 +59,10 @@ OnItemSelectedListener {
 
     private void updateProfileOnGui() throws ProfileNotFound {
         Log.v(TAG, "Going to load profile");
+        
+        Log.v(TAG, "Goint to set to 0 ");
+        sp_profiles.setSelection(0);
+        Log.v(TAG, "Selection set to 0 ");
 
         Profile p = datasource.getProfileByName(sp_profiles.getSelectedItem()
                 .toString());
@@ -78,8 +84,25 @@ OnItemSelectedListener {
 
         sp_hash_alg.setSelection(java.util.Arrays.asList(androidStrings)
                 .indexOf(p.getAlgorithm().getName()));
+        
 
         Log.v(TAG, "Profile loaded");
+    }
+
+    public void updateProfileSpinner()
+    {
+        Log.i(TAG, "Populating spinner with stored profiles");
+        // Populate a spinner with the profiles
+        Cursor cursor = datasource.getAllProfilesCursor();
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this.getActivity(), android.R.layout.simple_spinner_item, cursor, 
+                new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        sp_profiles.setAdapter(adapter);
+
+        Log.i(TAG, "Finished creating entry activity");
     }
 
     @Override
@@ -107,6 +130,8 @@ OnItemSelectedListener {
                 Log.i(TAG, "Clicked add profile button");
             }
         });
+
+        updateProfileSpinner();
 
         try {
             updateProfileOnGui();
