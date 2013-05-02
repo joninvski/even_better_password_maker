@@ -22,16 +22,18 @@
 
             <Spinner
                 android:id="@+id/spProfiles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
 
             <Button
                 android:id="@+id/btAddProfile"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="8dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:text="@string/buttonNewProfile" />
+
         </LinearLayout>
 
         <TextView
