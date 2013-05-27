@@ -6,6 +6,7 @@ import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
@@ -60,7 +61,7 @@ OnItemSelectedListener {
 
     private void updateProfileOnGui() throws ProfileNotFound {
         Log.v(TAG, "Going to load profile");
-        
+
         Log.v(TAG, "Goint to set to 0 ");
         sp_profiles.setSelection(0);
         Log.v(TAG, "Selection set to 0 ");
@@ -87,7 +88,7 @@ OnItemSelectedListener {
 
         sp_hash_alg.setSelection(java.util.Arrays.asList(androidStrings)
                 .indexOf(p.getAlgorithm().getName()));
-        
+
 
         Log.v(TAG, "Profile loaded");
     }
@@ -131,10 +132,19 @@ OnItemSelectedListener {
         bt_profileAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.i(TAG, "Clicked add profile button");
+                // Watch for button clicks.
+                FragmentManager fm = getFragmentManager();
+                Log.i(TAG, "Got fragment manager");
+                AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
+                Log.i(TAG, "Got dialog");
+                editNameDialog.show(fm, "fragment_edit_name");
+                Log.i(TAG, "Showing");
             }
         });
 
+        Log.i(TAG, "Going to update spinner");
         updateProfileSpinner();
+        Log.i(TAG, "Updated Spinner");
 
         try {
             updateProfileOnGui();
