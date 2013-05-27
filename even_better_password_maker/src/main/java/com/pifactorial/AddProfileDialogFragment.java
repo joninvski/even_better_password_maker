@@ -1,15 +1,22 @@
 package com.pifactorial;
 
 import android.app.DialogFragment;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.WindowManager.LayoutParams;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
-public class AddProfileDialogFragment extends DialogFragment {
+public class AddProfileDialogFragment extends DialogFragment implements OnEditorActionListener {
+
+    private static final String TAG = DetailProfileFrag.class.getName();
+
     int mNum;
 
     /**
@@ -38,19 +45,30 @@ public class AddProfileDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_dialog_add_profile, container, false);
-        // View tv = v.findViewById(R.id.text);
-        // ((TextView) tv).setText("Dialog #" + mNum + ": using style " + getNameForNum(mNum));
+        View v = inflater.inflate(R.layout.fragment_dialog_add_profile,
+                container, false);
+        EditText mEditText = (EditText) v.findViewById(R.id.txt_your_name);
 
-        // // Watch for button clicks.
-        // Button button = (Button)v.findViewById(R.id.show);
-        // button.setOnClickListener(new OnClickListener() {
-        //     public void onClick(View v) {
-        //         // When button is clicked, call up to owning activity.
-        //         ((FragmentDialog)getActivity()).showDialog();
-        //     }
-        // });
+        getDialog().setTitle("New Profile");
+
+        // Show soft keyboard automatically
+        mEditText.requestFocus();
+        getDialog().getWindow().setSoftInputMode(
+                LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        mEditText.setOnEditorActionListener(this);
 
         return v;
+    }
+
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (EditorInfo.IME_ACTION_DONE == actionId) {
+            // Return input text to activity
+            // AddProfileDialogFragment activity = (EditNameDialogListener) getActivity();
+            // activity.onFinishEditDialog(mEditText.getText().toString());
+            // this.dismiss();
+            Log.i(TAG, "Finished dialog");
+            return true;
+        }
+        return false;
     }
 }
