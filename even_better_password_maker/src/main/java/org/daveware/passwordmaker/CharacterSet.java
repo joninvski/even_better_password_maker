@@ -27,6 +27,7 @@ public class CharacterSet {
     public static String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     public static String SPECIAL_CHARS = "`~!@#$%^&*()_-+={}|[]\\:\";'<>?,./";
+    public static String EMPTY = "";
 
     private String charset = "";
 
@@ -36,6 +37,10 @@ public class CharacterSet {
         NUMERIC,
         SPECIAL_CHARS
     };
+
+    public CharacterSet() {
+        this.charset = EMPTY; 
+    }
 
     public CharacterSet(String charset) {
         this.charset = charset; 
@@ -69,6 +74,10 @@ public class CharacterSet {
 
     public void setUppercase() {
         append(UPPERCASE);
+    }
+
+    public void setLowercase() {
+        append(LOWERCASE);
     }
 
     public void setSpecialChars() {

@@ -44,7 +44,7 @@ public final class Profile {
     private String username                      = "";
     private AlgorithmType algorithm              = AlgorithmType.MD5;
     private int length                           = 8;
-    private CharacterSet characterSet            = CharacterSet.getDefaultCharacterset();
+    private CharacterSet characterSet            = new CharacterSet();
     private LeetType leetType                    = LeetType.NONE;
     private LeetLevel leetLevel                  = LeetLevel.LEVEL1;
     private String modifier                      = "";
@@ -469,7 +469,7 @@ public final class Profile {
 
     public void setCharSetLowercase(boolean isSet) {
         if(isSet)
-            characterSet.setUppercase();
+            characterSet.setLowercase();
         else
             characterSet.removeLowercase();
     }

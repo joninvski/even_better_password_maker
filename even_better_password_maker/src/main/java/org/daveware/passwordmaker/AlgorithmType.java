@@ -32,44 +32,26 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
     private static final String TAG = AlgorithmType.class.getName();
 
-	public static final AlgorithmType MD4 = new AlgorithmType(1, "MD4",
-			"HMAC-MD4", "md4", "hmac-md4", true);
-	public static final AlgorithmType MD5 = new AlgorithmType(2, "MD5",
-			"HMAC-MD5", "md5", "hmac-md5", true);
-	public static final AlgorithmType SHA1 = new AlgorithmType(3, "SHA1",
-			"HMAC-SHA1", "sha-1", "hmac-sha1", true);
-	public static final AlgorithmType RIPEMD160 = new AlgorithmType(4,
-			"RIPEMD160", "HMAC-RIPEMD160", "ripemd160", "hmac-rmd160", true);
-	public static final AlgorithmType SHA256 = new AlgorithmType(5, "SHA256",
-			"HMAC-SHA256", "sha-256", "hmac-sha256-fixed", true);
+	public static final AlgorithmType MD4       = new AlgorithmType(1, "MD4");
+	public static final AlgorithmType MD5       = new AlgorithmType(2, "MD5");
+	public static final AlgorithmType SHA1      = new AlgorithmType(3, "SHA-1");
+	public static final AlgorithmType RIPEMD160 = new AlgorithmType(4, "RIPEMD160");
+	public static final AlgorithmType SHA256    = new AlgorithmType(5, "SHA-256");
 
 	private static final AlgorithmType[] TYPES = { MD4, MD5, SHA1, RIPEMD160,
 			SHA256 };
 
 	private int type;
 	private String name;
-	private String hmacName;
-	private boolean compatible;
-
-	private String rdfName;
-	private String rdfHmacName;
 
 	private AlgorithmType() {
 		type = 2;
 		name = "";
-		compatible = false;
-		rdfName = "";
-		rdfHmacName = "";
 	}
 
-	private AlgorithmType(int i, String n, String hmac, String rdfN,
-			String rdfH, boolean c) {
+	private AlgorithmType(int i, String n) {
 		type = i;
 		name = n;
-		hmacName = hmac;
-		compatible = c;
-		rdfName = rdfN;
-		rdfHmacName = rdfH;
 	}
 
 	public String getName() {
@@ -85,14 +67,6 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 		return name;
 	}
 
-	public String toRdfString() {
-		return rdfName;
-	}
-
-	public String toHmacRdfString() {
-		return rdfHmacName;
-	}
-
 	public static AlgorithmType[] getTypes() {
 		return TYPES;
 	}
@@ -103,14 +77,6 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 		if (type > o.type)
 			return 1;
 		return 0;
-	}
-
-	public boolean isCompatible() {
-		return compatible;
-	}
-
-	public String getHmacName() {
-		return hmacName;
 	}
 
 	/**
@@ -132,16 +98,17 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
 		// Search the list of registered algorithms
 		for (AlgorithmType algoType : TYPES) {
+            // TODO - Remove this lowercase
 			String lower_name = algoType.name.toLowerCase(Locale.US);
-			String lower_rdfname = algoType.rdfName.toLowerCase(Locale.US);
-			String lower_hmacName = algoType.rdfHmacName.toLowerCase(Locale.US);
-			Log.i(TAG, "Comparing: " + lower_name + " / " + lower_rdfname + " / " + lower_hmacName + " --> " + lower_str);
+			Log.i(TAG, "Comparing " + lower_str + " --> "  + lower_name);
 
-			if (lower_str.equals(lower_name) || lower_str.equals(lower_hmacName) || lower_str.equals(lower_rdfname)) {
+			if (lower_str.equals(lower_name)) {
+			    Log.i(TAG, "Matched:" + lower_str + " --> "  + lower_name);
 				return algoType;
 			}
 		}
 
+		Log.e(TAG, String.format("Invalid algorithm type '%1s'", str));
 		throw new Exception(String.format("Invalid algorithm type '%1s'", str));
 	}
 }
