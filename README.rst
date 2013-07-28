@@ -14,6 +14,8 @@ Kudos to the dev of the project
 Instructions
 ============
 
+Note: Do not forget to set ANDROID_HOME variable.
+
 To compile
 ----------
 
