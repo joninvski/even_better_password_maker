@@ -350,21 +350,18 @@ public class PasswordMaker {
 		SecureByteArray dataBytes = null;
 
 		try {
-            Log.e("HERE", "BEFORE");
 			masterPasswordBytes = new SecureByteArray(masterPassword.getData());
 			dataBytes = new SecureByteArray(data.getData());
 
-            Log.e("HERE", "GOING");
             Mac mac;
             String algoName = "HMAC" + profile.getAlgorithm().getName();
-            mac = Mac.getInstance(algoName, "BC");
+            mac = Mac.getInstance( algoName, "BC");
             mac.init(new SecretKeySpec(masterPasswordBytes.getData(), algoName));
             mac.reset();
             mac.update(dataBytes.getData());
             digestChars = new SecureCharArray(mac.doFinal());
 
 			output = rstr2any(digestChars.getData(), profile.getCompleteCharacterSet());
-            Log.e("HERE", "OUTPUT");
 		} catch (Exception e) {
 			if (output != null)
 				output.erase();

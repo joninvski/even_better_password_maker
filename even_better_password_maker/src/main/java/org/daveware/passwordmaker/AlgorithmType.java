@@ -24,7 +24,7 @@ import android.util.Log;
 /**
  * Object representing an algorithm type.
  * 
- * All algorithms should be available in both plain and HMAC variants.
+ * All algorithms should be available in plain variants (HMAC not yet available).
  * 
  * @author Dave Marotti
  */
@@ -32,21 +32,18 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
     private static final String TAG = AlgorithmType.class.getName();
 
-	public static final AlgorithmType MD4       = new AlgorithmType(1, "MD4");
-	public static final AlgorithmType MD5       = new AlgorithmType(2, "MD5");
-	public static final AlgorithmType SHA1      = new AlgorithmType(3, "SHA-1");
-	public static final AlgorithmType RIPEMD160 = new AlgorithmType(4, "RIPEMD160");
-	public static final AlgorithmType SHA256    = new AlgorithmType(5, "SHA-256");
+	public static final AlgorithmType MD5       = new AlgorithmType(1, "MD5");
+	public static final AlgorithmType SHA1      = new AlgorithmType(2, "SHA1");
+	public static final AlgorithmType SHA256    = new AlgorithmType(3, "SHA256");
 
-	private static final AlgorithmType[] TYPES = { MD4, MD5, SHA1, RIPEMD160,
-			SHA256 };
+	private static final AlgorithmType[] TYPES = { MD5, SHA1, SHA256 };
 
 	private int type;
 	private String name;
 
 	private AlgorithmType() {
-		type = 2;
-		name = "";
+		type = 1;
+		name = "MD5";
 	}
 
 	private AlgorithmType(int i, String n) {
@@ -83,8 +80,8 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 	 * Converts a string to an algorithm type.
 	 * 
 	 * @param str
-	 *            The algorithm type. Valid values are: md4, md5, sha1, sha256,
-	 *            rmd160. Any of those valid types can be prefixed with "hmac-".
+	 *            The algorithm type. Valid values are: md5, sha1, sha256.
+	 *            Any of those valid types are prefixed with "hmac".
 	 * @return The algorithm type.
 	 * @throws Exception
 	 *             upon invalid algorithm string.
@@ -100,7 +97,6 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 		for (AlgorithmType algoType : TYPES) {
             // TODO - Remove this lowercase
 			String lower_name = algoType.name.toLowerCase(Locale.US);
-			Log.i(TAG, "Comparing " + lower_str + " --> "  + lower_name);
 
 			if (lower_str.equals(lower_name)) {
 			    Log.i(TAG, "Matched:" + lower_str + " --> "  + lower_name);
