@@ -25,7 +25,10 @@ import android.util.Log;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.security.MessageDigest;
+
 import org.daveware.passwordmaker.Profile.UrlComponents;
+
 
 /**
  * This class is used to generate passwords from a master password and an
@@ -197,10 +200,10 @@ public class PasswordMaker {
 
 		try {
             Log.e(TAG, "Making Password low level" + length);
-            
+
 			if (profile.getCompleteCharacterSet().length() < 2)
 				throw new Exception(
-						"profile contains a character set that is too short: " + 
+						"profile contains a character set that is too short: " +
                         profile.getCompleteCharacterSet());
 
 			data = new SecureCharArray(getModifiedInputText(inputText, profile)
@@ -214,6 +217,8 @@ public class PasswordMaker {
 			}
 
 			// Perform the actual hashing
+            Log.e(TAG, "Master pass" + masterPassword.toString());
+            Log.e(TAG, "Data" + data.toString());
 			output = hashTheData(masterPassword, data, profile);
 
 			// Use leet after hashing
@@ -353,13 +358,10 @@ public class PasswordMaker {
 			masterPasswordBytes = new SecureByteArray(masterPassword.getData());
 			dataBytes = new SecureByteArray(data.getData());
 
-            Mac mac;
-            String algoName = "HMAC" + profile.getAlgorithm().getName();
-            mac = Mac.getInstance( algoName, "BC");
-            mac.init(new SecretKeySpec(masterPasswordBytes.getData(), algoName));
-            mac.reset();
-            mac.update(dataBytes.getData());
-            digestChars = new SecureCharArray(mac.doFinal());
+            dataBytes.prepend(masterPasswordBytes); // TODO - This only happens if it is not HMAC
+
+            MessageDigest md = MessageDigest.getInstance(profile.getAlgorithm().getName(), "BC");
+            digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
 
 			output = rstr2any(digestChars.getData(), profile.getCompleteCharacterSet());
 		} catch (Exception e) {
