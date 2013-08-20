@@ -1,6 +1,7 @@
 package com.pifactorial;
 
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,7 +18,11 @@ public class AddProfileDialogFragment extends DialogFragment implements OnEditor
 
     private static final String TAG = DetailProfileFrag.class.getName();
 
-    int mNum;
+    private EditText mEditText;
+
+    public interface AddProfileDialogListener {
+        void onFinishEditDialog(String inputText);
+    }
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
@@ -47,7 +52,7 @@ public class AddProfileDialogFragment extends DialogFragment implements OnEditor
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dialog_add_profile,
                 container, false);
-        EditText mEditText = (EditText) v.findViewById(R.id.txt_your_name);
+        mEditText = (EditText) v.findViewById(R.id.txt_profile_name);
 
         getDialog().setTitle("New Profile");
 
@@ -62,13 +67,20 @@ public class AddProfileDialogFragment extends DialogFragment implements OnEditor
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // Return input text to activity
-            // AddProfileDialogFragment activity = (EditNameDialogListener) getActivity();
-            // activity.onFinishEditDialog(mEditText.getText().toString());
             // this.dismiss();
             Log.i(TAG, "Finished dialog");
+
+            FragmentManager fm = getFragmentManager();
+            DetailProfileFrag fragmentToCallback = (DetailProfileFrag) fm.findFragmentById(R.id.frag_update_detail);
+            fragmentToCallback.onFinishEditDialog(mEditText.getText().toString());
+            this.dismiss();
+
             return true;
         }
         return false;
+    }
+    
+    public void onClick(View v) {
+    	 Log.i(TAG, "Button clicked");
     }
 }

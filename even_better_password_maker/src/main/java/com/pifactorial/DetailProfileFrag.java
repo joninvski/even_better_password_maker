@@ -1,13 +1,10 @@
 package com.pifactorial;
 
-import java.util.List;
-
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
@@ -20,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,8 +24,9 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class DetailProfileFrag extends Fragment implements
-OnItemSelectedListener {
+import com.pifactorial.AddProfileDialogFragment.AddProfileDialogListener;
+
+public class DetailProfileFrag extends Fragment implements OnItemSelectedListener, AddProfileDialogListener  {
 
     private static final String TAG = DetailProfileFrag.class.getName();
 
@@ -254,27 +251,18 @@ OnItemSelectedListener {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-            long arg3) {
-        // TODO Auto-generated method stub
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    }
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-
-    }
-    private void loadSpinnerAlgorithm(Context context) {
-        // database handler
-        List<SpinnerProfile> labels = datasource.getAllLabels();
-
-        // Creating adapter for spinner
-        ArrayAdapter<SpinnerProfile> dataAdapter = new ArrayAdapter<SpinnerProfile>(context, android.R.layout.simple_spinner_item, labels);
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        sp_hash_alg.setAdapter(dataAdapter);
+    public void onFinishEditDialog(String inputText) {
+        Log.i(TAG, "Dialog text was: " + inputText);
     }
 }
