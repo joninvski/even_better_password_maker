@@ -98,7 +98,7 @@ OnItemSelectedListener {
         Log.i(TAG, "Populating spinner with stored profiles");
         // Populate a spinner with the profiles
         Cursor cursor = datasource.getAllProfilesCursor();
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this.getActivity(), android.R.layout.simple_spinner_item, cursor, 
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this.getActivity(), android.R.layout.simple_spinner_item, cursor,
                 new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
 
         // Specify the layout to use when the list of choices appears

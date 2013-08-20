@@ -144,9 +144,10 @@ public class ProfileDataSource {
             profile.setPrefix(cursor.getString(8));
             profile.setSuffix(cursor.getString(9));
 
-            /* TODO Fill the missing url components */ 
-            // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,         profile.getUrlCompomentProtocol().toString());
-            // values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,        profile.getUrlComponentSubDomain().toString());
+            profile.setUrlCompomentProtocol(Boolean.parseBoolean(cursor.getString(10)));
+            profile.setUrlComponentSubDomain(Boolean.parseBoolean(cursor.getString(11)));
+            profile.setUrlComponentDomain(Boolean.parseBoolean(cursor.getString(12)));
+            profile.setUrlComponentPortParameters(Boolean.parseBoolean(cursor.getString(13)));
 
             /* TODO - Complain to the android team about this */
             Log.d(TAG, "Cursor 14: " + cursor.getString(14) + " " + cursor.getInt(14));
@@ -165,7 +166,7 @@ public class ProfileDataSource {
         return profile;
     }
 
-    public Profile getProfileByName(String profileName) throws ProfileNotFound 
+    public Profile getProfileByName(String profileName) throws ProfileNotFound
     {
         Log.d(TAG, "Searching for profile by name: " + profileName);
         List<Profile> listProfiles = getAllProfiles();
@@ -214,4 +215,4 @@ public class ProfileDataSource {
         deleteProfile(p);
         insertProfile(p);
     }
-} 
+}
