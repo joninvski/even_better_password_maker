@@ -429,7 +429,7 @@ public final class Profile {
     }
 
     public Boolean removeUrlComponentProtocol() {
-        return this.urlComponents.add(UrlComponents.Protocol);
+        return this.urlComponents.remove(UrlComponents.Protocol);
     }
 
     public Boolean removeUrlComponentSubDomain() {
