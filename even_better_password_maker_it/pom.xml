@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.pifactorial</groupId>
         <artifactId>even_better_password_maker_parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.0.0-ALPHA</version>
     </parent>
 
     <artifactId>even_better_password_maker_it</artifactId>
@@ -31,7 +31,7 @@
             <groupId>com.pifactorial</groupId>
             <artifactId>even_better_password_maker</artifactId>
             <type>apk</type>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.0.1-ALPHA</version>
             <classifier>${zipaligned-classifier}</classifier> <!--  classifier set according to the ran profile -->
             <scope>provided</scope>
         </dependency>
@@ -39,7 +39,7 @@
             <groupId>com.pifactorial</groupId>
             <artifactId>even_better_password_maker</artifactId>
             <type>jar</type>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.0.1-ALPHA</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
