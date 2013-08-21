@@ -45,4 +45,5 @@
     <string name="buttonCancel">Delete</string>
     <string name="plusButton">Add</string>
     <string name="buttonNewProfile">+</string>
+    <string name="profile">Profile</string>
 </resources>

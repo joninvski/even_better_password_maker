@@ -12,6 +12,20 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/labelProfile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/profile"
+            android:textSize="23sp" />
+
+        <Spinner
+            android:id="@+id/spProfiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/labelURL"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -62,11 +76,6 @@
             android:paddingTop="20dp"
             android:textIsSelectable="false"
             android:textSize="30sp" />
-
-        <Spinner
-            android:id="@+id/spProfiles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </ScrollView>
