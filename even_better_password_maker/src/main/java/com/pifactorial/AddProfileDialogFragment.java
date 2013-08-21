@@ -1,5 +1,7 @@
 package com.pifactorial;
 
+import org.daveware.passwordmaker.Profile;
+
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface.OnClickListener;
@@ -99,8 +101,8 @@ public class AddProfileDialogFragment extends DialogFragment implements
 				.findFragmentById(R.id.frag_update_detail);
 		fragmentToCallback.onFinishEditDialog(mEditText.getText()
 				.toString());
+
+        //Lets close the alert box
         this.dismiss();
-
-
 	}
 }
