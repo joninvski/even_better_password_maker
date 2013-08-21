@@ -47,6 +47,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // Let's get the window controls
         textOutputPass = (TextView) findViewById(R.id.tvResultPass);
         etURL = (EditText) findViewById(R.id.etURL);
+        etURL.setSelection(etURL.getText().length()); // Puts the cursor at the end of the string
         etMasterPass = (EditText) findViewById(R.id.etMasterPass);
         Log.i(TAG, "Fetched all views");
 
