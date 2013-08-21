@@ -23,16 +23,16 @@
             android:layout_weight="1"
             android:imeOptions="actionDone"
             android:inputType="text" >
+
             <requestFocus />
         </EditText>
 
         <Button
             android:id="@+id/button1"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="+" />
-
+            android:text="@string/buttonNewProfile" />
     </LinearLayout>
 
 </LinearLayout>
