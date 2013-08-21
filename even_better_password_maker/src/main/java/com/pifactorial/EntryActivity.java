@@ -11,6 +11,7 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -139,8 +140,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.actionBtnGo:
-                Log.i(TAG, "Button go");
-                datasource.insertProfile(new Profile("JAKIM"));
+                Log.i(TAG, "Pressed the go button");
+                Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+                myWebLink.setData(Uri.parse(etURL.getText().toString()));
+                startActivity(myWebLink);
                 break;
 
             case R.id.actionBtnCopy:
