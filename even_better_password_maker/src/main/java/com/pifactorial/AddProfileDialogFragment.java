@@ -1,10 +1,7 @@
 package com.pifactorial;
 
-import org.daveware.passwordmaker.Profile;
-
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
