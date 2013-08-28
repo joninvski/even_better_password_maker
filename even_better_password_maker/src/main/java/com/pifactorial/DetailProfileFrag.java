@@ -5,6 +5,9 @@ import org.daveware.passwordmaker.Profile;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
@@ -46,6 +49,8 @@ public class DetailProfileFrag extends Fragment implements
 
 	private ProfileDataSource datasource;
 
+	private SharedPreferences mPrefs;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v(TAG, "Detail Profile creation started");
@@ -54,14 +59,17 @@ public class DetailProfileFrag extends Fragment implements
 
 		datasource = new ProfileDataSource(getActivity());
 		datasource.open();
+		mPrefs = getActivity().getSharedPreferences(getString(R.string.SharedPreferencesName),
+				Context.MODE_PRIVATE);
+
 	}
 
 	private void updateProfileOnGui() throws ProfileNotFound {
 		Log.v(TAG, "Going to load profile");
 
 		SQLiteCursor profileName = (SQLiteCursor) sp_profiles.getSelectedItem();
-        if(profileName == null)
-            sp_profiles.setSelection(0);
+		if (profileName == null)
+			sp_profiles.setSelection(0);
 
 		Profile profile = datasource.cursorToAccount(profileName);
 
@@ -78,7 +86,7 @@ public class DetailProfileFrag extends Fragment implements
 		cb_charNumber.setChecked(p.hasCharSetNumbers());
 		cb_charSymbols.setChecked(p.hasCharSetSymbols());
 		et_password_lenght.setText(Integer.toString(p.getLength()));
-		// int spinnerPosition = spAdap.getItemViewType(p.getName());
+	
 		String[] androidStrings = getResources().getStringArray(
 				R.array.hash_algorithms_string_array);
 
@@ -143,6 +151,11 @@ public class DetailProfileFrag extends Fragment implements
 					View selectedItemView, int position, long id) {
 				Log.i(TAG, "Choosen a new profile");
 				try {
+					int last_selected = sp_profiles.getSelectedItemPosition();
+					Editor editor = mPrefs.edit();
+					editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
+					editor.apply(); // TODO - Check the return value
+					
 					updateProfileOnGui();
 				} catch (ProfileNotFound e) {
 					e.printStackTrace();
@@ -158,6 +171,10 @@ public class DetailProfileFrag extends Fragment implements
 		Log.i(TAG, "Going to update spinner");
 		updateProfileSpinner();
 		Log.i(TAG, "Updated Spinner");
+		
+		// Now let's get the last selected profile
+        int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
+        sp_profiles.setSelection(last_selected);
 
 		try {
 			updateProfileOnGui();

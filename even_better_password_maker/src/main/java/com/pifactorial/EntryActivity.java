@@ -31,7 +31,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class EntryActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = EntryActivity.class.getName();
-    private static final String LAST_PROFILE_SHARED_PREFERENCE = "LAST_PROFILE";
 
     private ProfileDataSource datasource;
 
@@ -73,7 +72,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         datasource.open();
         Log.i(TAG, "Created data source");
 
-        mPrefs = getSharedPreferences("com.pifactorial.evenbetterpasswordmaker", Context.MODE_PRIVATE);
+		mPrefs = getSharedPreferences(getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
 
         // Let's create the callback when the spinner changes.
         // We just want to store in the last selected preference the selected
@@ -86,7 +85,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
                 int last_selected = spProfiles.getSelectedItemPosition();
                 Editor editor = mPrefs.edit();
-                editor.putInt(LAST_PROFILE_SHARED_PREFERENCE, last_selected);
+                editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
                 editor.apply(); // TODO - Check the return value
             }
 
@@ -122,7 +121,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         spProfiles.setAdapter(adapter);
 
         // Now let's get the default profile
-        int last_selected = mPrefs.getInt(LAST_PROFILE_SHARED_PREFERENCE, 0);
+        int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
         spProfiles.setSelection(last_selected);
 
         Log.i(TAG, "Finished creating entry activity");
