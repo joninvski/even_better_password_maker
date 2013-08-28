@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.pifactorial</groupId>
         <artifactId>even_better_password_maker_parent</artifactId>
-        <version>0.0.0-ALPHA</version>
+        <version>0.0.1-ALPHA</version>
     </parent>
 
     <artifactId>even_better_password_maker_it</artifactId>
