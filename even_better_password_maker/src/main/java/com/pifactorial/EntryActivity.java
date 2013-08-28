@@ -8,7 +8,10 @@ import org.daveware.passwordmaker.SecureCharArray;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.net.Uri;
@@ -18,14 +21,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = EntryActivity.class.getName();
+    private static final String LAST_PROFILE_SHARED_PREFERENCE = "LAST_PROFILE";
 
     private ProfileDataSource datasource;
 
@@ -35,6 +41,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     protected EditText etMasterPass;
     protected TextView textOutputPass;
     protected Spinner spProfiles;
+
+    private SharedPreferences mPrefs;
 
     /** Called when the activity is first created. */
     @Override
@@ -50,6 +58,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         etURL = (EditText) findViewById(R.id.etURL);
         etURL.setSelection(etURL.getText().length()); // Puts the cursor at the end of the string
         etMasterPass = (EditText) findViewById(R.id.etMasterPass);
+        spProfiles = (Spinner) findViewById(R.id.spProfiles);
         Log.i(TAG, "Fetched all views");
 
         // Set the action bar to don't show the app title
@@ -64,8 +73,31 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         datasource.open();
         Log.i(TAG, "Created data source");
 
+        mPrefs = getSharedPreferences("com.pifactorial.evenbetterpasswordmaker", Context.MODE_PRIVATE);
+
+        // Let's create the callback when the spinner changes.
+        // We just want to store in the last selected preference the selected
+        // value
+        spProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parentView,
+                View selectedItemView, int position, long id) {
+                Log.i(TAG, "Choosen a new profile");
+                Log.i(TAG, "Let's save the the shared preference");
+
+                int last_selected = spProfiles.getSelectedItemPosition();
+                Editor editor = mPrefs.edit();
+                editor.putInt(LAST_PROFILE_SHARED_PREFERENCE, last_selected);
+                editor.apply(); // TODO - Check the return value
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView) {
+                Log.i(TAG, "Nothing was selected on the profile spinner");
+            }
+
+        });
+
         // Check if there is no profile
-        if(datasource.getAllProfiles().size() < 1) {
+        if (datasource.getAllProfiles().size() < 1) {
             Log.i(TAG, "No profile in DB was found");
             Profile defaultProfile = Profile.getDefaultProfile();
             Log.i(TAG, "Inserting default profile: " + defaultProfile);
@@ -75,19 +107,23 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         updateProfileSpinner();
     }
 
-    public void updateProfileSpinner()
-    {
+    public void updateProfileSpinner() {
         Log.i(TAG, "Populating spinner with stored profiles");
         // Populate a spinner with the profiles
         Cursor cursor = datasource.getAllProfilesCursor();
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, 
-                new String[] { ProfileSqLiteHelper.COLUMN_NAME }, new int[] { android.R.id.text1 }, 0);
-        spProfiles = (Spinner) findViewById(R.id.spProfiles);
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_spinner_item, cursor,
+                new String[] { ProfileSqLiteHelper.COLUMN_NAME },
+                new int[] { android.R.id.text1 }, 0);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spProfiles.setAdapter(adapter);
+
+        // Now let's get the default profile
+        int last_selected = mPrefs.getInt(LAST_PROFILE_SHARED_PREFERENCE, 0);
+        spProfiles.setSelection(last_selected);
 
         Log.i(TAG, "Finished creating entry activity");
     }
@@ -126,6 +162,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                     textOutputPass.setText("");
                 }
                 break;
+
+            default:
+                Log.e(TAG, "Something else was pressed");
+                break;
         }
     }
 
@@ -139,6 +179,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+
             case R.id.actionBtnGo:
                 Log.i(TAG, "Pressed the go button");
                 Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
@@ -152,12 +193,13 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                 ClipData clip = ClipData.newPlainText("Copied Text", textOutputPass.getText());
                 clipboard.setPrimaryClip(clip);
                 break;
+
             case R.id.actionBtnAbout:
                 Log.i(TAG, "Clicked About");
                 break;
+
             case R.id.actionBtnProfiles:
                 Log.i(TAG, "Clicked Profiles");
-
                 Intent myIntent = new Intent(EntryActivity.this,
                         UpdateActivity.class);
                 EntryActivity.this.startActivity(myIntent);
