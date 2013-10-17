@@ -22,7 +22,8 @@
             android:title="@string/buttonAbout"
             android:showAsAction="collapseActionView">
             <menu>
-                <item android:id="@+id/item1" android:title="teste"/>
+                <item android:id="@+id/item1" android:title="License"/>
+                <item android:id="@+id/item2" android:title="Developer"/>
             </menu>
         </item>
     </group>
