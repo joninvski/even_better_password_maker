@@ -3,9 +3,12 @@ package com.pifactorial;
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
@@ -155,7 +158,7 @@ public class DetailProfileFrag extends Fragment implements
 					Editor editor = mPrefs.edit();
 					editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
 					editor.apply(); // TODO - Check the return value
-					
+
 					updateProfileOnGui();
 				} catch (ProfileNotFound e) {
 					e.printStackTrace();
@@ -171,7 +174,7 @@ public class DetailProfileFrag extends Fragment implements
 		Log.i(TAG, "Going to update spinner");
 		updateProfileSpinner();
 		Log.i(TAG, "Updated Spinner");
-		
+
 		// Now let's get the last selected profile
         int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
         sp_profiles.setSelection(last_selected);
@@ -227,10 +230,31 @@ public class DetailProfileFrag extends Fragment implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Log.i(TAG, "Some button was pressed");
+        final Context context = getActivity();
+
 		switch (item.getItemId()) {
 		case R.id.actionBtnSave:
+            Log.i(TAG, "Clicked the save button");
 			saveProfile();
-			break;
+
+            // Now let's show an alert box
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+            // set title
+            alertDialogBuilder.setTitle("Profile Saved");
+            // alertDialogBuilder.setMessage("Profile has been saved");
+            alertDialogBuilder.setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton){
+                            Intent myIntent = new Intent(context, EntryActivity.class);
+                            DetailProfileFrag.this.startActivity(myIntent);
+                        }});
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            break;
+
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}

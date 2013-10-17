@@ -36,7 +36,8 @@ public class ProfileDataSource {
         ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE,
         ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS,
         ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS,
-        ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM };
+        ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM
+    };
 
     public ProfileDataSource(Context context) {
         dbHelper = new ProfileSqLiteHelper(context);
