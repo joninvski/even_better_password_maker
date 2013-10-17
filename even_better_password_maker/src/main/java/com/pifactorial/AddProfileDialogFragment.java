@@ -67,7 +67,6 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		// Let's get the button and insert the callback
 		Button button = (Button) v.findViewById(R.id.button1);
 		button.setOnClickListener(this);
-		
 
 		return v;
 	}
