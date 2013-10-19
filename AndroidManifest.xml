@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pifactorial"
+    android:versionCode="5"
+    android:versionName="0.0.4-ALPHA" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <application
+        android:allowBackup="True"
+        android:icon="@drawable/pwm"
+        android:label="Even Better Password Maker"
+        android:uiOptions="splitActionBarWhenNarrow" >
+        <activity
+            android:name="EntryActivity"
+            android:label="Even Better Password Maker" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:label="@string/act_send" >
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="UpdateActivity"
+            android:exported="false"
+            android:label="Update Profile" >
+            <intent-filter>
+                <action android:name="com.pifactorial.UPDATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
