@@ -19,17 +19,14 @@ Note: Do not forget to set ANDROID_HOME variable.
 To compile
 ----------
 
-    mvn3 install compile
+    ./gradlew compile
 
-To deploy
-----------
+To deploy to phone
+------------------
 
-    mvn3 install android:deploy
+    ./gradlew installDebug
 
 Test
 ----
 
-Tests are run each time you run:
-
-    mvn3 install
-
+    ./gradlew connectedInstrumentTest
