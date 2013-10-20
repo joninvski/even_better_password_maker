@@ -193,9 +193,9 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                 clipboard.setPrimaryClip(clip);
                 break;
 
-            case R.id.actionBtnAbout:
-                Log.i(TAG, "Clicked About");
-                break;
+            // case R.id.actionBtnAbout:
+            //     Log.i(TAG, "Clicked About");
+            //     break;
 
             case R.id.actionBtnProfiles:
                 Log.i(TAG, "Clicked Profiles");
