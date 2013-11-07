@@ -28,5 +28,9 @@ To deploy to phone
 
 Test
 ----
-
     ./gradlew connectedInstrumentTest
+
+Note
+----
+
+Do not forget to set and export the ANDROID_HOME and JAVA_HOME variables
