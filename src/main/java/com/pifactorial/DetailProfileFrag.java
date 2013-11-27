@@ -231,14 +231,17 @@ public class DetailProfileFrag extends Fragment implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Log.i(TAG, "Some button was pressed");
         final Context context = getActivity();
+        AlertDialog.Builder alertDialogBuilder;
+        AlertDialog alertDialog;
 
 		switch (item.getItemId()) {
+
 		case R.id.actionBtnSave:
             Log.i(TAG, "Clicked the save button");
 			saveProfile();
 
             // Now let's show an alert box
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+            alertDialogBuilder = new AlertDialog.Builder(context);
             // set title
             alertDialogBuilder.setTitle("Profile Saved");
             // alertDialogBuilder.setMessage("Profile has been saved");
@@ -249,11 +252,28 @@ public class DetailProfileFrag extends Fragment implements
                             DetailProfileFrag.this.startActivity(myIntent);
                         }});
             // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog = alertDialogBuilder.create();
             // show it
             alertDialog.show();
             break;
 
+        case R.id.actionBtnDelete:
+            Log.i(TAG, "Clicked the delete button");
+
+
+            alertDialogBuilder = new AlertDialog.Builder(context);
+
+            if(deleteProfile())
+                alertDialogBuilder.setTitle("Profile deleted");
+            else
+                alertDialogBuilder.setTitle("Default profile cannot be deleted");
+
+
+            alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+            break;
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -261,15 +281,33 @@ public class DetailProfileFrag extends Fragment implements
 		return true;
 	}
 
+	private boolean deleteProfile() {
+
+
+		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
+		Profile profile = datasource.cursorToAccount(cursor);
+
+		Log.d(TAG, "Deleting the profile with name " + profile.getName());
+
+        if(profile.getName().equals(Profile.DEFAULT_NAME)) {
+            Log.d(TAG, "Could not delete as it was the default"); 
+            return false;
+        }
+
+        else {
+            datasource.deleteProfile(profile);
+            return true;
+        }
+    }
+
 	private void saveProfile() {
 		// set the default according to value
 		Log.d(TAG, "Clicked the save button");
-		Profile p = new Profile();
+        Profile p = new Profile();
 
-		SQLiteCursor profileName = (SQLiteCursor) sp_profiles.getSelectedItem();
-		Profile profile = datasource.cursorToAccount(profileName);
+		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
+		String profileName = datasource.cursorToAccount(cursor).getName();
 
-		p.setName(profile.getName());
 		p.setUrlCompomentProtocol(cb_urlProtocol.isChecked());
 		p.setUrlComponentSubDomain(cb_urlSubdomain.isChecked());
 		p.setUrlComponentDomain(cb_urlDomain.isChecked());

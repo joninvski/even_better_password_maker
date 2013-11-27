@@ -39,6 +39,7 @@ public final class Profile {
     }
 
     public static int DEFAULT_LENGTH = 8;
+    public static final String DEFAULT_NAME = "Default";
 
     private String name                          = "";
     private String username                      = "";
@@ -54,6 +55,7 @@ public final class Profile {
     private String costumChars                   = "";
 
     public Profile() {
+        this.name = DEFAULT_NAME;
     }
 
     public Profile(String name) {
@@ -359,7 +361,7 @@ public final class Profile {
 
     public static Profile getDefaultProfile() {
         try {
-            return new Profile("Default", "", AlgorithmType.MD5, 8,
+            return new Profile(DEFAULT_NAME, "", AlgorithmType.MD5, 8,
                     CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
                     "", "", "");
         } catch (Exception e) {
