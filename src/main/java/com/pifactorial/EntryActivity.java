@@ -60,8 +60,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         spProfiles = (Spinner) findViewById(R.id.spProfiles);
         Log.i(TAG, "Fetched all views");
 
-        // Set the action bar to don't show the app title
-        this.getActionBar().setDisplayShowTitleEnabled(false);
+        // Set the action bar to show the app title
+        this.getActionBar().setDisplayShowTitleEnabled(true);
 
         // Master password should always start as not visible
         visible = false;
