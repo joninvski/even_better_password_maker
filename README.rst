@@ -30,6 +30,12 @@ Test
 ----
     ./gradlew connectedInstrumentTest
 
+Create apk for market
+---------------------
+
+./release.sh ~/path_to_keystore
+
+
 Note
 ----
 

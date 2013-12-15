@@ -254,12 +254,18 @@ public class SecureCharArray {
 		return data.length;
 	}
 
+    // Use this purely for debug
+	// @Override
+	// public String toString() {
+	// 	String string = Integer.toString(data.length) + " <-- ";
+	// 	for (int i = 0; i < data.length; i++) {
+	// 		string = string + Character.toString(data[i]);
+	// 	}
+	// 	return string;
+	// }
+ 
 	@Override
 	public String toString() {
-		String string = Integer.toString(data.length) + " <-- ";
-		for (int i = 0; i < data.length; i++) {
-			string = string + Character.toString(data[i]);
-		}
-		return string;
+        return String.format("This is a placeholder for a password. I will not show you the true one");
 	}
 }

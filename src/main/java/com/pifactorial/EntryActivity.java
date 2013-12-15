@@ -30,12 +30,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
-    private static final String TAG = EntryActivity.class.getName();
-
     private ProfileDataSource datasource;
-
     private Boolean visible;
-
     protected EditText etURL;
     protected EditText etMasterPass;
     protected TextView textOutputPass;
@@ -46,19 +42,18 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "Creating Entry Activity");
+        Log.d(Constants.LOG, "Creating Entry Activity");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Log.i(TAG, "Activity created");
 
-        Log.i(TAG, "Fetching views");
         // Let's get the window controls
         textOutputPass = (TextView) findViewById(R.id.tvResultPass);
         etURL = (EditText) findViewById(R.id.etURL);
         etURL.setSelection(etURL.getText().length()); // Puts the cursor at the end of the string
         etMasterPass = (EditText) findViewById(R.id.etMasterPass);
         spProfiles = (Spinner) findViewById(R.id.spProfiles);
-        Log.i(TAG, "Fetched all views");
+        Log.d(Constants.LOG, "Fetched all views");
 
         // Set the action bar to show the app title
         this.getActionBar().setDisplayShowTitleEnabled(true);
@@ -67,10 +62,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         visible = false;
 
         // Create a data source to get profiles
-        Log.i(TAG, "Creating data source");
+        Log.d(Constants.LOG, "Creating data source");
         datasource = new ProfileDataSource(this);
         datasource.open();
-        Log.i(TAG, "Created data source");
+        Log.d(Constants.LOG, "Created data source");
 
 		mPrefs = getSharedPreferences(getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
 
@@ -80,8 +75,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         spProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView,
                 View selectedItemView, int position, long id) {
-                Log.i(TAG, "Choosen a new profile");
-                Log.i(TAG, "Let's save the the shared preference");
+                Log.d(Constants.LOG, "Saving shared preferences");
 
                 int last_selected = spProfiles.getSelectedItemPosition();
                 Editor editor = mPrefs.edit();
@@ -90,16 +84,16 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
-                Log.i(TAG, "Nothing was selected on the profile spinner");
+                Log.i(Constants.LOG, "Strange, nothing was selected on the profile spinner");
             }
 
         });
 
         // Check if there is no profile
         if (datasource.getAllProfiles().size() < 1) {
-            Log.i(TAG, "No profile in DB was found");
+            Log.d(Constants.LOG, "No profile in DB was found");
             Profile defaultProfile = Profile.getDefaultProfile();
-            Log.i(TAG, "Inserting default profile: " + defaultProfile);
+            Log.d(Constants.LOG, "Inserting default profile: " + defaultProfile);
             datasource.insertProfile(defaultProfile);
         }
 
@@ -107,7 +101,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     }
 
     public void updateProfileSpinner() {
-        Log.i(TAG, "Populating spinner with stored profiles");
         // Populate a spinner with the profiles
         Cursor cursor = datasource.getAllProfilesCursor();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
@@ -123,8 +116,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // Now let's get the default profile
         int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
         spProfiles.setSelection(last_selected);
-
-        Log.i(TAG, "Finished creating entry activity");
     }
 
     public void onClick(View v) {
@@ -132,7 +123,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
             case R.id.tvResultPass:
 
-                Log.i(TAG, "Clicked on text output password");
+                Log.d(Constants.LOG, "Clicked on text output password");
 
                 // Toggle the visible variable
                 visible = !visible;
@@ -142,19 +133,17 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                         // Get spinner profile
                         SQLiteCursor profileName = (SQLiteCursor) spProfiles.getSelectedItem();
                         Profile profile = datasource.cursorToAccount(profileName);
-                        Log.i(TAG, "Profile fetched \n" + profile.toString());
+                        Log.d(Constants.LOG, "Profile fetched \n" + profile.toString());
 
                         // Use the profile and master password to get the generated password
                         SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
-                        Log.e(TAG, "Generating password now --> " + master.toString());
                         SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
-                        Log.e(TAG, "Password generated --> " + result);
 
                         // Show the generated password
                         textOutputPass.setText(new String(result.getData()));
 
                     } catch (PasswordGenerationException e) {
-                        Log.e(TAG, "Error in generating the new password" + e.getMessage());
+                        Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
                     }
 
                 } else {
@@ -163,7 +152,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                 break;
 
             default:
-                Log.e(TAG, "Something else was pressed");
+                Log.e(Constants.LOG, "Some unexpected view was pressed");
                 break;
         }
     }
@@ -180,25 +169,25 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         switch (item.getItemId()) {
 
             case R.id.actionBtnGo:
-                Log.i(TAG, "Pressed the go button");
+                Log.d(Constants.LOG, "Pressed the go button");
                 Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
                 myWebLink.setData(Uri.parse(etURL.getText().toString()));
                 startActivity(myWebLink);
                 break;
 
             case R.id.actionBtnCopy:
-                Log.i(TAG, "Clicked item Copy");
+                Log.d(Constants.LOG, "Clicked item Copy");
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Copied Text", textOutputPass.getText());
                 clipboard.setPrimaryClip(clip);
                 break;
 
             // case R.id.actionBtnAbout:
-            //     Log.i(TAG, "Clicked About");
+            //     Log.i(Constants.LOG, "Clicked About");
             //     break;
 
             case R.id.actionBtnProfiles:
-                Log.i(TAG, "Clicked Profiles");
+                Log.d(Constants.LOG, "Clicked Profiles");
                 Intent myIntent = new Intent(EntryActivity.this,
                         UpdateActivity.class);
                 EntryActivity.this.startActivity(myIntent);
@@ -212,13 +201,13 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onPause() {
-        Log.i(TAG, "on Pausing");
+        Log.d(Constants.LOG, "on Pausing");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.i(TAG, "on Stopping");
+        Log.d(Constants.LOG, "on Stopping");
         super.onStop();
     }
 

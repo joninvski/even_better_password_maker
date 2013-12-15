@@ -38,8 +38,6 @@ import org.daveware.passwordmaker.Profile.UrlComponents;
  */
 public class PasswordMaker {
 
-    private static final String TAG = PasswordMaker.class.getName();
-
 	private static Pattern urlRegex = Pattern
 			.compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
 
@@ -199,8 +197,6 @@ public class PasswordMaker {
 		SecureCharArray data = null;
 
 		try {
-            Log.e(TAG, "Making Password low level" + length);
-
 			if (profile.getCompleteCharacterSet().length() < 2)
 				throw new Exception(
 						"profile contains a character set that is too short: " +
@@ -217,8 +213,6 @@ public class PasswordMaker {
 			}
 
 			// Perform the actual hashing
-            Log.e(TAG, "Master pass" + masterPassword.toString());
-            Log.e(TAG, "Data" + data.toString());
 			output = hashTheData(masterPassword, data, profile);
 
 			// Use leet after hashing

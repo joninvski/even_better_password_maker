@@ -35,8 +35,6 @@ import com.pifactorial.AddProfileDialogFragment.AddProfileDialogListener;
 public class DetailProfileFrag extends Fragment implements
 		OnItemSelectedListener, AddProfileDialogListener {
 
-	private static final String TAG = DetailProfileFrag.class.getName();
-
 	protected Spinner sp_profiles;
 	protected CheckBox cb_urlProtocol;
 	protected CheckBox cb_urlSubdomain;
@@ -56,7 +54,7 @@ public class DetailProfileFrag extends Fragment implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.v(TAG, "Detail Profile creation started");
+		Log.v(Constants.LOG, "Detail Profile creation started");
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
@@ -68,17 +66,16 @@ public class DetailProfileFrag extends Fragment implements
 	}
 
 	private void updateProfileOnGui() throws ProfileNotFound {
-		Log.v(TAG, "Going to load profile");
+		Log.d(Constants.LOG, "Going to load profile");
 
 		SQLiteCursor profileName = (SQLiteCursor) sp_profiles.getSelectedItem();
 		if (profileName == null)
 			sp_profiles.setSelection(0);
 
 		Profile profile = datasource.cursorToAccount(profileName);
-
 		Profile p = datasource.getProfileByName(profile.getName());
 
-		Log.v(TAG, "Profile fetched : " + p.toString());
+		Log.d(Constants.LOG, "Profile fetched : " + p.toString());
 
 		cb_urlProtocol.setChecked(p.getUrlCompomentProtocol());
 		cb_urlSubdomain.setChecked(p.getUrlComponentSubDomain());
@@ -89,18 +86,18 @@ public class DetailProfileFrag extends Fragment implements
 		cb_charNumber.setChecked(p.hasCharSetNumbers());
 		cb_charSymbols.setChecked(p.hasCharSetSymbols());
 		et_password_lenght.setText(Integer.toString(p.getLength()));
-	
+
 		String[] androidStrings = getResources().getStringArray(
 				R.array.hash_algorithms_string_array);
 
 		sp_hash_alg.setSelection(java.util.Arrays.asList(androidStrings)
 				.indexOf(p.getAlgorithm().getName()));
 
-		Log.v(TAG, "Profile loaded");
+		Log.d(Constants.LOG, "Profile loaded");
 	}
 
 	public void updateProfileSpinner() {
-		Log.i(TAG, "Populating spinner with stored profiles");
+		Log.d(Constants.LOG, "Populating spinner with stored profiles");
 		// Populate a spinner with the profiles
 		Cursor cursor = datasource.getAllProfilesCursor();
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
@@ -113,13 +110,13 @@ public class DetailProfileFrag extends Fragment implements
 		// Apply the adapter to the spinner
 		sp_profiles.setAdapter(adapter);
 
-		Log.i(TAG, "Finished creating entry activity");
+		Log.d(Constants.LOG, "Finished creating entry activity");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.v(TAG, "Starting on CreateView");
+		Log.d(Constants.LOG, "Starting on CreateView");
 		View view = inflater.inflate(R.layout.detail_profile, container, false);
 		super.onCreateView(inflater, container, savedInstanceState);
 
@@ -138,21 +135,18 @@ public class DetailProfileFrag extends Fragment implements
 
 		bt_profileAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Log.i(TAG, "Clicked add profile button");
+				Log.i(Constants.LOG, "Clicked add profile button");
 				// Watch for button clicks.
 				FragmentManager fm = getFragmentManager();
-				Log.i(TAG, "Got fragment manager");
 				AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
-				Log.i(TAG, "Got dialog");
 				editNameDialog.show(fm, "fragment_edit_name");
-				Log.i(TAG, "Showing");
 			}
 		});
 
 		sp_profiles.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				Log.i(TAG, "Choosen a new profile");
+				Log.d(Constants.LOG, "Choosen a new profile");
 				try {
 					int last_selected = sp_profiles.getSelectedItemPosition();
 					Editor editor = mPrefs.edit();
@@ -166,14 +160,14 @@ public class DetailProfileFrag extends Fragment implements
 			}
 
 			public void onNothingSelected(AdapterView<?> parentView) {
-				Log.i(TAG, "Nothing was selected on the profile spinner");
+				Log.i(Constants.LOG, "Nothing was selected on the profile spinner");
 			}
 
 		});
 
-		Log.i(TAG, "Going to update spinner");
+		Log.d(Constants.LOG, "Going to update spinner");
 		updateProfileSpinner();
-		Log.i(TAG, "Updated Spinner");
+		Log.d(Constants.LOG, "Updated Spinner");
 
 		// Now let's get the last selected profile
         int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
@@ -184,21 +178,21 @@ public class DetailProfileFrag extends Fragment implements
 		} catch (ProfileNotFound e) {
 			e.printStackTrace();
 		}
-		Log.v(TAG, "Detail Profile created");
+		Log.d(Constants.LOG, "Detail Profile created");
 
-		Log.v(TAG, "View created");
+		Log.d(Constants.LOG, "View created");
 		return view;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.v(TAG, "Going to create activity");
+		Log.v(Constants.LOG, "Going to create activity");
 		super.onActivityCreated(savedInstanceState);
-		Log.v(TAG, "Activity Created");
+		Log.v(Constants.LOG, "Activity Created");
 	}
 
 	public void setText(String item) {
-		Log.v(TAG, "Set Text = " + item);
+		Log.v(Constants.LOG, "Set Text = " + item);
 		TextView view = (TextView) getView().findViewById(R.id.spProfiles);
 		view.setText(item);
 	}
@@ -209,13 +203,13 @@ public class DetailProfileFrag extends Fragment implements
 	};
 
 	public int getShownIndex() {
-		Log.v(TAG, "Get shown index = ");
+		Log.v(Constants.LOG, "Get shown index = ");
 
 		return getArguments().getInt("index", 0);
 	}
 
 	public static DetailProfileFrag newInstance(int index) {
-		Log.v(TAG, "New instance = ");
+		Log.v(Constants.LOG, "New instance = ");
 
 		DetailProfileFrag f = new DetailProfileFrag();
 
@@ -229,7 +223,6 @@ public class DetailProfileFrag extends Fragment implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.i(TAG, "Some button was pressed");
         final Context context = getActivity();
         AlertDialog.Builder alertDialogBuilder;
         AlertDialog alertDialog;
@@ -237,7 +230,7 @@ public class DetailProfileFrag extends Fragment implements
 		switch (item.getItemId()) {
 
 		case R.id.actionBtnSave:
-            Log.i(TAG, "Clicked the save button");
+            Log.d(Constants.LOG, "Clicked the save button");
 			saveProfile();
 
             // Now let's show an alert box
@@ -258,7 +251,7 @@ public class DetailProfileFrag extends Fragment implements
             break;
 
         case R.id.actionBtnDelete:
-            Log.i(TAG, "Clicked the delete button");
+            Log.d(Constants.LOG, "Clicked the delete button");
 
 
             alertDialogBuilder = new AlertDialog.Builder(context);
@@ -287,10 +280,10 @@ public class DetailProfileFrag extends Fragment implements
 		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
 		Profile profile = datasource.cursorToAccount(cursor);
 
-		Log.d(TAG, "Deleting the profile with name " + profile.getName());
+		Log.d(Constants.LOG, "Deleting the profile with name " + profile.getName());
 
         if(profile.getName().equals(Profile.DEFAULT_NAME)) {
-            Log.d(TAG, "Could not delete as it was the default"); 
+            Log.i(Constants.LOG, "Could not delete as it was the default"); 
             return false;
         }
 
@@ -302,7 +295,7 @@ public class DetailProfileFrag extends Fragment implements
 
 	private void saveProfile() {
 		// set the default according to value
-		Log.d(TAG, "Clicked the save button");
+		Log.d(Constants.LOG, "Clicked the save button");
         Profile p = new Profile();
 
 		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
@@ -325,16 +318,16 @@ public class DetailProfileFrag extends Fragment implements
 			e.printStackTrace();
 		}
 
-		Log.d(TAG, "Saving profile: " + p);
+		Log.d(Constants.LOG, "Saving profile: " + p);
 		if (datasource.profileExists(p.getName())) {
-			Log.d(TAG, "Profile already exists. Replacing it");
+			Log.i(Constants.LOG, "Profile already exists. Replacing it");
 			datasource.replaceProfile(p);
 		} else {
-			Log.d(TAG, "Inserting new profile");
+			Log.i(Constants.LOG, "Inserting new profile");
 			datasource.insertProfile(p);
 		}
 
-		Log.d(TAG, "Profile saved");
+		Log.d(Constants.LOG, "Profile saved");
 	}
 
 	@Override
@@ -355,7 +348,7 @@ public class DetailProfileFrag extends Fragment implements
 	}
 
 	public void onFinishEditDialog(String profileName) {
-		Log.i(TAG, "Dialog text was: " + profileName);
+		Log.d(Constants.LOG, "Dialog text was: " + profileName);
 
 		Profile defaultProfile = Profile.getDefaultProfile();
 		defaultProfile.setName(profileName);

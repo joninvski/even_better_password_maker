@@ -7,8 +7,6 @@ import android.util.Log;
 
 public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 
-	private static final String TAG = ProfileSqLiteHelper.class.getName();
-
 	public static final String TABLE_PROFILES                       = "profiles";
 	public static final String COLUMN_ID                            = "_id";
 	public static final String COLUMN_NAME                          = "name";
@@ -67,7 +65,7 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-        Log.i(TAG, "Creating database: " + DATABASE_CREATE);
+        Log.d(Constants.LOG, "Creating database: " + DATABASE_CREATE);
 		database.execSQL(DATABASE_CREATE);
 	}
 
