@@ -1,10 +1,7 @@
 package com.pifactorial;
 
-import android.util.Log;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 
 public class UpdateActivity extends Activity {
 

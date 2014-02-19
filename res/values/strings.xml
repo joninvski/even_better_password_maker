@@ -46,4 +46,6 @@
     <string name="plusButton">Add</string>
     <string name="buttonNewProfile">+</string>
     <string name="profile">Profile</string>
+    <string name="password_copy_to_clipboard">Password copied to clipboard</string>
+    
 </resources>

@@ -74,7 +74,7 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 		Log.w(ProfileSqLiteHelper.class.getName(),
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
-		onCreate(db);
+		//db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
+		//onCreate(db);
 	}
 }

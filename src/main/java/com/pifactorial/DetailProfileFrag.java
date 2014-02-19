@@ -301,6 +301,7 @@ public class DetailProfileFrag extends Fragment implements
 		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
 		String profileName = datasource.cursorToAccount(cursor).getName();
 
+		p.setName(profileName);
 		p.setUrlCompomentProtocol(cb_urlProtocol.isChecked());
 		p.setUrlComponentSubDomain(cb_urlSubdomain.isChecked());
 		p.setUrlComponentDomain(cb_urlDomain.isChecked());
