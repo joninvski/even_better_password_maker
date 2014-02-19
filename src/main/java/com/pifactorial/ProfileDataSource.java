@@ -13,7 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class ProfileDataSource {
-    private static final String TAG = ProfileDataSource.class.getName();
 
     // Database fields
     private SQLiteDatabase database;
@@ -52,7 +51,7 @@ public class ProfileDataSource {
     }
 
     public Profile insertProfile(Profile profile) {
-        Log.d(TAG, "Inserting new profile");
+        Log.d(Constants.LOG, "Inserting new profile");
 
         // Prepare the contentor to insert values
         ContentValues values = new ContentValues();
@@ -103,7 +102,7 @@ public class ProfileDataSource {
     }
 
     public void deleteProfile(Profile profile) {
-        Log.d(TAG, "Deleting profile: " + profile);
+        Log.i(Constants.LOG, "Deleting profile: " + profile);
         String name = profile.getName();
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
                 ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
@@ -150,11 +149,6 @@ public class ProfileDataSource {
             profile.setUrlComponentDomain(Boolean.parseBoolean(cursor.getString(12)));
             profile.setUrlComponentPortParameters(Boolean.parseBoolean(cursor.getString(13)));
 
-            /* TODO - Complain to the android team about this */
-            Log.d(TAG, "Cursor 14: " + cursor.getString(14) + " " + cursor.getInt(14));
-            Log.d(TAG, "Cursor 15: " + cursor.getString(15) + " " + cursor.getInt(15));
-            Log.d(TAG, "Cursor 16: " + cursor.getString(16) + " " + cursor.getInt(16));
-            Log.d(TAG, "Cursor 17: " + cursor.getString(17) + " " + cursor.getInt(17));
             profile.setCharSetUppercase(Boolean.parseBoolean(cursor.getString(14)));
             profile.setCharSetLowercase(Boolean.parseBoolean(cursor.getString(15)));
             profile.setCharSetNumbers(Boolean.parseBoolean(cursor.getString(16)));
@@ -169,16 +163,14 @@ public class ProfileDataSource {
 
     public Profile getProfileByName(String profileName) throws ProfileNotFound
     {
-        Log.d(TAG, "Searching for profile by name: " + profileName);
+        Log.d(Constants.LOG, "Searching for profile by name: " + profileName);
         List<Profile> listProfiles = getAllProfiles();
 
         for(Profile p : listProfiles)
         {
 
-            Log.d(TAG, String.format("Comparing %s with %s", p.getName(), profileName));
-
             if(p.getName().equals(profileName)){
-                Log.d(TAG, "Found profile " + p.getName());
+                Log.d(Constants.LOG, "Found profile " + p.getName());
                 return p;
             }
         }

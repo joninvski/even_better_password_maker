@@ -42,6 +42,11 @@ Other targets
     * clean
     This task cleans the output of the project
 
+Create apk for market
+---------------------
+
+./release.sh ~/path_to_keystore
+
 Note
 ----
 

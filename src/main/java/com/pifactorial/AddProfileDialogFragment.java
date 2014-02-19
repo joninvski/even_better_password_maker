@@ -18,8 +18,6 @@ import android.widget.TextView.OnEditorActionListener;
 public class AddProfileDialogFragment extends DialogFragment implements
 		OnEditorActionListener, View.OnClickListener {
 
-	private static final String TAG = DetailProfileFrag.class.getName();
-
 	private EditText mEditText;
 
 	public interface AddProfileDialogListener {
@@ -74,7 +72,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		if (EditorInfo.IME_ACTION_DONE == actionId) {
 			// this.dismiss();
-			Log.i(TAG, "Finished dialog");
+			Log.d(Constants.LOG, "Finished dialog");
 
             createNewProfileAndDismissDialog();
 			this.dismiss();
@@ -85,7 +83,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
 	}
 
 	public void onClick(View v) {
-		Log.i(TAG, "Button clicked with text ");
+		Log.d(Constants.LOG, "Button clicked with text ");
         createNewProfileAndDismissDialog();
 		this.dismiss();
 	}
