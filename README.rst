@@ -30,13 +30,29 @@ Test
 ----
     ./gradlew connectedInstrumentTest
 
+Other targets
+-------------
+
+    * assemble
+    The task to assemble the output(s) of the project
+    * check
+    The task to run all the checks.
+    * build
+    This task does both assemble and check
+    * clean
+    This task cleans the output of the project
+
 Create apk for market
 ---------------------
 
 ./release.sh ~/path_to_keystore
 
-
 Note
 ----
 
 Do not forget to set and export the ANDROID_HOME and JAVA_HOME variables
+
+e.g.
+
+    ANDROID_HOME=/home/workspace/android/sdk; export ANDROID_HOME
+    JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386/jre/; export JAVA_HOME
