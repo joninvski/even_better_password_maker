@@ -94,6 +94,20 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
 		});
 
+        // Get intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                etURL.setText(sharedText);
+                }
+            }
+        }
+
 		// Check if there is no profile
 		if (datasource.getAllProfiles().size() < 1) {
 			Log.d(Constants.LOG, "No profile in DB was found");
