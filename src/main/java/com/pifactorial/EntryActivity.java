@@ -101,19 +101,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
         });
 
-        // Get intent, action and MIME type
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
-                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                if (sharedText != null) {
-                    etURL.setText(sharedText);
-                }
-            }
-        }
 
         // Check if there is no profile
         if (datasource.getAllProfiles().size() < 1) {
@@ -217,8 +204,24 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         super.onResume();
         updateProfileSpinner();
 
-        String lastURL = mPrefs.getString("LastURL", getString(R.string.http));
-        etURL.setText(lastURL);
+        // Get intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                    etURL.setText(sharedText);
+                }
+            }
+        }
+        else {
+            String lastURL = mPrefs.getString("LastURL", getString(R.string.http));
+            etURL.setText(lastURL);
+        }
+
         etURL.setSelection(etURL.getText().length()); // Puts the cursor at the end of the string
     }
 

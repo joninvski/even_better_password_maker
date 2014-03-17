@@ -31,10 +31,10 @@ android {
 
 
     defaultConfig {
-        versionCode 8
-        versionName "0.0.8-ALPHA"
+        versionCode 9
+        versionName "0.0.9-ALPHA"
         minSdkVersion 14
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
 
 
