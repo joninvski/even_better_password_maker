@@ -34,7 +34,7 @@ android {
         versionCode 8
         versionName "0.0.8-ALPHA"
         minSdkVersion 14
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
 
 
