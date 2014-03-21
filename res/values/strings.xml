@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">EvenBetterPasswordMaker</string>
-    <string name="copy">Copy</string>
-    <string name="go">Go</string>
-    <string name="update">Update</string>
     <string name="mpw">Master-Password</string>
     <string name="url">URL</string>
     <string name="act_send">Generate password</string>
-    <string name="modProfile">Choose or modify profile</string>
-    <string name="emptyFields">Clear fields on exit</string>
     <string name="http">http://</string>
     <string name="profile_protocol" translatable="false">Protocol</string>
     <string name="profile_subdomain" translatable="false">Subdomain</string>
@@ -17,7 +11,6 @@
     <string name="profile_port" translatable="false">Port, path, anchor, query parameters</string>
     <string name="profile_hash_algorithm" translatable="false">Hash Algorithm</string>
     <string name="profile_name_label" translatable="false">Profile Name</string>
-    <string name="profile_default_name" translatable="false">Default</string>
     <string name="profile_url_components_label" translatable="false">Url components</string>
 
     <string-array name="hash_algorithms_string_array" translatable="false">
@@ -32,20 +25,15 @@
     <string name="cb_pass_characters_uppercase">uppercase</string>
     <string name="cb_pass_characters_number">numbers</string>
     <string name="cb_pass_characters_symbols">symbols</string>
-    <string name="et_pass_costum_characters_hint">costum</string>
-    <string name="bt_detail_profile_save">Save</string>
-    <string name="bt_detail_profile_cancel">Cancel</string>
     <string name="text_show_password_hint">Click to show/hide</string>
     <string name="buttonCopy">Copy</string>
     <string name="buttonGo">Go</string>
     <string name="buttonProfiles">Profiles</string>
-    <string name="buttonAbout">About</string>
     <string name="buttonSave">Save</string>
     <string name="buttonDelete">Delete</string>
     <string name="buttonCancel">Delete</string>
-    <string name="plusButton">Add</string>
     <string name="buttonNewProfile">+</string>
     <string name="profile">Profile</string>
     <string name="password_copy_to_clipboard">Password copied to clipboard</string>
-    
+
 </resources>

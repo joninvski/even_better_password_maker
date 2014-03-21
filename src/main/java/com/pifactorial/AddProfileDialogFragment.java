@@ -24,21 +24,6 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		void onFinishEditDialog(String inputText);
 	}
 
-	/**
-	 * Create a new instance of MyDialogFragment, providing "num" as an
-	 * argument.
-	 */
-	static AddProfileDialogFragment newInstance(int num) {
-		AddProfileDialogFragment f = new AddProfileDialogFragment();
-
-		// Supply num input as an argument.
-		Bundle args = new Bundle();
-		args.putInt("num", num);
-		f.setArguments(args);
-
-		return f;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

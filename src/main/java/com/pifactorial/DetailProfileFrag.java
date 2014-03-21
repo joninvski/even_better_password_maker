@@ -191,12 +191,6 @@ public class DetailProfileFrag extends Fragment implements
 		Log.v(Constants.LOG, "Activity Created");
 	}
 
-	public void setText(String item) {
-		Log.v(Constants.LOG, "Set Text = " + item);
-		TextView view = (TextView) getView().findViewById(R.id.spProfiles);
-		view.setText(item);
-	}
-
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -206,19 +200,6 @@ public class DetailProfileFrag extends Fragment implements
 		Log.v(Constants.LOG, "Get shown index = ");
 
 		return getArguments().getInt("index", 0);
-	}
-
-	public static DetailProfileFrag newInstance(int index) {
-		Log.v(Constants.LOG, "New instance = ");
-
-		DetailProfileFrag f = new DetailProfileFrag();
-
-		// Supply index input as an argument.
-		Bundle args = new Bundle();
-		args.putInt("index", index);
-		f.setArguments(args);
-
-		return f;
 	}
 
 	@Override
@@ -347,6 +328,7 @@ public class DetailProfileFrag extends Fragment implements
 		// TODO Auto-generated method stub
 
 	}
+
 
 	public void onFinishEditDialog(String profileName) {
 		Log.d(Constants.LOG, "Dialog text was: " + profileName);
