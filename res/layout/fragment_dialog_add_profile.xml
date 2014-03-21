@@ -10,7 +10,7 @@
         android:id="@+id/lbl_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter profile name" />
+        android:text="@string/enterProfileName" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/txt_profile_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:imeOptions="actionDone"

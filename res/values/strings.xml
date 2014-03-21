@@ -31,9 +31,9 @@
     <string name="buttonProfiles">Profiles</string>
     <string name="buttonSave">Save</string>
     <string name="buttonDelete">Delete</string>
-    <string name="buttonCancel">Delete</string>
     <string name="buttonNewProfile">+</string>
     <string name="profile">Profile</string>
     <string name="password_copy_to_clipboard">Password copied to clipboard</string>
+    <string name="enterProfileName">Enter profile name</string>
 
 </resources>
