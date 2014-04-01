@@ -7,7 +7,7 @@ env:
   - ANDROID_SDK=android-sdk_r22.6.1-linux.tgz
 
 matrix:
-- ANDROID_SDKS=android-19,sysimg-19  ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+- ANDROID_SDK_IMAGE=sysimg-19  ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
 branches:
   only:
@@ -28,8 +28,7 @@ before_install:
 
   # Install required components.
   # For a full list, run `android list sdk -a --extended`
-  - echo y | android update sdk --filter 1,2                        --no-ui --force
-  - echo y | android update sdk --filter ${ANDROID_SDKS}            --no-ui --force
+  - echo y | android update sdk --filter ${ANDROID_SDK_IMAGE}       --no-ui --force
   - echo y | android update sdk --filter extra-android-support      --no-ui --force
   - echo y | android update sdk --filter extra-android-m2repository --no-ui --force
 
