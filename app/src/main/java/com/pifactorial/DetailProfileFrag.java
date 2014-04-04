@@ -35,18 +35,18 @@ import com.pifactorial.AddProfileDialogFragment.AddProfileDialogListener;
 public class DetailProfileFrag extends Fragment implements
 		OnItemSelectedListener, AddProfileDialogListener {
 
-	protected Spinner sp_profiles;
-	protected CheckBox cb_urlProtocol;
-	protected CheckBox cb_urlSubdomain;
-	protected CheckBox cb_urlDomain;
-	protected CheckBox cb_urlPort;
-	protected Spinner sp_hash_alg;
-	protected EditText et_password_lenght;
-	protected CheckBox cb_charLower;
-	protected CheckBox cb_charUpper;
-	protected CheckBox cb_charNumber;
-	protected CheckBox cb_charSymbols;
-	protected Button bt_profileAdd;
+	protected Spinner mProfiles;
+	protected CheckBox mUrlProtocol;
+	protected CheckBox mUrlSubdomain;
+	protected CheckBox mUrlDomain;
+	protected CheckBox mUrlPort;
+	protected Spinner mHashAlg;
+	protected EditText mPasswordLenght;
+	protected CheckBox mCharLower;
+	protected CheckBox mCharUpper;
+	protected CheckBox mCharNumber;
+	protected CheckBox mCharSymbols;
+	protected Button mProfileAdd;
 
 	private ProfileDataSource datasource;
 
@@ -66,36 +66,36 @@ public class DetailProfileFrag extends Fragment implements
 	private void updateProfileOnGui() throws ProfileNotFound {
 		Log.d(Constants.LOG, "Going to load profile");
 
-		SQLiteCursor profileName = (SQLiteCursor) sp_profiles.getSelectedItem();
+		SQLiteCursor profileName = (SQLiteCursor) mProfiles.getSelectedItem();
 		if (profileName == null)
-			sp_profiles.setSelection(0);
+			mProfiles.setSelection(0);
 
 		Profile profile = datasource.cursorToAccount(profileName);
 		Profile p = datasource.getProfileByName(profile.getName());
 
 		Log.d(Constants.LOG, "Profile fetched : " + p.toString());
 
-		cb_urlProtocol.setChecked(p.getUrlCompomentProtocol());
-		cb_urlSubdomain.setChecked(p.getUrlComponentSubDomain());
-		cb_urlDomain.setChecked(p.getUrlComponentDomain());
-		cb_urlPort.setChecked(p.getUrlComponentPortParameters());
-		cb_charLower.setChecked(p.hasCharSetLowercase());
-		cb_charUpper.setChecked(p.hasCharSetUppercase());
-		cb_charNumber.setChecked(p.hasCharSetNumbers());
-		cb_charSymbols.setChecked(p.hasCharSetSymbols());
-		et_password_lenght.setText(Integer.toString(p.getLength()));
+		mUrlProtocol.setChecked(p.getUrlCompomentProtocol());
+		mUrlSubdomain.setChecked(p.getUrlComponentSubDomain());
+		mUrlDomain.setChecked(p.getUrlComponentDomain());
+		mUrlPort.setChecked(p.getUrlComponentPortParameters());
+		mCharLower.setChecked(p.hasCharSetLowercase());
+		mCharUpper.setChecked(p.hasCharSetUppercase());
+		mCharNumber.setChecked(p.hasCharSetNumbers());
+		mCharSymbols.setChecked(p.hasCharSetSymbols());
+		mPasswordLenght.setText(Integer.toString(p.getLength()));
 
 		String[] androidStrings = getResources().getStringArray(
 				R.array.hash_algorithms_string_array);
 
-		sp_hash_alg.setSelection(java.util.Arrays.asList(androidStrings)
+		mHashAlg.setSelection(java.util.Arrays.asList(androidStrings)
 				.indexOf(p.getAlgorithm().getName()));
 
 		Log.d(Constants.LOG, "Profile loaded");
 	}
 
 	public void updateProfileSpinner() {
-		Log.d(Constants.LOG, "Populating spinner with stored profiles");
+
 		// Populate a spinner with the profiles
 		Cursor cursor = datasource.getAllProfilesCursor();
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
@@ -106,32 +106,29 @@ public class DetailProfileFrag extends Fragment implements
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
-		sp_profiles.setAdapter(adapter);
+		mProfiles.setAdapter(adapter);
 
-		Log.d(Constants.LOG, "Finished creating entry activity");
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		Log.d(Constants.LOG, "Starting on CreateView");
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.detail_profile, container, false);
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		sp_profiles = (Spinner) view.findViewById(R.id.spProfiles);
-		bt_profileAdd = (Button) view.findViewById(R.id.btAddProfile);
-		cb_urlProtocol = (CheckBox) view.findViewById(R.id.cb_url_protocol);
-		cb_urlSubdomain = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
-		cb_urlDomain = (CheckBox) view.findViewById(R.id.cb_url_domain);
-		cb_urlPort = (CheckBox) view.findViewById(R.id.cb_url_port);
-		sp_hash_alg = (Spinner) view.findViewById(R.id.sp_hash_alg);
-		et_password_lenght = (EditText) view.findViewById(R.id.etPassLenght);
-		cb_charLower = (CheckBox) view.findViewById(R.id.cb_char_lower);
-		cb_charUpper = (CheckBox) view.findViewById(R.id.cb_char_upper);
-		cb_charNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
-		cb_charSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
+		mProfiles = (Spinner) view.findViewById(R.id.spProfiles);
+		mProfileAdd = (Button) view.findViewById(R.id.btAddProfile);
+		mUrlProtocol = (CheckBox) view.findViewById(R.id.cb_url_protocol);
+		mUrlSubdomain = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
+		mUrlDomain = (CheckBox) view.findViewById(R.id.cb_url_domain);
+		mUrlPort = (CheckBox) view.findViewById(R.id.cb_url_port);
+		mHashAlg = (Spinner) view.findViewById(R.id.sp_hash_alg);
+		mPasswordLenght = (EditText) view.findViewById(R.id.etPassLenght);
+		mCharLower = (CheckBox) view.findViewById(R.id.cb_char_lower);
+		mCharUpper = (CheckBox) view.findViewById(R.id.cb_char_upper);
+		mCharNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
+		mCharSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
 
-		bt_profileAdd.setOnClickListener(new View.OnClickListener() {
+		mProfileAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Log.i(Constants.LOG, "Clicked add profile button");
 				// Watch for button clicks.
@@ -141,12 +138,12 @@ public class DetailProfileFrag extends Fragment implements
 			}
 		});
 
-		sp_profiles.setOnItemSelectedListener(new OnItemSelectedListener() {
+		mProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
 				Log.d(Constants.LOG, "Choosen a new profile");
 				try {
-					int last_selected = sp_profiles.getSelectedItemPosition();
+					int last_selected = mProfiles.getSelectedItemPosition();
 					Editor editor = mPrefs.edit();
 					editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
 					editor.apply(); // TODO - Check the return value
@@ -169,7 +166,7 @@ public class DetailProfileFrag extends Fragment implements
 
 		// Now let's get the last selected profile
         int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
-        sp_profiles.setSelection(last_selected);
+        mProfiles.setSelection(last_selected);
 
 		try {
 			updateProfileOnGui();
@@ -253,13 +250,13 @@ public class DetailProfileFrag extends Fragment implements
 	private boolean deleteProfile() {
 
 
-		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
+		SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
 		Profile profile = datasource.cursorToAccount(cursor);
 
 		Log.d(Constants.LOG, "Deleting the profile with name " + profile.getName());
 
         if(profile.getName().equals(Profile.DEFAULT_NAME)) {
-            Log.i(Constants.LOG, "Could not delete as it was the default"); 
+            Log.i(Constants.LOG, "Could not delete as it was the default");
             return false;
         }
 
@@ -274,21 +271,21 @@ public class DetailProfileFrag extends Fragment implements
 		Log.d(Constants.LOG, "Clicked the save button");
         Profile p = new Profile();
 
-		SQLiteCursor cursor = (SQLiteCursor) sp_profiles.getSelectedItem();
+		SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
 		String profileName = datasource.cursorToAccount(cursor).getName();
 
 		p.setName(profileName);
-		p.setUrlCompomentProtocol(cb_urlProtocol.isChecked());
-		p.setUrlComponentSubDomain(cb_urlSubdomain.isChecked());
-		p.setUrlComponentDomain(cb_urlDomain.isChecked());
-		p.setUrlComponentPortParameters(cb_urlPort.isChecked());
-		p.setCharSetLowercase(cb_charLower.isChecked());
-		p.setCharSetUppercase(cb_charUpper.isChecked());
-		p.setCharSetNumbers(cb_charNumber.isChecked());
-		p.setCharSetSymbols(cb_charSymbols.isChecked());
-		p.setLength(Integer.parseInt(et_password_lenght.getText().toString()));
+		p.setUrlCompomentProtocol(mUrlProtocol.isChecked());
+		p.setUrlComponentSubDomain(mUrlSubdomain.isChecked());
+		p.setUrlComponentDomain(mUrlDomain.isChecked());
+		p.setUrlComponentPortParameters(mUrlPort.isChecked());
+		p.setCharSetLowercase(mCharLower.isChecked());
+		p.setCharSetUppercase(mCharUpper.isChecked());
+		p.setCharSetNumbers(mCharNumber.isChecked());
+		p.setCharSetSymbols(mCharSymbols.isChecked());
+		p.setLength(Integer.parseInt(mPasswordLenght.getText().toString()));
 
-		String algorithm_string = sp_hash_alg.getSelectedItem().toString();
+		String algorithm_string = mHashAlg.getSelectedItem().toString();
 		try {
 			p.setAlgorithm(AlgorithmType.fromRdfString(algorithm_string));
 		} catch (Exception e) {
