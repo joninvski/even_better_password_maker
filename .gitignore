@@ -1,5 +1,2 @@
-TAGS
-.classpath
-.settings/
-proguard-project.txt
-project.properties
+build/
+.gradle/
