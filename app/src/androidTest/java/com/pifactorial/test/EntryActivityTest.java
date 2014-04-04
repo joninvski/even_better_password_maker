@@ -6,7 +6,7 @@ import com.pifactorial.*;
 public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryActivity> {
 
     public EntryActivityTest() {
-        super(EntryActivity.class); 
+        super(EntryActivity.class);
     }
 
     public void testActivity() {

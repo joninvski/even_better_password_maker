@@ -41,52 +41,47 @@ import org.daveware.passwordmaker.SecureCharArray;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
-    private ProfileDataSource datasource;
-    private Boolean visible;
-    protected EditText etURL;
-    protected EditText etMasterPass;
-    protected TextView textOutputPass;
-    protected Spinner spProfiles;
+    // Views
+    private EditText etURL;
+    private EditText etMasterPass;
+    private TextView textOutputPass;
+    private Spinner spProfiles;
 
+    // Other
+    private ProfileDataSource datasource;
+    private Boolean mPassVisible;
     private SharedPreferences mPrefs;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(Constants.LOG, "Creating Entry Activity");
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
 
         // Let's get the window controls
         textOutputPass = (TextView) findViewById(R.id.tvResultPass);
-        etURL = (EditText) findViewById(R.id.etURL);
-
-        etMasterPass = (EditText) findViewById(R.id.etMasterPass);
-        spProfiles = (Spinner) findViewById(R.id.spProfiles);
-        Log.d(Constants.LOG, "Fetched all views");
+        etURL          = (EditText) findViewById(R.id.etURL);
+        etMasterPass   = (EditText) findViewById(R.id.etMasterPass);
+        spProfiles     = (Spinner) findViewById(R.id.spProfiles);
 
         // Set the action bar to show the app title
         this.getActionBar().setDisplayShowTitleEnabled(true);
 
-        // Master password should always start as not visible
-        visible = false;
+        // Master password should always start as not mPassVisible
+        mPassVisible = false;
 
         // Create a data source to get profiles
-        Log.d(Constants.LOG, "Creating data source");
         datasource = new ProfileDataSource(this);
         datasource.open();
-        Log.d(Constants.LOG, "Created data source");
 
         mPrefs = getSharedPreferences(getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
 
         // Let's create the callback when the spinner changes.
-        // We just want to store in the last selected preference the selected
-        // value
+        // We just want to store in the last selected preference the selected value
         spProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView,
                 View selectedItemView, int position, long id) {
-                Log.d(Constants.LOG, "Saving shared preferences");
 
                 int last_selected = spProfiles.getSelectedItemPosition();
                 Editor editor = mPrefs.edit();
@@ -98,7 +93,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
                 Log.i(Constants.LOG,
                     "Strange, nothing was selected on the profile spinner");
             }
-
         });
 
 
@@ -157,10 +151,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.tvResultPass:
-
-                Log.d(Constants.LOG, "Clicked on text output password");
-                // Toggle the visible variable
-                visible = !visible;
+                mPassVisible = !mPassVisible;
                 updatePassword();
 
                 break;
@@ -172,13 +163,12 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     }
 
     private void updatePassword() {
-        if (visible) {
+        if (mPassVisible) {
             try {
                 SecureCharArray result = getPassword();
                 textOutputPass.setText(new String(result.getData()));     // Show the generated password
             } catch (PasswordGenerationException e) {
-                Log.e(Constants.LOG, "Error in generating the new password"
-                        + e.getMessage());
+                Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
             }
         } else {
             textOutputPass.setText("");
@@ -192,10 +182,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         Log.d(Constants.LOG, "Profile fetched \n" + profile.toString());
 
         // Use the profile and master password to get the generated password
-        SecureCharArray master = new SecureCharArray(etMasterPass.getText()
-                .toString());
-        SecureCharArray result = PasswordMaker.makePassword(master, profile,
-                etURL.getText().toString());
+        SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
+        SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
         return result;
     }
 
@@ -254,10 +242,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
                 break;
 
-                // case R.id.actionBtnAbout:
-                // Log.i(Constants.LOG, "Clicked About");
-                // break;
-
             case R.id.actionBtnProfiles:
                 Log.d(Constants.LOG, "Clicked Profiles");
                 Intent myIntent = new Intent(EntryActivity.this,
@@ -273,7 +257,6 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onPause() {
-        Log.d(Constants.LOG, "on Pausing");
 
         // Save the last URL
         Editor editor = mPrefs.edit();
