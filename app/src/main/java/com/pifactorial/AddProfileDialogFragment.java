@@ -14,11 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
+import java.util.Locale;
 
 public class AddProfileDialogFragment extends DialogFragment implements
-		OnEditorActionListener, View.OnClickListener {
+		OnEditorActionListener {
 
 	private EditText mEditText;
+	private DialogFragment mAddProfileDialogFragment;
 
 	public interface AddProfileDialogListener {
 		void onFinishEditDialog(String inputText);
@@ -30,16 +33,16 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		// Pick a style based on the num.
 		int style = DialogFragment.STYLE_NORMAL, theme = 0;
 		setStyle(style, theme);
+        mAddProfileDialogFragment = this;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_dialog_add_profile,
-				container, false);
+		View v = inflater.inflate(R.layout.fragment_dialog_add_profile, container, false);
 		mEditText = (EditText) v.findViewById(R.id.txt_profile_name);
 
-		getDialog().setTitle("New Profile");
+		getDialog().setTitle(getString(R.string.new_profile));
 
 		// Show soft keyboard automatically
 		mEditText.requestFocus();
@@ -48,8 +51,22 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		mEditText.setOnEditorActionListener(this);
 
 		// Let's get the button and insert the callback
-		Button button = (Button) v.findViewById(R.id.button1);
-		button.setOnClickListener(this);
+		Button buttonOk = (Button) v.findViewById(R.id.ok_add_profile);
+		buttonOk.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewProfileAndDismissDialog();
+                mAddProfileDialogFragment.dismiss();
+            }
+        });
+
+		Button buttonCancel = (Button) v.findViewById(R.id.cancel_add_profile);
+		buttonCancel.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAddProfileDialogFragment.dismiss();
+            }
+        });
 
 		return v;
 	}
@@ -67,19 +84,16 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		return false;
 	}
 
-	public void onClick(View v) {
-		Log.d(Constants.LOG, "Button clicked with text ");
-        createNewProfileAndDismissDialog();
-		this.dismiss();
-	}
-
 	private void createNewProfileAndDismissDialog()
 	{
 		FragmentManager fm = getFragmentManager();
-		DetailProfileFrag fragmentToCallback = (DetailProfileFrag) fm
-				.findFragmentById(R.id.frag_update_detail);
-		fragmentToCallback.onFinishEditDialog(mEditText.getText()
-				.toString());
+		DetailProfileFrag fragmentToCallback = (DetailProfileFrag) fm.findFragmentById(R.id.frag_update_detail);
+        String profileName = mEditText.getText().toString();
+		fragmentToCallback.onFinishEditDialog(profileName);
+
+        String msg = String.format(Locale.US, "%s %s", profileName, getString(R.string.toast_profile_created));
+        Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
 
         //Lets close the alert box
         this.dismiss();

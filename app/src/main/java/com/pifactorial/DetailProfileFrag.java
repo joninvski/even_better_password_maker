@@ -60,9 +60,7 @@ public class DetailProfileFrag extends Fragment implements
 
 		datasource = new ProfileDataSource(getActivity());
 		datasource.open();
-		mPrefs = getActivity().getSharedPreferences(getString(R.string.SharedPreferencesName),
-				Context.MODE_PRIVATE);
-
+		mPrefs = getActivity().getSharedPreferences(getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
 	}
 
 	private void updateProfileOnGui() throws ProfileNotFound {
@@ -178,9 +176,6 @@ public class DetailProfileFrag extends Fragment implements
 		} catch (ProfileNotFound e) {
 			e.printStackTrace();
 		}
-		Log.d(Constants.LOG, "Detail Profile created");
-
-		Log.d(Constants.LOG, "View created");
 		return view;
 	}
 

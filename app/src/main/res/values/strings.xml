@@ -31,8 +31,11 @@
     <string name="buttonProfiles">Profiles</string>
     <string name="buttonSave">Save</string>
     <string name="buttonDelete">Delete</string>
-    <string name="buttonNewProfile">+</string>
+    <string name="buttonNewProfile">Add</string>
+    <string name="buttonCancelProfile">Cancel</string>
     <string name="profile">Profile</string>
     <string name="password_copy_to_clipboard">Password copied to clipboard</string>
-    <string name="enterProfileName">Enter profile name</string>
+    <string name="enter_profile_name">Enter profile name</string>
+    <string name="new_profile">New Profile</string>
+    <string name="toast_profile_created">profile created</string>
 </resources>
