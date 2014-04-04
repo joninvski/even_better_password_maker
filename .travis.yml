@@ -5,7 +5,7 @@ env:
   global:
     - TERM=dumb
     - BUILD_TOOLS=build-tools-19.0.3
-    - ANDROID_SDK_FILE=android-sdk_r22.6.1-linux.tgz
+    - ANDROID_SDK_FILE=android-sdk_r22.6.2-linux.tgz
   matrix:
       - ANDROID_SDKS=android-19,sysimg-19  ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 

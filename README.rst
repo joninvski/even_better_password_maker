@@ -56,3 +56,4 @@ e.g.
 
     ANDROID_HOME=/home/workspace/android/sdk; export ANDROID_HOME
     JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386/jre/; export JAVA_HOME
+
