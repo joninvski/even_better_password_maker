@@ -49,7 +49,7 @@ public class DetailProfileFrag extends Fragment implements
 	protected Button mProfileAdd;
 
 	private ProfileDataSource datasource;
-	private SharedPreferences mPrefs;
+	private ManagePreferences mPrefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,15 +59,15 @@ public class DetailProfileFrag extends Fragment implements
 
 		datasource = new ProfileDataSource(getActivity());
 		datasource.open();
-		mPrefs = getActivity().getSharedPreferences(getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
+		mPrefs = new ManagePreferences(getActivity());
 	}
 
 	private void updateProfileOnGui() throws ProfileNotFound {
-		SQLiteCursor profileCursor = (SQLiteCursor) mProfiles.getSelectedItem();
-		if (profileCursor == null)
-			mProfiles.setSelection(0);
+        final int last_profile_selected = mPrefs.getLastSelectedProfile();
+		mProfiles.setSelection(last_profile_selected);
 
-        String profileName = datasource.getProfileName(profileCursor);
+		SQLiteCursor profileCursor = (SQLiteCursor) mProfiles.getSelectedItem();
+        final String profileName = datasource.getProfileName(profileCursor);
 		final Profile p = datasource.getProfileByName(profileName);
 
 		mUrlProtocol.setChecked(p.getUrlCompomentProtocol());
@@ -95,6 +95,7 @@ public class DetailProfileFrag extends Fragment implements
 
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 		// Apply the adapter to the spinner
 		mProfiles.setAdapter(adapter);
 	}
@@ -133,9 +134,7 @@ public class DetailProfileFrag extends Fragment implements
 				Log.d(Constants.LOG, "Choosen a new profile");
 				try {
 					final int last_selected = mProfiles.getSelectedItemPosition();
-					Editor editor = mPrefs.edit();
-					editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
-					editor.apply(); // TODO - Check the return value
+                    mPrefs.setLastSelectedProfile(last_selected);
 					updateProfileOnGui();
 				} catch (ProfileNotFound e) {
 					e.printStackTrace();
@@ -147,12 +146,10 @@ public class DetailProfileFrag extends Fragment implements
 			}
 		});
 
-		Log.d(Constants.LOG, "Going to update spinner");
 		updateProfileSpinner();
-		Log.d(Constants.LOG, "Updated Spinner");
 
 		// Now let's get the last selected profile
-        final int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
+        final int last_selected = mPrefs.getLastSelectedProfile();
         mProfiles.setSelection(last_selected);
 
 		try {

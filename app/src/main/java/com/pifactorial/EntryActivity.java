@@ -50,7 +50,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     // Other
     private ProfileDataSource datasource;
     private Boolean mPassVisible;
-    private SharedPreferences mPrefs;
+    private ManagePreferences mPrefs;
 
     /** Called when the activity is first created. */
     @Override
@@ -75,7 +75,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         datasource = new ProfileDataSource(this);
         datasource.open();
 
-        mPrefs = getSharedPreferences(getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
+        mPrefs = new ManagePreferences(this);
 
         // Let's create the callback when the spinner changes.
         // We just want to store in the last selected preference the selected value
@@ -83,10 +83,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> parentView,
                 View selectedItemView, int position, long id) {
 
-                int last_selected = spProfiles.getSelectedItemPosition();
-                Editor editor = mPrefs.edit();
-                editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
-                editor.apply(); // TODO - Check the return value
+                final int last_selected = spProfiles.getSelectedItemPosition();
+                mPrefs.setLastSelectedProfile(last_selected);
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -99,7 +97,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // Check if there is no profile
         if (datasource.getAllProfiles().size() < 1) {
             Log.d(Constants.LOG, "No profile in DB was found");
-            Profile defaultProfile = Profile.getDefaultProfile();
+            final Profile defaultProfile = Profile.getDefaultProfile();
             Log.d(Constants.LOG, "Inserting default profile: " + defaultProfile);
             datasource.insertProfile(defaultProfile);
         }
@@ -143,7 +141,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         spProfiles.setAdapter(adapter);
 
         // Now let's get the default profile
-        int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
+        final int last_selected = mPrefs.getLastSelectedProfile();
         spProfiles.setSelection(last_selected);
     }
 
@@ -165,7 +163,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     private void updatePassword() {
         if (mPassVisible) {
             try {
-                SecureCharArray result = getPassword();
+                final SecureCharArray result = getPassword();
                 textOutputPass.setText(new String(result.getData()));     // Show the generated password
             } catch (PasswordGenerationException e) {
                 Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
@@ -177,13 +175,13 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
     private SecureCharArray getPassword() throws PasswordGenerationException {
         // Get spinner profile
-        SQLiteCursor profileCursor = (SQLiteCursor) spProfiles.getSelectedItem();
-        Profile profile = datasource.createProfileFromCursor(profileCursor);
+        final SQLiteCursor profileCursor = (SQLiteCursor) spProfiles.getSelectedItem();
+        final Profile profile = datasource.createProfileFromCursor(profileCursor);
         Log.d(Constants.LOG, "Profile fetched \n" + profile.toString());
 
         // Use the profile and master password to get the generated password
-        SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
-        SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
+        final SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
+        final SecureCharArray result = PasswordMaker.makePassword(master, profile, etURL.getText().toString());
         return result;
     }
 
@@ -193,9 +191,9 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         updateProfileSpinner();
 
         // Get intent, action and MIME type
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
+        final Intent intent = getIntent();
+        final String action = intent.getAction();
+        final String type = intent.getType();
 
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
@@ -206,7 +204,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             }
         }
         else {
-            String lastURL = mPrefs.getString("LastURL", getString(R.string.http));
+            String lastURL = mPrefs.getLastURL();
+            
             etURL.setText(lastURL);
         }
 
@@ -220,7 +219,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
             case R.id.actionBtnGo:
                 Log.d(Constants.LOG, "Pressed the go button");
-                Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+                final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
                 myWebLink.setData(Uri.parse(etURL.getText().toString()));
                 startActivity(myWebLink);
                 break;
@@ -228,10 +227,10 @@ public class EntryActivity extends Activity implements View.OnClickListener {
             case R.id.actionBtnCopy:
                 Log.d(Constants.LOG, "Clicked item Copy");
                 try {
-                    SecureCharArray generatedPassword = getPassword();
+                    final SecureCharArray generatedPassword = getPassword();
 
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
+                    final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    final ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
                     clipboard.setPrimaryClip(clip);
 
                     Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
@@ -244,8 +243,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
             case R.id.actionBtnProfiles:
                 Log.d(Constants.LOG, "Clicked Profiles");
-                Intent myIntent = new Intent(EntryActivity.this,
-                        UpdateActivity.class);
+                final Intent myIntent = new Intent(EntryActivity.this, UpdateActivity.class);
                 EntryActivity.this.startActivity(myIntent);
                 break;
 
@@ -257,12 +255,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onPause() {
-
         // Save the last URL
-        Editor editor = mPrefs.edit();
-        editor.putString("LastURL", etURL.getText().toString());
-        editor.apply(); // TODO - Check the return value
-
+        mPrefs.setLastURL(etURL.getText().toString());
         super.onPause();
     }
 
