@@ -12,5 +12,4 @@ public class UpdateActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile);
 	}
-
 }

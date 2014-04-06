@@ -30,16 +30,12 @@ public class AddProfileDialogFragment extends DialogFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Pick a style based on the num.
-		int style = DialogFragment.STYLE_NORMAL, theme = 0;
-		setStyle(style, theme);
         mAddProfileDialogFragment = this;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_dialog_add_profile, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		final View v = inflater.inflate(R.layout.fragment_dialog_add_profile, container, false);
 		mEditText = (EditText) v.findViewById(R.id.txt_profile_name);
 
 		getDialog().setTitle(getString(R.string.new_profile));
@@ -51,7 +47,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		mEditText.setOnEditorActionListener(this);
 
 		// Let's get the button and insert the callback
-		Button buttonOk = (Button) v.findViewById(R.id.ok_add_profile);
+		final Button buttonOk = (Button) v.findViewById(R.id.ok_add_profile);
 		buttonOk.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +56,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
             }
         });
 
-		Button buttonCancel = (Button) v.findViewById(R.id.cancel_add_profile);
+		final Button buttonCancel = (Button) v.findViewById(R.id.cancel_add_profile);
 		buttonCancel.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,16 +80,14 @@ public class AddProfileDialogFragment extends DialogFragment implements
 		return false;
 	}
 
-	private void createNewProfileAndDismissDialog()
-	{
-		FragmentManager fm = getFragmentManager();
-		DetailProfileFrag fragmentToCallback = (DetailProfileFrag) fm.findFragmentById(R.id.frag_update_detail);
-        String profileName = mEditText.getText().toString();
+	private void createNewProfileAndDismissDialog() {
+		final FragmentManager fm = getFragmentManager();
+		final DetailProfileFrag fragmentToCallback = (DetailProfileFrag) fm.findFragmentById(R.id.frag_update_detail);
+        final String profileName = mEditText.getText().toString();
 		fragmentToCallback.onFinishEditDialog(profileName);
 
-        String msg = String.format(Locale.US, "%s %s", profileName, getString(R.string.toast_profile_created));
+        final String msg = String.format(Locale.US, "%s %s", profileName, getString(R.string.toast_profile_created));
         Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
 
         //Lets close the alert box
         this.dismiss();

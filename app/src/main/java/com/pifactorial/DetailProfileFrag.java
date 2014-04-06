@@ -132,8 +132,8 @@ public class DetailProfileFrag extends Fragment implements
 			public void onClick(View v) {
 				Log.i(Constants.LOG, "Clicked add profile button");
 				// Watch for button clicks.
-				FragmentManager fm = getFragmentManager();
-				AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
+				final FragmentManager fm = getFragmentManager();
+				final AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
 				editNameDialog.show(fm, "fragment_edit_name");
 			}
 		});
@@ -143,11 +143,10 @@ public class DetailProfileFrag extends Fragment implements
 					View selectedItemView, int position, long id) {
 				Log.d(Constants.LOG, "Choosen a new profile");
 				try {
-					int last_selected = mProfiles.getSelectedItemPosition();
+					final int last_selected = mProfiles.getSelectedItemPosition();
 					Editor editor = mPrefs.edit();
 					editor.putInt(getString(R.string.LastSelectedProfile), last_selected);
 					editor.apply(); // TODO - Check the return value
-
 					updateProfileOnGui();
 				} catch (ProfileNotFound e) {
 					e.printStackTrace();
@@ -157,7 +156,6 @@ public class DetailProfileFrag extends Fragment implements
 			public void onNothingSelected(AdapterView<?> parentView) {
 				Log.i(Constants.LOG, "Nothing was selected on the profile spinner");
 			}
-
 		});
 
 		Log.d(Constants.LOG, "Going to update spinner");
@@ -165,7 +163,7 @@ public class DetailProfileFrag extends Fragment implements
 		Log.d(Constants.LOG, "Updated Spinner");
 
 		// Now let's get the last selected profile
-        int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
+        final int last_selected = mPrefs.getInt(getString(R.string.LastSelectedProfile), 0);
         mProfiles.setSelection(last_selected);
 
 		try {
@@ -178,9 +176,7 @@ public class DetailProfileFrag extends Fragment implements
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.v(Constants.LOG, "Going to create activity");
 		super.onActivityCreated(savedInstanceState);
-		Log.v(Constants.LOG, "Activity Created");
 	}
 
 	@Override
@@ -226,14 +222,12 @@ public class DetailProfileFrag extends Fragment implements
         case R.id.actionBtnDelete:
             Log.d(Constants.LOG, "Clicked the delete button");
 
-
             alertDialogBuilder = new AlertDialog.Builder(context);
 
             if(deleteProfile())
                 alertDialogBuilder.setTitle("Profile deleted");
             else
                 alertDialogBuilder.setTitle("Default profile cannot be deleted");
-
 
             alertDialog = alertDialogBuilder.create();
 
@@ -248,8 +242,6 @@ public class DetailProfileFrag extends Fragment implements
 	}
 
 	private boolean deleteProfile() {
-
-
 		SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
 		Profile profile = datasource.cursorToAccount(cursor);
 
@@ -285,7 +277,7 @@ public class DetailProfileFrag extends Fragment implements
 		p.setCharSetSymbols(mCharSymbols.isChecked());
 		p.setLength(Integer.parseInt(mPasswordLenght.getText().toString()));
 
-		String algorithm_string = mHashAlg.getSelectedItem().toString();
+		final String algorithm_string = mHashAlg.getSelectedItem().toString();
 		try {
 			p.setAlgorithm(AlgorithmType.fromRdfString(algorithm_string));
 		} catch (Exception e) {
@@ -300,8 +292,6 @@ public class DetailProfileFrag extends Fragment implements
 			Log.i(Constants.LOG, "Inserting new profile");
 			datasource.insertProfile(p);
 		}
-
-		Log.d(Constants.LOG, "Profile saved");
 	}
 
 	@Override
@@ -313,22 +303,17 @@ public class DetailProfileFrag extends Fragment implements
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
-
 	public void onFinishEditDialog(String profileName) {
-		Log.d(Constants.LOG, "Dialog text was: " + profileName);
-
-		Profile defaultProfile = Profile.getDefaultProfile();
+		final Profile defaultProfile = Profile.getDefaultProfile();
 		defaultProfile.setName(profileName);
 
-		ProfileDataSource datasource = new ProfileDataSource(getActivity());
+		final ProfileDataSource datasource = new ProfileDataSource(getActivity());
 		datasource.open();
 		datasource.insertProfile(defaultProfile);
 		datasource.close();

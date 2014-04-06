@@ -17,7 +17,7 @@ public class ProfileDataSource {
     // Database fields
     private SQLiteDatabase database;
     private ProfileSqLiteHelper dbHelper;
-    private String[] allColumns = { ProfileSqLiteHelper.COLUMN_ID,
+    private final String[] allColumns = { ProfileSqLiteHelper.COLUMN_ID,
         ProfileSqLiteHelper.COLUMN_NAME,
         ProfileSqLiteHelper.COLUMN_USERNAME,
         ProfileSqLiteHelper.COLUMN_ALGORITHM,
@@ -58,38 +58,24 @@ public class ProfileDataSource {
 
         values.put(ProfileSqLiteHelper.COLUMN_NAME, profile.getName());
         values.put(ProfileSqLiteHelper.COLUMN_USERNAME, profile.getUsername());
-        values.put(ProfileSqLiteHelper.COLUMN_ALGORITHM, profile.getAlgorithm()
-                .toString());
-        values.put(ProfileSqLiteHelper.COLUMN_LENGTH,
-                Integer.toString(profile.getLength()));
-        values.put(ProfileSqLiteHelper.COLUMN_LEET_TYPE, profile.getLeetType()
-                .toString());
-        values.put(ProfileSqLiteHelper.COLUMN_LEET_LEVEL, profile
-                .getLeetLevel().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_ALGORITHM, profile.getAlgorithm().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_LENGTH, Integer.toString(profile.getLength()));
+        values.put(ProfileSqLiteHelper.COLUMN_LEET_TYPE, profile.getLeetType().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_LEET_LEVEL, profile.getLeetLevel().toString());
         values.put(ProfileSqLiteHelper.COLUMN_MODIFIER, profile.getModifier());
         values.put(ProfileSqLiteHelper.COLUMN_PREFIX, profile.getPrefix());
         values.put(ProfileSqLiteHelper.COLUMN_SUFFIX, profile.getSuffix());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL, profile
-                .getUrlCompomentProtocol().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN, profile
-                .getUrlComponentSubDomain().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN, profile
-                .getUrlComponentDomain().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,
-                profile.getUrlComponentPortParameters().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE, profile
-                .hasCharSetUppercase().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE, profile
-                .hasCharSetLowercase().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS, profile
-                .hasCharSetNumbers().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS, profile
-                .hasCharSetSymbols().toString());
-        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM, profile
-                .getCharSetCostum().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL, profile.getUrlCompomentProtocol().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN, profile.getUrlComponentSubDomain().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN, profile.getUrlComponentDomain().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS, profile.getUrlComponentPortParameters().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE, profile.hasCharSetUppercase().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE, profile.hasCharSetLowercase().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS, profile.hasCharSetNumbers().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS, profile.hasCharSetSymbols().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM, profile.getCharSetCostum().toString());
 
-        long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES,
-                null, values);
+        long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES, null, values);
 
         Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
                 allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId,
