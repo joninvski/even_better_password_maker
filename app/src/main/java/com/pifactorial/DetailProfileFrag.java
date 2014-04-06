@@ -49,7 +49,6 @@ public class DetailProfileFrag extends Fragment implements
 	protected Button mProfileAdd;
 
 	private ProfileDataSource datasource;
-
 	private SharedPreferences mPrefs;
 
 	@Override
@@ -64,16 +63,12 @@ public class DetailProfileFrag extends Fragment implements
 	}
 
 	private void updateProfileOnGui() throws ProfileNotFound {
-		Log.d(Constants.LOG, "Going to load profile");
-
-		SQLiteCursor profileName = (SQLiteCursor) mProfiles.getSelectedItem();
-		if (profileName == null)
+		SQLiteCursor profileCursor = (SQLiteCursor) mProfiles.getSelectedItem();
+		if (profileCursor == null)
 			mProfiles.setSelection(0);
 
-		Profile profile = datasource.cursorToAccount(profileName);
-		Profile p = datasource.getProfileByName(profile.getName());
-
-		Log.d(Constants.LOG, "Profile fetched : " + p.toString());
+        String profileName = datasource.getProfileName(profileCursor);
+		final Profile p = datasource.getProfileByName(profileName);
 
 		mUrlProtocol.setChecked(p.getUrlCompomentProtocol());
 		mUrlSubdomain.setChecked(p.getUrlComponentSubDomain());
@@ -85,17 +80,12 @@ public class DetailProfileFrag extends Fragment implements
 		mCharSymbols.setChecked(p.hasCharSetSymbols());
 		mPasswordLenght.setText(Integer.toString(p.getLength()));
 
-		String[] androidStrings = getResources().getStringArray(
-				R.array.hash_algorithms_string_array);
-
-		mHashAlg.setSelection(java.util.Arrays.asList(androidStrings)
-				.indexOf(p.getAlgorithm().getName()));
-
+		String[] androidStrings = getResources().getStringArray(R.array.hash_algorithms_string_array);
+		mHashAlg.setSelection(java.util.Arrays.asList(androidStrings).indexOf(p.getAlgorithm().getName()));
 		Log.d(Constants.LOG, "Profile loaded");
 	}
 
 	public void updateProfileSpinner() {
-
 		// Populate a spinner with the profiles
 		Cursor cursor = datasource.getAllProfilesCursor();
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
@@ -107,7 +97,6 @@ public class DetailProfileFrag extends Fragment implements
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		mProfiles.setAdapter(adapter);
-
 	}
 
 	@Override
@@ -243,7 +232,7 @@ public class DetailProfileFrag extends Fragment implements
 
 	private boolean deleteProfile() {
 		SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
-		Profile profile = datasource.cursorToAccount(cursor);
+		Profile profile = datasource.createProfileFromCursor(cursor);
 
 		Log.d(Constants.LOG, "Deleting the profile with name " + profile.getName());
 
@@ -264,7 +253,7 @@ public class DetailProfileFrag extends Fragment implements
         Profile p = new Profile();
 
 		SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
-		String profileName = datasource.cursorToAccount(cursor).getName();
+		String profileName = datasource.createProfileFromCursor(cursor).getName();
 
 		p.setName(profileName);
 		p.setUrlCompomentProtocol(mUrlProtocol.isChecked());

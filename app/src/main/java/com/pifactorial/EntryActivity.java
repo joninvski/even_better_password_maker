@@ -177,8 +177,8 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
     private SecureCharArray getPassword() throws PasswordGenerationException {
         // Get spinner profile
-        SQLiteCursor profileName = (SQLiteCursor) spProfiles.getSelectedItem();
-        Profile profile = datasource.cursorToAccount(profileName);
+        SQLiteCursor profileCursor = (SQLiteCursor) spProfiles.getSelectedItem();
+        Profile profile = datasource.createProfileFromCursor(profileCursor);
         Log.d(Constants.LOG, "Profile fetched \n" + profile.toString());
 
         // Use the profile and master password to get the generated password

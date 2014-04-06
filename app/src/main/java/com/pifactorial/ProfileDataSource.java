@@ -81,7 +81,7 @@ public class ProfileDataSource {
                 allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId,
                 null, null, null, null);
         cursor.moveToFirst();
-        Profile newAccount = cursorToAccount(cursor);
+        final Profile newAccount = createProfileFromCursor(cursor);
         cursor.close();
 
         return newAccount;
@@ -107,7 +107,7 @@ public class ProfileDataSource {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Profile profile = cursorToAccount(cursor);
+            Profile profile = createProfileFromCursor(cursor);
             profiles.add(profile);
             cursor.moveToNext();
         }
@@ -116,7 +116,11 @@ public class ProfileDataSource {
         return profiles;
     }
 
-    public Profile cursorToAccount(Cursor cursor) {
+    public String getProfileName(Cursor cursor) {
+        return cursor.getString(1);
+    }
+
+    public Profile createProfileFromCursor(Cursor cursor) {
         Profile profile = new Profile();
 
         try {

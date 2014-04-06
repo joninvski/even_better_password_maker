@@ -61,8 +61,7 @@ public class LeetType implements Comparable<LeetType> {
         return 0;
     }
 
-    public static LeetType fromRdfString(String str)
-    {
+    public static LeetType fromRdfString(String str) {
         for(LeetType type : TYPES) {
             if(str.compareTo(type.rdfName)==0)
                 return type;
