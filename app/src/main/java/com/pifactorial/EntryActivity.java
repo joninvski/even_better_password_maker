@@ -38,12 +38,13 @@ import org.daveware.passwordmaker.PasswordGenerationException;
 import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.SecureCharArray;
+import org.michaelevans.chromahashview.ChromaHashView;
 
 public class EntryActivity extends Activity implements View.OnClickListener {
 
     // Views
     private EditText etURL;
-    private EditText etMasterPass;
+    private ChromaHashView etMasterPass;
     private TextView textOutputPass;
     private Spinner spProfiles;
 
@@ -62,7 +63,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // Let's get the window controls
         textOutputPass = (TextView) findViewById(R.id.tvResultPass);
         etURL          = (EditText) findViewById(R.id.etURL);
-        etMasterPass   = (EditText) findViewById(R.id.etMasterPass);
+        etMasterPass   = (ChromaHashView) findViewById(R.id.etMasterPass);
         spProfiles     = (Spinner) findViewById(R.id.spProfiles);
 
         // Set the action bar to show the app title

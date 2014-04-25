@@ -55,14 +55,14 @@
             android:textSize="23sp" >
         </TextView>
 
-        <EditText
+        <org.michaelevans.chromahashview.ChromaHashView
             android:id="@+id/etMasterPass"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:text=""
             android:textSize="18sp" >
-        </EditText>
+        </org.michaelevans.chromahashview.ChromaHashView>
 
         <TextView
             android:id="@+id/tvResultPass"

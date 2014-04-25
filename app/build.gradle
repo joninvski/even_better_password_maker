@@ -10,6 +10,19 @@ buildscript {
 
 apply plugin: 'android'
 
+
+// This is just a hack. Use a real maven rep when it exists
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+     compile 'doesntmatter:chromaHashView:0@aar'
+}
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.0.3"
@@ -24,7 +37,6 @@ android {
         minSdkVersion 14
         targetSdkVersion 19
     }
-
 
     signingConfigs {
         release
@@ -47,3 +59,4 @@ android {
         android.buildTypes.release.signingConfig = null
     }
 }
+
