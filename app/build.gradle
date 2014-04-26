@@ -4,14 +4,16 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.9.1'
+        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.9.+'
     }
 
 }
 
 apply plugin: 'android'
+apply plugin: 'spoon'
 
 
-// This is just a hack. Use a real maven rep when it exists
+// TODO: This is just a hack. Use a real maven rep when it exists
 repositories {
     mavenCentral()
     flatDir {
@@ -20,8 +22,10 @@ repositories {
 }
 
 dependencies {
-     compile 'doesntmatter:chromaHashView:0@aar'
+     compile 'doesnotmatter:chromaHashView:0@aar'
      compile project(':domain')
+     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.+'
+     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.+'
 }
 
 android {
