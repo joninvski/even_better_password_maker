@@ -1,17 +1,17 @@
 /*
  * PasswordMaker Java Edition - One Password To Rule Them All
  * Copyright (C) 2011 Dave Marotti
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,13 +19,11 @@ package org.daveware.passwordmaker;
 
 import java.util.Locale;
 
-import android.util.Log;
-
 /**
  * Object representing an algorithm type.
- * 
+ *
  * All algorithms should be available in plain variants (HMAC not yet available).
- * 
+ *
  * @author Dave Marotti
  */
 public class AlgorithmType implements Comparable<AlgorithmType> {
@@ -78,7 +76,7 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
 	/**
 	 * Converts a string to an algorithm type.
-	 * 
+	 *
 	 * @param str
 	 *            The algorithm type. Valid values are: md5, sha1, sha256.
 	 *            Any of those valid types are prefixed with "hmac".
@@ -99,12 +97,10 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 			String lower_name = algoType.name.toLowerCase(Locale.US);
 
 			if (lower_str.equals(lower_name)) {
-			    Log.i(TAG, "Matched:" + lower_str + " --> "  + lower_name);
 				return algoType;
 			}
 		}
 
-		Log.e(TAG, String.format("Invalid algorithm type '%1s'", str));
 		throw new Exception(String.format("Invalid algorithm type '%1s'", str));
 	}
 }

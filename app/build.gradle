@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
      compile 'doesntmatter:chromaHashView:0@aar'
+     compile project(':domain')
 }
 
 android {
@@ -32,8 +33,8 @@ android {
     }
 
     defaultConfig {
-        versionCode 9
-        versionName "0.0.9-ALPHA"
+        versionCode 10
+        versionName "0.1-BETA"
         minSdkVersion 14
         targetSdkVersion 19
     }
