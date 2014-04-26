@@ -1,17 +1,17 @@
 /*
  * PasswordMaker Java Edition - One Password To Rule Them All
  * Copyright (C) 2011 Dave Marotti
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,20 +32,20 @@ import org.daveware.passwordmaker.Profile.UrlComponents;
 /**
  * This class is used to generate passwords from a master password and an
  * profile.
- * 
+ *
  * @author Dave Marotti
  */
 public class PasswordMaker {
 
     private static Pattern urlRegex = Pattern
-        .compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
+                                      .compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
 
     /**
      * Maps an array of characters to another character set.
-     * 
+     *
      * This is the magic which allows an encrypted password to be mapped into a
      * a specific character set.
-     * 
+     *
      * @param input
      *            The array of characters to map.
      * @param encoding
@@ -57,7 +57,7 @@ public class PasswordMaker {
      *             On odd length!?
      */
     public static SecureCharArray rstr2any(char[] input, String encoding)
-        throws Exception {
+    throws Exception {
         int length = input.length;
         int divisor;
         int full_length;
@@ -79,12 +79,12 @@ public class PasswordMaker {
         dividend = new int[dividend_length];
         for (i = 0; i < dividend_length; i++) {
             dividend[i] = (((int) input[i * 2]) << 8)
-                | ((int) input[i * 2 + 1]);
+                          | ((int) input[i * 2 + 1]);
         }
 
         full_length = (int) Math.ceil(
-                (double) length * 8
-                / (Math.log((double) encoding.length()) / Math.log((double) 2)));
+                          (double) length * 8
+                          / (Math.log((double) encoding.length()) / Math.log((double) 2)));
         remainders = new int[full_length];
 
         for (j = 0; j < full_length; j++) {
@@ -142,7 +142,7 @@ public class PasswordMaker {
         if (uriComponents.contains(UrlComponents.Protocol)
                 && protocol.length() > 0) {
             retVal.append(protocol);
-                }
+        }
         if (domainText != null) {
             final String subDomain;
             int dnDot = domainText.lastIndexOf('.');
@@ -154,7 +154,7 @@ public class PasswordMaker {
                 subDomain = "";
             }
             final boolean hasSubDomain = uriComponents
-                .contains(UrlComponents.Subdomain) && dnDot != -1;
+                                         .contains(UrlComponents.Subdomain) && dnDot != -1;
             if (hasSubDomain) {
                 retVal.append(subDomain);
             }
@@ -167,13 +167,13 @@ public class PasswordMaker {
         if (uriComponents.contains(UrlComponents.PortPathAnchorQuery)
                 && portPath.length() > 0) {
             retVal.append(portPath);
-                }
+        }
         return retVal.toString();
     }
 
     /**
      * Generates a hash of the master password with settings from the profile.
-     * 
+     *
      * @param masterPassword
      *            The password to use as a key for the various algorithms.
      * @param profile
@@ -186,7 +186,7 @@ public class PasswordMaker {
      */
     public static SecureCharArray makePassword(SecureCharArray masterPassword,
             Profile profile, final String inputText)
-        throws PasswordGenerationException {
+    throws PasswordGenerationException {
 
         LeetLevel leetLevel = profile.getLeetLevel();
         int length = profile.getLength();
@@ -196,18 +196,18 @@ public class PasswordMaker {
         try {
             if (profile.getCompleteCharacterSet().length() < 2)
                 throw new Exception(
-                        "profile contains a character set that is too short: " +
-                        profile.getCompleteCharacterSet());
+                    "profile contains a character set that is too short: " +
+                    profile.getCompleteCharacterSet());
 
             data = new SecureCharArray(getModifiedInputText(inputText, profile)
-                    + profile.getUsername() + profile.getModifier());
+                                       + profile.getUsername() + profile.getModifier());
 
             // Use leet before hashing
             if (profile.getLeetType() == LeetType.BEFORE
                     || profile.getLeetType() == LeetType.BOTH) {
                 LeetEncoder.leetConvert(leetLevel, masterPassword);
                 LeetEncoder.leetConvert(leetLevel, data);
-                    }
+            }
 
             // Perform the actual hashing
             output = hashTheData(masterPassword, data, profile);
@@ -216,12 +216,12 @@ public class PasswordMaker {
             if (profile.getLeetType() == LeetType.AFTER
                     || profile.getLeetType() == LeetType.BOTH) {
                 LeetEncoder.leetConvert(leetLevel, output);
-                    }
+            }
 
             // Apply the prefix
             if (profile.getPrefix().length() > 0) {
                 SecureCharArray prefix = new SecureCharArray(
-                        profile.getPrefix());
+                    profile.getPrefix());
                 output.prepend(prefix);
                 prefix.erase();
             }
@@ -230,7 +230,7 @@ public class PasswordMaker {
             output.resize(length, true);
             if (profile.getSuffix().length() > 0) {
                 SecureCharArray suffix = new SecureCharArray(
-                        profile.getSuffix());
+                    profile.getSuffix());
 
                 // If the suffix is larger than the entire password (not smart),
                 // then
@@ -264,7 +264,7 @@ public class PasswordMaker {
     /**
      * Intermediate step of generating a password. Performs constant hashing
      * until the resulting hash is long enough.
-     * 
+     *
      * @param masterPassword
      *            You should know by now.
      * @param data
@@ -288,16 +288,16 @@ public class PasswordMaker {
             while (output.size() < length) {
                 if (count == 0) {
                     intermediateOutput = runAlgorithm(masterPassword, data,
-                            profile);
+                                                      profile);
                 } else {
                     // add ye bit'o chaos
                     secureIteration.replace(masterPassword);
                     secureIteration.append(new SecureCharArray("\n"));
                     secureIteration.append(new SecureCharArray(Integer
-                                .toString(count)));
+                                           .toString(count)));
 
                     interIntermediateOutput = runAlgorithm(secureIteration,
-                            data, profile);
+                                                           data, profile);
                     intermediateOutput.append(interIntermediateOutput);
                     interIntermediateOutput.erase();
 
@@ -327,7 +327,7 @@ public class PasswordMaker {
     /**
      * This performs the actual hashing. It obtains an instance of the hashing
      * algorithm and feeds in the necessary data.
-     * 
+     *
      * @param masterPassword
      *            The master password to use as a key.
      * @param data

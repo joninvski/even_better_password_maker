@@ -10,7 +10,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
     }
 
     public void testActivity() {
-    	EntryActivity activity = getActivity();
+        EntryActivity activity = getActivity();
         assertNotNull(activity);
     }
 }

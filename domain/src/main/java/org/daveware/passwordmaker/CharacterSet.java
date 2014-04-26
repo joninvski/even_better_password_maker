@@ -1,17 +1,17 @@
 /*
  * PasswordMaker Java Edition - One Password To Rule Them All
  * Copyright (C) 2011 Dave Marotti
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,16 +39,16 @@ public class CharacterSet {
     };
 
     public CharacterSet() {
-        this.charset = EMPTY; 
+        this.charset = EMPTY;
     }
 
     public CharacterSet(String charset) {
-        this.charset = charset; 
+        this.charset = charset;
     }
 
     public CharacterSet(String[] charset_array) {
         for (String c : charset_array)
-            charset += c; 
+            charset += c;
     }
 
     public String getChars() {
@@ -56,16 +56,16 @@ public class CharacterSet {
     }
 
     public void join(String new_charset) {
-        charset += new_charset; 
+        charset += new_charset;
     }
 
     public void join(String[] charset_array) {
         for (String c : charset_array)
-            charset += c; 
+            charset += c;
     }
 
     public static CharacterSet getDefaultCharacterset() {
-        return new CharacterSet(new String[]{UPPERCASE, LOWERCASE});
+        return new CharacterSet(new String[] {UPPERCASE, LOWERCASE});
     }
 
     public Boolean contains(String s) {
@@ -115,12 +115,12 @@ public class CharacterSet {
         remove(NUMERIC);
     }
 
-    public int length(){
+    public int length() {
         return charset.length();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.charset;
     }
 }

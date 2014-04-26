@@ -82,7 +82,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // We just want to store in the last selected preference the selected value
         spProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView,
-                View selectedItemView, int position, long id) {
+                                       View selectedItemView, int position, long id) {
 
                 final int last_selected = spProfiles.getSelectedItemPosition();
                 mPrefs.setLastSelectedProfile(last_selected);
@@ -90,7 +90,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
 
             public void onNothingSelected(AdapterView<?> parentView) {
                 Log.i(Constants.LOG,
-                    "Strange, nothing was selected on the profile spinner");
+                      "Strange, nothing was selected on the profile spinner");
             }
         });
 
@@ -149,15 +149,15 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.tvResultPass:
-                mPassVisible = !mPassVisible;
-                updatePassword();
+        case R.id.tvResultPass:
+            mPassVisible = !mPassVisible;
+            updatePassword();
 
-                break;
+            break;
 
-            default:
-                Log.e(Constants.LOG, "Some unexpected view was pressed");
-                break;
+        default:
+            Log.e(Constants.LOG, "Some unexpected view was pressed");
+            break;
         }
     }
 
@@ -206,7 +206,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         }
         else {
             String lastURL = mPrefs.getLastURL();
-            
+
             etURL.setText(lastURL);
         }
 
@@ -218,38 +218,38 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         // Handle item selection
         switch (item.getItemId()) {
 
-            case R.id.actionBtnGo:
-                Log.d(Constants.LOG, "Pressed the go button");
-                final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-                myWebLink.setData(Uri.parse(etURL.getText().toString()));
-                startActivity(myWebLink);
-                break;
+        case R.id.actionBtnGo:
+            Log.d(Constants.LOG, "Pressed the go button");
+            final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+            myWebLink.setData(Uri.parse(etURL.getText().toString()));
+            startActivity(myWebLink);
+            break;
 
-            case R.id.actionBtnCopy:
-                Log.d(Constants.LOG, "Clicked item Copy");
-                try {
-                    final SecureCharArray generatedPassword = getPassword();
+        case R.id.actionBtnCopy:
+            Log.d(Constants.LOG, "Clicked item Copy");
+            try {
+                final SecureCharArray generatedPassword = getPassword();
 
-                    final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                    final ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
-                    clipboard.setPrimaryClip(clip);
+                final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                final ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
+                clipboard.setPrimaryClip(clip);
 
-                    Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
-                } catch (PasswordGenerationException e) {
-                    Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
-                    Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
+            } catch (PasswordGenerationException e) {
+                Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
+                Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
+            }
 
-                break;
+            break;
 
-            case R.id.actionBtnProfiles:
-                Log.d(Constants.LOG, "Clicked Profiles");
-                final Intent myIntent = new Intent(EntryActivity.this, UpdateActivity.class);
-                EntryActivity.this.startActivity(myIntent);
-                break;
+        case R.id.actionBtnProfiles:
+            Log.d(Constants.LOG, "Clicked Profiles");
+            final Intent myIntent = new Intent(EntryActivity.this, UpdateActivity.class);
+            EntryActivity.this.startActivity(myIntent);
+            break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        default:
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }

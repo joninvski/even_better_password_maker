@@ -6,11 +6,11 @@ import com.pifactorial.*;
 public class UpdateActivityTest extends ActivityInstrumentationTestCase2<UpdateActivity> {
 
     public UpdateActivityTest() {
-        super(UpdateActivity.class); 
+        super(UpdateActivity.class);
     }
 
     public void testActivity() {
-    	UpdateActivity activity = getActivity();
+        UpdateActivity activity = getActivity();
         assertNotNull(activity);
     }
 }

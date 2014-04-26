@@ -30,77 +30,77 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
     private static final String TAG = AlgorithmType.class.getName();
 
-	public static final AlgorithmType MD5       = new AlgorithmType(1, "MD5");
-	public static final AlgorithmType SHA1      = new AlgorithmType(2, "SHA1");
-	public static final AlgorithmType SHA256    = new AlgorithmType(3, "SHA256");
+    public static final AlgorithmType MD5       = new AlgorithmType(1, "MD5");
+    public static final AlgorithmType SHA1      = new AlgorithmType(2, "SHA1");
+    public static final AlgorithmType SHA256    = new AlgorithmType(3, "SHA256");
 
-	private static final AlgorithmType[] TYPES = { MD5, SHA1, SHA256 };
+    private static final AlgorithmType[] TYPES = { MD5, SHA1, SHA256 };
 
-	private int type;
-	private String name;
+    private int type;
+    private String name;
 
-	private AlgorithmType() {
-		type = 1;
-		name = "MD5";
-	}
+    private AlgorithmType() {
+        type = 1;
+        name = "MD5";
+    }
 
-	private AlgorithmType(int i, String n) {
-		type = i;
-		name = n;
-	}
+    private AlgorithmType(int i, String n) {
+        type = i;
+        name = n;
+    }
 
-	public String getName() {
-		return this.toString();
-	}
+    public String getName() {
+        return this.toString();
+    }
 
-	public int getType() {
-		return type;
-	}
+    public int getType() {
+        return type;
+    }
 
-	@Override
-	public String toString() {
-		return name;
-	}
+    @Override
+    public String toString() {
+        return name;
+    }
 
-	public static AlgorithmType[] getTypes() {
-		return TYPES;
-	}
+    public static AlgorithmType[] getTypes() {
+        return TYPES;
+    }
 
-	public int compareTo(AlgorithmType o) {
-		if (type < o.type)
-			return -1;
-		if (type > o.type)
-			return 1;
-		return 0;
-	}
+    public int compareTo(AlgorithmType o) {
+        if (type < o.type)
+            return -1;
+        if (type > o.type)
+            return 1;
+        return 0;
+    }
 
-	/**
-	 * Converts a string to an algorithm type.
-	 *
-	 * @param str
-	 *            The algorithm type. Valid values are: md5, sha1, sha256.
-	 *            Any of those valid types are prefixed with "hmac".
-	 * @return The algorithm type.
-	 * @throws Exception
-	 *             upon invalid algorithm string.
-	 */
-	public static AlgorithmType fromRdfString(String str) throws Exception {
-		String lower_str = str.toLowerCase(Locale.US);
+    /**
+     * Converts a string to an algorithm type.
+     *
+     * @param str
+     *            The algorithm type. Valid values are: md5, sha1, sha256.
+     *            Any of those valid types are prefixed with "hmac".
+     * @return The algorithm type.
+     * @throws Exception
+     *             upon invalid algorithm string.
+     */
+    public static AlgorithmType fromRdfString(String str) throws Exception {
+        String lower_str = str.toLowerCase(Locale.US);
 
-		// default
-		if (str.length() == 0)
-			return MD5;
+        // default
+        if (str.length() == 0)
+            return MD5;
 
-		// Search the list of registered algorithms
-		for (AlgorithmType algoType : TYPES) {
+        // Search the list of registered algorithms
+        for (AlgorithmType algoType : TYPES) {
             // TODO - Remove this lowercase
-			String lower_name = algoType.name.toLowerCase(Locale.US);
+            String lower_name = algoType.name.toLowerCase(Locale.US);
 
-			if (lower_str.equals(lower_name)) {
-				return algoType;
-			}
-		}
+            if (lower_str.equals(lower_name)) {
+                return algoType;
+            }
+        }
 
-		throw new Exception(String.format("Invalid algorithm type '%1s'", str));
-	}
+        throw new Exception(String.format("Invalid algorithm type '%1s'", str));
+    }
 }

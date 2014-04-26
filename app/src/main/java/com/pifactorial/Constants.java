@@ -1,5 +1,5 @@
 package com.pifactorial;
 
 class Constants {
-   public static final String LOG = "EBPassMaker";
+    public static final String LOG = "EBPassMaker";
 }

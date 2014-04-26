@@ -1,7 +1,7 @@
 
-/* 
+/*
  * This class was adapted from the project
- * 
+ *
  * PasswordMaker Java Edition - One Password To Rule Them All
  * Copyright (C) 2011 Dave Marotti
  *
@@ -69,7 +69,7 @@ public final class Profile {
 
     /**
      * Constructor which allows all members.
-     * 
+     *
      * @param name
      * @param username
      * @param algorithm
@@ -82,9 +82,9 @@ public final class Profile {
      * @param suffix
      */
     public Profile(String name, String username, AlgorithmType algorithm,
-            int length, CharacterSet characterSet, LeetType leetType,
-            LeetLevel leetLevel, String modifier, String prefix, String suffix)
-            throws Exception {
+                   int length, CharacterSet characterSet, LeetType leetType,
+                   LeetLevel leetLevel, String modifier, String prefix, String suffix)
+    throws Exception {
         this.name = name;
         this.username = username;
         this.algorithm = algorithm;
@@ -99,10 +99,10 @@ public final class Profile {
 
     /**
      * Copies the settings (not including children or ID) from another profile
-     * 
+     *
      * LEAVE THIS FUNCTION HERE so it's easy to see if new members are ever
      * added so I don't forget to update it.
-     * 
+     *
      * @param a
      *            The other profile to copy from.
      */
@@ -127,7 +127,7 @@ public final class Profile {
 
     /**
      * Gets the default set of UrlComponents (empty set).
-     * 
+     *
      * @return
      */
     private static EnumSet<UrlComponents> defaultUrlComponents() {
@@ -319,7 +319,7 @@ public final class Profile {
      * If the urlComponents field is empty then the entire getUrl field will be
      * used. This set is unmodifiable. Use the helper functions to set or modify
      * the set.
-     * 
+     *
      * @return the url components specified for this profile (may be empty)
      */
     public final Set<UrlComponents> getUrlComponents() {
@@ -328,7 +328,7 @@ public final class Profile {
 
     /**
      * Implements the Comparable<Profile> interface, this is based on the name.
-     * 
+     *
      * @param o
      *            The other profile to compare to.
      * @return this.name.compareTo(otherProfile.name);
@@ -346,24 +346,24 @@ public final class Profile {
     @Override
     public String toString() {
         return this.name + ": "              + this.algorithm                 + "\n"
-                         + "Username: "      + this.username                  + "\n"
-                         + "Alghorithm: "    + this.algorithm                 + "\n"
-                         + "Lenght: "        + Integer.toString(this.length)  + "\n"
-                         + "CharacterSet: "  + this.characterSet              + "\n"
-                         + "LeetType: "      + this.leetType                  + "\n"
-                         + "LeetLevel: "     + this.leetLevel                 + "\n"
-                         + "Modifier: "      + this.modifier                  + "\n"
-                         + "Prefix: "        + this.prefix                    + "\n"
-                         + "Suffix: "        + this.suffix                    + "\n"
-                         + "UrlComponents: " + this.urlComponents             + "\n"
-                         + "CostumChars: "   + this.costumChars;
+               + "Username: "      + this.username                  + "\n"
+               + "Alghorithm: "    + this.algorithm                 + "\n"
+               + "Lenght: "        + Integer.toString(this.length)  + "\n"
+               + "CharacterSet: "  + this.characterSet              + "\n"
+               + "LeetType: "      + this.leetType                  + "\n"
+               + "LeetLevel: "     + this.leetLevel                 + "\n"
+               + "Modifier: "      + this.modifier                  + "\n"
+               + "Prefix: "        + this.prefix                    + "\n"
+               + "Suffix: "        + this.suffix                    + "\n"
+               + "UrlComponents: " + this.urlComponents             + "\n"
+               + "CostumChars: "   + this.costumChars;
     }
 
     public static Profile getDefaultProfile() {
         try {
             return new Profile(DEFAULT_NAME, "", AlgorithmType.MD5, 8,
-                    CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
-                    "", "", "");
+                               CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
+                               "", "", "");
         } catch (Exception e) {
             e.printStackTrace();
             return null;

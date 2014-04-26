@@ -18,25 +18,25 @@ public class ProfileDataSource {
     private SQLiteDatabase database;
     private ProfileSqLiteHelper dbHelper;
     private final String[] allColumns = { ProfileSqLiteHelper.COLUMN_ID,
-        ProfileSqLiteHelper.COLUMN_NAME,
-        ProfileSqLiteHelper.COLUMN_USERNAME,
-        ProfileSqLiteHelper.COLUMN_ALGORITHM,
-        ProfileSqLiteHelper.COLUMN_LENGTH,
-        ProfileSqLiteHelper.COLUMN_LEET_TYPE,
-        ProfileSqLiteHelper.COLUMN_LEET_LEVEL,
-        ProfileSqLiteHelper.COLUMN_MODIFIER,
-        ProfileSqLiteHelper.COLUMN_PREFIX,
-        ProfileSqLiteHelper.COLUMN_SUFFIX,
-        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,
-        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,
-        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN,
-        ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,
-        ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE,
-        ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE,
-        ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS,
-        ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS,
-        ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM
-    };
+                                          ProfileSqLiteHelper.COLUMN_NAME,
+                                          ProfileSqLiteHelper.COLUMN_USERNAME,
+                                          ProfileSqLiteHelper.COLUMN_ALGORITHM,
+                                          ProfileSqLiteHelper.COLUMN_LENGTH,
+                                          ProfileSqLiteHelper.COLUMN_LEET_TYPE,
+                                          ProfileSqLiteHelper.COLUMN_LEET_LEVEL,
+                                          ProfileSqLiteHelper.COLUMN_MODIFIER,
+                                          ProfileSqLiteHelper.COLUMN_PREFIX,
+                                          ProfileSqLiteHelper.COLUMN_SUFFIX,
+                                          ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL,
+                                          ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN,
+                                          ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN,
+                                          ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS,
+                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_UPPERCASE,
+                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE,
+                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS,
+                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS,
+                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM
+                                        };
 
     public ProfileDataSource(Context context) {
         dbHelper = new ProfileSqLiteHelper(context);
@@ -78,8 +78,8 @@ public class ProfileDataSource {
         long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES, null, values);
 
         Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
-                allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId,
-                null, null, null, null);
+                                       allColumns, ProfileSqLiteHelper.COLUMN_ID + " = " + insertId,
+                                       null, null, null, null);
         cursor.moveToFirst();
         final Profile newAccount = createProfileFromCursor(cursor);
         cursor.close();
@@ -91,19 +91,19 @@ public class ProfileDataSource {
         Log.i(Constants.LOG, "Deleting profile: " + profile);
         String name = profile.getName();
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
-                ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
+                        ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
     }
 
     public Cursor getAllProfilesCursor() {
         return database.query(ProfileSqLiteHelper.TABLE_PROFILES, allColumns,
-                null, null, null, null, null);
+                              null, null, null, null, null);
     }
 
     public List<Profile> getAllProfiles() {
         List<Profile> profiles = new ArrayList<Profile>();
 
         Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
-                allColumns, null, null, null, null, null);
+                                       allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -159,7 +159,7 @@ public class ProfileDataSource {
         for(Profile p : listProfiles)
         {
 
-            if(p.getName().equals(profileName)){
+            if(p.getName().equals(profileName)) {
                 Log.d(Constants.LOG, "Found profile " + p.getName());
                 return p;
             }
@@ -171,9 +171,9 @@ public class ProfileDataSource {
     {
         List<SpinnerProfile> labels = new ArrayList<SpinnerProfile>();
         Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
-                allColumns, null, null, null, null, null);
+                                       allColumns, null, null, null, null, null);
 
-        if(cursor.moveToFirst()){
+        if(cursor.moveToFirst()) {
             do {
                 labels.add ( new SpinnerProfile ( cursor.getString(1) , cursor.getString(2) ) );
             } while (cursor.moveToNext());
