@@ -3,10 +3,6 @@
     package="com.pifactorial"
     >
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
-
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
