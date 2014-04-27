@@ -8,6 +8,7 @@ public class ManagePreferences {
 
     private SharedPreferences mPrefs;
     private Context c;
+    private final int sdk_version = android.os.Build.VERSION.SDK_INT;
 
     public ManagePreferences(Context context) {
         c = context;
@@ -17,13 +18,23 @@ public class ManagePreferences {
     public void setLastSelectedProfile(int last_selected) {
         final Editor editor = mPrefs.edit();
         editor.putInt(c.getString(R.string.LastSelectedProfile), last_selected);
-        editor.apply(); // TODO - Check the return value
+        if(sdk_version < 9) {
+            editor.commit();
+        }
+        else{
+            editor.apply(); // TODO - Check the return value
+        }
     }
 
     public void setLastURL(String lastUrl) {
         final Editor editor = mPrefs.edit();
         editor.putString("LastURL", lastUrl);
-        editor.apply(); // TODO - Check the return value
+        if(sdk_version < 9) {
+            editor.commit();
+        }
+        else{
+            editor.apply(); // TODO - Check the return value
+        }
     }
 
     public int getLastSelectedProfile() {
