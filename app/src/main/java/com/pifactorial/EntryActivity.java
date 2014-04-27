@@ -16,6 +16,7 @@ import android.net.Uri;
 
 import android.os.Bundle;
 
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 
@@ -27,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -36,20 +38,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.Security;
+
 import org.daveware.passwordmaker.PasswordGenerationException;
 import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.SecureCharArray;
 
 import org.michaelevans.chromahashview.ChromaHashView;
+
 import org.spongycastle.jce.provider.BouncyCastleProvider;
-import java.security.Security;
 
 public class EntryActivity extends ActionBarActivity implements View.OnClickListener {
 
     static {
-            Security.addProvider(new BouncyCastleProvider());
-        }
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     // Views
     private EditText etURL;
@@ -247,19 +251,22 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
         case R.id.actionBtnCopy:
             Log.d(Constants.LOG, "Clicked item Copy");
-            try {
-                final SecureCharArray generatedPassword = getPassword();
 
-                final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                final ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
-                clipboard.setPrimaryClip(clip);
+            if( sdk_version >= 11) {
+                try {
+                    final SecureCharArray generatedPassword = getPassword();
 
-                Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
-            } catch (PasswordGenerationException e) {
-                Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
-                Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
+                    final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    final ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
+
+                } catch (PasswordGenerationException e) {
+                    Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
+                }
             }
-
             break;
 
         case R.id.actionBtnProfiles:
@@ -290,7 +297,17 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+
+        if( sdk_version >= 11) {
+            inflater.inflate(R.menu.main_menu, menu);
+        }
+        else
+        {
+
+            inflater.inflate(R.menu.main_menu_old, menu);
+        }
+
+
         return super.onCreateOptionsMenu(menu);
     }
 }

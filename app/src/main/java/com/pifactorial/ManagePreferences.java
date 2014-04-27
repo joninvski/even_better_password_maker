@@ -21,7 +21,7 @@ public class ManagePreferences {
         if(sdk_version < 9) {
             editor.commit();
         }
-        else{
+        else {
             editor.apply(); // TODO - Check the return value
         }
     }
@@ -32,7 +32,7 @@ public class ManagePreferences {
         if(sdk_version < 9) {
             editor.commit();
         }
-        else{
+        else {
             editor.apply(); // TODO - Check the return value
         }
     }
