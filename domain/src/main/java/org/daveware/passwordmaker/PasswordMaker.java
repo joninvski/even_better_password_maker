@@ -351,7 +351,7 @@ public class PasswordMaker {
 
             dataBytes.prepend(masterPasswordBytes); // TODO - This only happens if it is not HMAC
 
-            MessageDigest md = MessageDigest.getInstance(profile.getAlgorithm().getName(), "BC");
+            MessageDigest md = MessageDigest.getInstance(profile.getAlgorithm().getName(), "SC");
             digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
 
             output = rstr2any(digestChars.getData(), profile.getCompleteCharacterSet());

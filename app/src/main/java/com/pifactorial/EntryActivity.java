@@ -42,8 +42,14 @@ import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.SecureCharArray;
 
 import org.michaelevans.chromahashview.ChromaHashView;
+import org.spongycastle.jce.provider.BouncyCastleProvider;
+import java.security.Security;
 
 public class EntryActivity extends ActionBarActivity implements View.OnClickListener {
+
+    static {
+            Security.addProvider(new BouncyCastleProvider());
+        }
 
     // Views
     private EditText etURL;
