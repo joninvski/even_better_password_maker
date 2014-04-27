@@ -16,6 +16,9 @@ import android.net.Uri;
 
 import android.os.Bundle;
 
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBarActivity;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -29,7 +32,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,9 +40,10 @@ import org.daveware.passwordmaker.PasswordGenerationException;
 import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.SecureCharArray;
+
 import org.michaelevans.chromahashview.ChromaHashView;
 
-public class EntryActivity extends Activity implements View.OnClickListener {
+public class EntryActivity extends ActionBarActivity implements View.OnClickListener {
 
     // Views
     private EditText etURL;
@@ -52,6 +55,7 @@ public class EntryActivity extends Activity implements View.OnClickListener {
     private ProfileDataSource datasource;
     private Boolean mPassVisible;
     private ManagePreferences mPrefs;
+    private int sdk_version;
 
     /** Called when the activity is first created. */
     @Override
@@ -66,8 +70,18 @@ public class EntryActivity extends Activity implements View.OnClickListener {
         etMasterPass   = (ChromaHashView) findViewById(R.id.etMasterPass);
         spProfiles     = (Spinner) findViewById(R.id.spProfiles);
 
-        // Set the action bar to show the app title
-        this.getActionBar().setDisplayShowTitleEnabled(true);
+        sdk_version = android.os.Build.VERSION.SDK_INT;
+
+        if( sdk_version < 11) {
+            // Set the action bar to show the app title
+            android.support.v7.app.ActionBar bar = getSupportActionBar();
+            bar.setDisplayShowTitleEnabled(true);
+        }
+        else {
+            android.app.ActionBar bar2 = getActionBar();
+            bar2.setDisplayShowTitleEnabled(true);
+        }
+
 
         // Master password should always start as not mPassVisible
         mPassVisible = false;

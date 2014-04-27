@@ -140,17 +140,6 @@
                 android:text="@string/cb_pass_characters_symbols" />
         </LinearLayout>
 
-        <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:measureWithLargestChild="true"
-            android:orientation="horizontal"
-            android:paddingLeft="2dip"
-            android:paddingRight="2dip"
-            android:paddingTop="0dip" >
-        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

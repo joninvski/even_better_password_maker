@@ -12,7 +12,8 @@
         android:allowBackup="True"
         android:icon="@drawable/pwm"
         android:label="Even Better Password Maker"
-        android:uiOptions="splitActionBarWhenNarrow" >
+        android:uiOptions="splitActionBarWhenNarrow"
+        android:theme="@style/Theme.AppCompat" >
         <activity
             android:name="EntryActivity"
             android:label="Even Better Password Maker" >

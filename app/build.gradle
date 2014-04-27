@@ -23,6 +23,8 @@ repositories {
 
 dependencies {
      compile 'doesnotmatter:chromaHashView:0@aar'
+     compile 'com.android.support:support-v4:19.1.+'
+     compile 'com.android.support:appcompat-v7:19.1.+'
      compile project(':domain')
      androidTestCompile 'com.squareup.spoon:spoon-client:1.1.+'
      androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.+'
@@ -39,7 +41,7 @@ android {
     defaultConfig {
         versionCode 10
         versionName "0.1-BETA"
-        minSdkVersion 14
+        minSdkVersion 7
         targetSdkVersion 19
     }
 
