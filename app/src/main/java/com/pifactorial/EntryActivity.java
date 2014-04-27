@@ -92,7 +92,6 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
             bar2.setDisplayShowTitleEnabled(true);
         }
 
-
         // Master password should always start as not mPassVisible
         mPassVisible = false;
 
@@ -118,16 +117,6 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
             }
         });
 
-
-        // Check if there is no profile
-        if (datasource.getAllProfiles().size() < 1) {
-            Log.d(Constants.LOG, "No profile in DB was found");
-            final Profile defaultProfile = Profile.getDefaultProfile();
-            Log.d(Constants.LOG, "Inserting default profile: " + defaultProfile);
-            datasource.insertProfile(defaultProfile);
-        }
-
-        updateProfileSpinner();
 
         TextWatcher watcher = new TextWatcher() {
             @Override
@@ -213,6 +202,15 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Check if there is no profile
+        if (datasource.getAllProfiles().size() < 1) {
+            Log.d(Constants.LOG, "No profile in DB was found");
+            final Profile defaultProfile = Profile.getDefaultProfile();
+            Log.d(Constants.LOG, "Inserting default profile: " + defaultProfile);
+            datasource.insertProfile(defaultProfile);
+        }
+
         updateProfileSpinner();
 
         // Get intent, action and MIME type

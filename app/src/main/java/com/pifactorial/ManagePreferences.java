@@ -39,6 +39,8 @@ public class ManagePreferences {
 
     public int getLastSelectedProfile() {
         final int last_profile_selected = mPrefs.getInt(c.getString(R.string.LastSelectedProfile), 0);
+        // if(last_profile_selected < 1)
+        //     return 1;
         return last_profile_selected;
     }
 

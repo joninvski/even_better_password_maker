@@ -90,6 +90,12 @@ public class ProfileDataSource {
     public void deleteProfile(Profile profile) {
         Log.i(Constants.LOG, "Deleting profile: " + profile);
         String name = profile.getName();
+
+        // I will not delete the last profile
+        if(getAllProfiles().size() <= 1){
+            return;
+        }
+
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
                         ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
     }

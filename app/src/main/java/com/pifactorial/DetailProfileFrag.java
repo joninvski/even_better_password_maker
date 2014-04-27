@@ -1,36 +1,43 @@
 package com.pifactorial;
 
-import org.daveware.passwordmaker.AlgorithmType;
-import org.daveware.passwordmaker.Profile;
-
 import android.app.AlertDialog;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+
 import android.os.Bundle;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SimpleCursorAdapter;
+
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pifactorial.AddProfileDialogFragment.AddProfileDialogListener;
+
+import org.daveware.passwordmaker.AlgorithmType;
+import org.daveware.passwordmaker.Profile;
 
 public class DetailProfileFrag extends Fragment implements
     OnItemSelectedListener, AddProfileDialogListener {
@@ -98,6 +105,10 @@ public class DetailProfileFrag extends Fragment implements
 
         // Apply the adapter to the spinner
         mProfiles.setAdapter(adapter);
+
+        // Now let's get the last selected profile
+        final int last_selected = mPrefs.getLastSelectedProfile();
+        mProfiles.setSelection(last_selected);
     }
 
     @Override
@@ -148,9 +159,6 @@ public class DetailProfileFrag extends Fragment implements
 
         updateProfileSpinner();
 
-        // Now let's get the last selected profile
-        final int last_selected = mPrefs.getLastSelectedProfile();
-        mProfiles.setSelection(last_selected);
 
         try {
             updateProfileOnGui();
@@ -217,6 +225,8 @@ public class DetailProfileFrag extends Fragment implements
                 alertDialogBuilder.setTitle("Default profile cannot be deleted");
 
             alertDialog = alertDialogBuilder.create();
+            mPrefs.setLastSelectedProfile(0);
+            updateProfileSpinner();
 
             // show it
             alertDialog.show();
@@ -296,9 +306,12 @@ public class DetailProfileFrag extends Fragment implements
         // TODO Auto-generated method stub
     }
 
+    @Override
     public void onFinishEditDialog(String profileName) {
         final Profile defaultProfile = Profile.getDefaultProfile();
         defaultProfile.setName(profileName);
+
+        mPrefs.setLastSelectedProfile(mProfiles.getAdapter().getCount());
 
         final ProfileDataSource datasource = new ProfileDataSource(getActivity());
         datasource.open();
