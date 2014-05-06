@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+        <item
+            android:id="@+id/actionBtnGo"
+            android:title="@string/buttonGo"
+            yourapp:showAsAction="always">
+        </item>
+        <item
+            android:id="@+id/actionBtnProfiles"
+            android:title="@string/buttonProfiles"
+            yourapp:showAsAction="always">
+        </item>
+</menu>
