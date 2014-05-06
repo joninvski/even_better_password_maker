@@ -301,7 +301,6 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         }
         else
         {
-
             inflater.inflate(R.menu.main_menu_old, menu);
         }
 

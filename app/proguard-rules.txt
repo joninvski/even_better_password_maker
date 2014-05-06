@@ -18,3 +18,4 @@
 
 -dontwarn org.joda.convert.**
 -dontwarn javax.naming.**
+-keep class org.spongycastle.**
