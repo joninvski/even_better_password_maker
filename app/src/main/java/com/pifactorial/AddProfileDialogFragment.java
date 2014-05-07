@@ -42,8 +42,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
 
         // Show soft keyboard automatically
         mEditText.requestFocus();
-        getDialog().getWindow().setSoftInputMode(
-            LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         mEditText.setOnEditorActionListener(this);
 
         // Let's get the button and insert the callback
@@ -69,7 +68,6 @@ public class AddProfileDialogFragment extends DialogFragment implements
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // this.dismiss();
             Log.d(Constants.LOG, "Finished dialog");
 
             createNewProfileAndDismissDialog();

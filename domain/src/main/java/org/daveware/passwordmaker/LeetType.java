@@ -36,16 +36,14 @@ public class LeetType implements Comparable<LeetType> {
 
     private LeetType() { }
 
-    private LeetType(int t, String n, String rdfN)
-    {
+    private LeetType(int t, String n, String rdfN) {
         type = t;
         name = n;
         rdfName = rdfN;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 

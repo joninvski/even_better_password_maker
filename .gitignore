@@ -1,2 +1,4 @@
 build/
 .gradle/
+debug.keystore
+local.properties

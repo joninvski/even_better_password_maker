@@ -80,8 +80,7 @@ public class LeetLevel implements Comparable<LeetLevel> {
      * @throws Exception upon invalid level.
      */
     public static LeetLevel fromString(String str)
-    throws Exception
-    {
+    throws Exception {
         if(str.length()==0)
             return LEVEL1;
 

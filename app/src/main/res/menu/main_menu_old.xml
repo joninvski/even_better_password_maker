@@ -5,7 +5,7 @@
         <item
             android:id="@+id/actionBtnGo"
             android:title="@string/buttonGo"
-            yourapp:showAsAction="always">
+            yourapp:showAsAction="ifRoom">
         </item>
         <item
             android:id="@+id/actionBtnProfiles"

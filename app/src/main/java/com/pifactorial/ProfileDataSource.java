@@ -91,11 +91,6 @@ public class ProfileDataSource {
         Log.i(Constants.LOG, "Deleting profile: " + profile);
         String name = profile.getName();
 
-        // I will not delete the last profile
-        if(getAllProfiles().size() <= 1){
-            return;
-        }
-
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
                         ProfileSqLiteHelper.COLUMN_NAME + " = '" + name + "'", null);
     }
@@ -157,13 +152,11 @@ public class ProfileDataSource {
         return profile;
     }
 
-    public Profile getProfileByName(String profileName) throws ProfileNotFound
-    {
+    public Profile getProfileByName(String profileName) throws ProfileNotFound {
         Log.d(Constants.LOG, "Searching for profile by name: " + profileName);
         List<Profile> listProfiles = getAllProfiles();
 
-        for(Profile p : listProfiles)
-        {
+        for(Profile p : listProfiles) {
 
             if(p.getName().equals(profileName)) {
                 Log.d(Constants.LOG, "Found profile " + p.getName());
@@ -173,8 +166,7 @@ public class ProfileDataSource {
         throw new ProfileNotFound("Profile with name " + profileName + " was not found");
     }
 
-    public List<SpinnerProfile> getAllLabels()
-    {
+    public List<SpinnerProfile> getAllLabels() {
         List<SpinnerProfile> labels = new ArrayList<SpinnerProfile>();
         Cursor cursor = database.query(ProfileSqLiteHelper.TABLE_PROFILES,
                                        allColumns, null, null, null, null, null);
@@ -190,7 +182,6 @@ public class ProfileDataSource {
         return labels;
     }
 
-    /* TODO - Improve this method */
     public boolean profileExists(String name) {
         try {
             getProfileByName(name);

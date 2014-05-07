@@ -4,8 +4,7 @@ public class SpinnerProfile {
     private final String a;
     private final String b;
 
-    public SpinnerProfile(String a, String b)
-    {
+    public SpinnerProfile(String a, String b) {
         this.a = a;
         this.b = b;
     }

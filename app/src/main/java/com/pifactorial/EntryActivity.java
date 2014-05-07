@@ -1,8 +1,9 @@
 package com.pifactorial;
 
+import android.annotation.TargetApi;
+
 import android.app.Activity;
 
-import android.content.ClipboardManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.database.sqlite.SQLiteCursor;
 
 import android.net.Uri;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v4.view.MenuItemCompat;
@@ -82,15 +84,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
         sdk_version = android.os.Build.VERSION.SDK_INT;
 
-        if( sdk_version < 11) {
-            // Set the action bar to show the app title
-            android.support.v7.app.ActionBar bar = getSupportActionBar();
-            bar.setDisplayShowTitleEnabled(true);
-        }
-        else {
-            android.app.ActionBar bar2 = getActionBar();
-            bar2.setDisplayShowTitleEnabled(true);
-        }
+        setActionBar();
 
         // Master password should always start as not mPassVisible
         mPassVisible = false;
@@ -140,6 +134,27 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         etURL.addTextChangedListener(watcher);
         etMasterPass.addTextChangedListener(watcher);
     }
+
+    private void setActionBar() {
+        if( sdk_version < Build.VERSION_CODES.GINGERBREAD) {
+            setActionBarForSeven();
+        } else {
+            setActionBarForEleven();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.ECLAIR_MR1)
+    private void setActionBarForSeven() {
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        bar.setDisplayShowTitleEnabled(true);
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void setActionBarForEleven() {
+        android.app.ActionBar bar2 = getActionBar();
+        bar2.setDisplayShowTitleEnabled(true);
+    }
+
 
     public void updateProfileSpinner() {
         // Populate a spinner with the profiles
@@ -225,8 +240,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
                     etURL.setText(sharedText);
                 }
             }
-        }
-        else {
+        } else {
             String lastURL = mPrefs.getLastURL();
 
             etURL.setText(lastURL);
@@ -250,21 +264,15 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         case R.id.actionBtnCopy:
             Log.d(Constants.LOG, "Clicked item Copy");
 
-            if( sdk_version >= 11) {
-                try {
-                    final SecureCharArray generatedPassword = getPassword();
-
-                    final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                    final ClipData clip = ClipData.newPlainText("Copied Text", new String(generatedPassword.getData()));
-                    clipboard.setPrimaryClip(clip);
-
-                    Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
-
-                } catch (PasswordGenerationException e) {
-                    Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
-                    Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
-                }
+            try {
+                final SecureCharArray generatedPassword = getPassword();
+                String pass = new String(generatedPassword.getData());
+                copyPassToClipBoard(pass);
+            } catch (PasswordGenerationException e) {
+                Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
+                Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
             }
+
             break;
 
         case R.id.actionBtnProfiles:
@@ -278,6 +286,30 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         }
         return true;
     }
+
+    private void copyPassToClipBoard(String pass) {
+        if( sdk_version < android.os.Build.VERSION_CODES.HONEYCOMB ) {
+            copyClipBoardBeforeHoneyComb(pass);
+        } else {
+            copyClipboardAfterHoneyComb(pass);
+        }
+
+        Toast.makeText(getApplicationContext(), R.string.password_copy_to_clipboard, Toast.LENGTH_SHORT).show();
+    }
+
+    @TargetApi(android.os.Build.VERSION_CODES.ECLAIR_MR1)
+    private void copyClipBoardBeforeHoneyComb(String pass) {
+        final android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        clipboard.setText(pass);
+    }
+
+    @TargetApi(android.os.Build.VERSION_CODES.HONEYCOMB)
+    private void copyClipboardAfterHoneyComb(String pass) {
+        final android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        final ClipData clip = ClipData.newPlainText("Copied Text", pass);
+        clipboard.setPrimaryClip(clip);
+    }
+
 
     @Override
     protected void onPause() {
@@ -298,12 +330,9 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
         if( sdk_version >= 11) {
             inflater.inflate(R.menu.main_menu, menu);
-        }
-        else
-        {
+        } else {
             inflater.inflate(R.menu.main_menu_old, menu);
         }
-
 
         return super.onCreateOptionsMenu(menu);
     }

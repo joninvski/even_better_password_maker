@@ -286,7 +286,7 @@ public class DetailProfileFrag extends Fragment implements
             Log.i(Constants.LOG, "Profile already exists. Replacing it");
             datasource.replaceProfile(p);
         } else {
-            Log.i(Constants.LOG, "Inserting new profile");
+            Log.d(Constants.LOG, "Inserting new profile");
             datasource.insertProfile(p);
         }
     }
@@ -297,8 +297,7 @@ public class DetailProfileFrag extends Fragment implements
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-                               long arg3) {
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
         // TODO Auto-generated method stub
     }
 

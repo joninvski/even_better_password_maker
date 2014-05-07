@@ -1,1 +1,25 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+allprojects {
+    tasks.withType(Compile) {
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+    task printDependencies << {task -> println "Subproject -> $task.project.name" }
+}
+
+subprojects {
+    printDependencies {
+        afterEvaluate { Project project ->
+            if (configurations.find { it.name == 'compile' }) {
+                doLast {
+                    println "$project.configurations.compile.asPath\n"
+                }
+            }
+            if (configurations.find { it.name == 'androidTestCompile' }) {
+                doLast {
+                    println "$project.configurations.androidTestCompile.asPath\n"
+                }
+            }
+        }
+    }
+}
+
