@@ -30,17 +30,19 @@ public class AlgorithmType implements Comparable<AlgorithmType> {
 
     private static final String TAG = AlgorithmType.class.getName();
 
-    public static final AlgorithmType MD5       = new AlgorithmType(1, "MD5");
-    public static final AlgorithmType SHA1      = new AlgorithmType(2, "SHA1");
-    public static final AlgorithmType SHA256    = new AlgorithmType(3, "SHA256");
+    public static final AlgorithmType MD4       = new AlgorithmType(1, "MD4");
+    public static final AlgorithmType MD5       = new AlgorithmType(2, "MD5");
+    public static final AlgorithmType SHA1      = new AlgorithmType(3, "SHA1");
+    public static final AlgorithmType SHA256    = new AlgorithmType(4, "SHA256");
+    public static final AlgorithmType RIPEMD160 = new AlgorithmType(5, "RIPEMD160");
 
-    private static final AlgorithmType[] TYPES = { MD5, SHA1, SHA256 };
+    private static final AlgorithmType[] TYPES = { MD4, MD5, SHA1, SHA256, RIPEMD160 };
 
     private int type;
     private String name;
 
     private AlgorithmType() {
-        type = 1;
+        type = 2;
         name = "MD5";
     }
 

@@ -14,9 +14,11 @@
     <string name="profile_url_components_label">Url components</string>
 
     <string-array name="hash_algorithms_string_array" translatable="false">
+        <item>MD4</item>
         <item>MD5</item>
         <item>SHA1</item>
         <item>SHA256</item>
+        <item>RIPEMD160</item>
     </string-array>
 
     <string name="label_password_length">Password length</string>
