@@ -136,7 +136,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
     }
 
     private void setActionBar() {
-        if( sdk_version < Build.VERSION_CODES.GINGERBREAD) {
+        if( sdk_version < Build.VERSION_CODES.HONEYCOMB) {
             setActionBarForSeven();
         } else {
             setActionBarForEleven();
