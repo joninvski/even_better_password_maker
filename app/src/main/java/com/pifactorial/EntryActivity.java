@@ -257,8 +257,20 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         case R.id.actionBtnGo:
             Log.d(Constants.LOG, "Pressed the go button");
             final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-            myWebLink.setData(Uri.parse(etURL.getText().toString()));
-            startActivity(myWebLink);
+
+            try{
+                Uri uri = Uri.parse(etURL.getText().toString());
+                myWebLink.setData(uri);
+                startActivity(myWebLink);
+            }
+            catch (NullPointerException e) {
+                Log.e(Constants.LOG, "Url string is empty" + e.getMessage());
+                Toast.makeText(getApplicationContext(), "Url string is empty", Toast.LENGTH_SHORT).show();
+            }
+            catch (android.content.ActivityNotFoundException e) {
+                Log.e(Constants.LOG, "Unable to generate uri" + e.getMessage());
+                Toast.makeText(getApplicationContext(), "Invalid URI", Toast.LENGTH_SHORT).show();
+            }
             break;
 
         case R.id.actionBtnCopy:
