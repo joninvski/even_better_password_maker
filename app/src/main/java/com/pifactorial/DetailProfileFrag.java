@@ -38,6 +38,7 @@ import com.pifactorial.AddProfileDialogFragment.AddProfileDialogListener;
 
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
+import android.widget.Toast;
 
 public class DetailProfileFrag extends Fragment implements
     OnItemSelectedListener, AddProfileDialogListener {
@@ -184,6 +185,21 @@ public class DetailProfileFrag extends Fragment implements
         return getArguments().getInt("index", 0);
     }
 
+    public boolean validateProfileInput() {
+        try{
+            int value = Integer.parseInt(mPasswordLenght.getText().toString());
+            if (value <= 0) {
+                Toast.makeText(getActivity(), "Password length cannot be less than 1", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), "Invalid password length", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final Context context = getActivity();
@@ -194,6 +210,11 @@ public class DetailProfileFrag extends Fragment implements
 
         case R.id.actionBtnSave:
             Log.d(Constants.LOG, "Clicked the save button");
+
+            if(!validateProfileInput()){
+                break;
+            }
+
             saveProfile();
 
             // Now let's show an alert box
