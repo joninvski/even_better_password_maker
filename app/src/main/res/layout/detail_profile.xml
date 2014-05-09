@@ -11,10 +11,11 @@
 
         <TextView
             android:id="@+id/lbProfileName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_name_label"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_marginTop="4dp"
+            style="?android:attr/listSeparatorTextViewStyle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,10 +38,11 @@
 
         <TextView
             android:id="@+id/lbUrlComponents"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_url_components_label"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_marginTop="14dp"
+            style="?android:attr/listSeparatorTextViewStyle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,21 +53,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_protocol"
-                android:textSize="@dimen/Small" />
+                />
 
             <CheckBox
                 android:id="@+id/cb_url_subdomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_subdomain"
-                android:textSize="@dimen/Small" />
+                />
 
             <CheckBox
                 android:id="@+id/cb_url_domain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_domain"
-                android:textSize="@dimen/Small" />
+                />
         </LinearLayout>
 
         <CheckBox
@@ -76,10 +78,11 @@
 
         <TextView
             android:id="@+id/lbHashAlgorithm"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_hash_algorithm"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_marginTop="14dp"
+            style="?android:attr/listSeparatorTextViewStyle" />
 
 
         <LinearLayout
@@ -99,13 +102,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="HMAC" />
-
         </LinearLayout>
 
         <TextView
             android:id="@+id/lbPasswordLenght"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/label_password_length" />
 
         <EditText
@@ -117,7 +121,9 @@
 
         <TextView
             android:id="@+id/lbPasswordCharacters"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="14dp"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_pass_characters" />
 
@@ -144,7 +150,7 @@
 
             <CheckBox
                 android:id="@+id/cb_char_number"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_number" />
 
@@ -155,8 +161,5 @@
                 android:text="@string/cb_pass_characters_symbols" />
         </LinearLayout>
 
-
-
     </LinearLayout>
-
 </ScrollView>
