@@ -53,6 +53,7 @@ public final class Profile {
     private String suffix                        = "";
     private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
     private String costumChars                   = "";
+    private Boolean isHMAC                       = false;
 
     public Profile() {
         this.name = DEFAULT_NAME;
@@ -83,7 +84,7 @@ public final class Profile {
      */
     public Profile(String name, String username, AlgorithmType algorithm,
                    int length, CharacterSet characterSet, LeetType leetType,
-                   LeetLevel leetLevel, String modifier, String prefix, String suffix)
+                   LeetLevel leetLevel, String modifier, String prefix, String suffix, boolean isHMAC)
     throws Exception {
         this.name = name;
         this.username = username;
@@ -95,6 +96,7 @@ public final class Profile {
         this.modifier = modifier;
         this.prefix = prefix;
         this.suffix = suffix;
+        this.isHMAC = isHMAC;
     }
 
     /**
@@ -117,6 +119,7 @@ public final class Profile {
         this.modifier = a.modifier;
         this.prefix = a.prefix;
         this.suffix = a.suffix;
+        this.isHMAC = a.isHMAC;
 
         // The documentation says EnumSet.copyOf() will fail on empty sets.
         if (a.urlComponents.isEmpty() == false)
@@ -315,6 +318,10 @@ public final class Profile {
         this.urlComponents.add(urlComponent);
     }
 
+    public final void setIsHMAC(Boolean isHMAC) {
+        this.isHMAC = isHMAC;
+    }
+
     /**
      * If the urlComponents field is empty then the entire getUrl field will be
      * used. This set is unmodifiable. Use the helper functions to set or modify
@@ -363,7 +370,7 @@ public final class Profile {
         try {
             return new Profile(DEFAULT_NAME, "", AlgorithmType.MD5, 8,
                                CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
-                               "", "", "");
+                               "", "", "", false);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -504,5 +511,9 @@ public final class Profile {
 
     public void setAlgorithm(String algorithmString) throws Exception {
         this.algorithm = AlgorithmType.fromRdfString(algorithmString);
+    }
+
+    public Boolean isHMAC(){
+        return this.isHMAC;
     }
 }

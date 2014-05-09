@@ -12,6 +12,7 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME                          = "name";
     public static final String COLUMN_USERNAME                      = "username";
     public static final String COLUMN_ALGORITHM                     = "algorithm";
+    public static final String COLUMN_ISHMAC                        = "isHMAC";
     public static final String COLUMN_LENGTH                        = "length";
     public static final String COLUMN_LEET_TYPE                     = "leet_type";
     public static final String COLUMN_LEET_LEVEL                    = "leet_level";
@@ -33,7 +34,7 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CHAR_SET_COSTUM               = "char_set_costum";
 
     private static final String DATABASE_NAME = "profiles.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
@@ -42,6 +43,7 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
             + COLUMN_NAME                          + " text not null, "
             + COLUMN_USERNAME                      + " text not null, "
             + COLUMN_ALGORITHM                     + " text not null, "
+            + COLUMN_ISHMAC                        + " boolean default 0, "
             + COLUMN_LENGTH                        + " integer not null, "
             + COLUMN_LEET_TYPE                     + " text not null, "
             + COLUMN_LEET_LEVEL                    + " integer not null, "
@@ -71,10 +73,13 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(ProfileSqLiteHelper.class.getName(),
-              "Upgrading database from version " + oldVersion + " to "
-              + newVersion + ", which will destroy all old data");
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
-        //onCreate(db);
+        Log.w(ProfileSqLiteHelper.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion);
+
+        final int FIRST_DB_VERSION_WITH_HMAC = 2;
+        if(oldVersion < FIRST_DB_VERSION_WITH_HMAC )
+        {
+            db.execSQL("ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " + COLUMN_ISHMAC + " DEFAULT 0;");
+            db.execSQL("UPDATE " + TABLE_PROFILES + " SET " + COLUMN_ISHMAC + "=" + "0;");
+        }
     }
 }
