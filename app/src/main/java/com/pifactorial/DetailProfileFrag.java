@@ -44,6 +44,7 @@ public class DetailProfileFrag extends Fragment implements
     OnItemSelectedListener, AddProfileDialogListener {
 
     protected Spinner mProfiles;
+    protected CheckBox mIsHMAC;
     protected CheckBox mUrlProtocol;
     protected CheckBox mUrlSubdomain;
     protected CheckBox mUrlDomain;
@@ -88,6 +89,8 @@ public class DetailProfileFrag extends Fragment implements
         mCharSymbols.setChecked(p.hasCharSetSymbols());
         mPasswordLenght.setText(Integer.toString(p.getLength()));
 
+        mIsHMAC.setChecked(p.isHMAC());
+
         String[] androidStrings = getResources().getStringArray(R.array.hash_algorithms_string_array);
         mHashAlg.setSelection(java.util.Arrays.asList(androidStrings).indexOf(p.getAlgorithm().getName()));
         Log.d(Constants.LOG, "Profile loaded");
@@ -120,6 +123,7 @@ public class DetailProfileFrag extends Fragment implements
         mProfiles = (Spinner) view.findViewById(R.id.spProfiles);
         mProfileAdd = (Button) view.findViewById(R.id.btAddProfile);
         mUrlProtocol = (CheckBox) view.findViewById(R.id.cb_url_protocol);
+        mIsHMAC = (CheckBox) view.findViewById(R.id.cb_isHMAC);
         mUrlSubdomain = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
         mUrlDomain = (CheckBox) view.findViewById(R.id.cb_url_domain);
         mUrlPort = (CheckBox) view.findViewById(R.id.cb_url_port);
@@ -289,6 +293,7 @@ public class DetailProfileFrag extends Fragment implements
         p.setUrlComponentSubDomain(mUrlSubdomain.isChecked());
         p.setUrlComponentDomain(mUrlDomain.isChecked());
         p.setUrlComponentPortParameters(mUrlPort.isChecked());
+        p.setIsHMAC(mIsHMAC.isChecked());
         p.setCharSetLowercase(mCharLower.isChecked());
         p.setCharSetUppercase(mCharUpper.isChecked());
         p.setCharSetNumbers(mCharNumber.isChecked());

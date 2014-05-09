@@ -37,8 +37,7 @@ import org.daveware.passwordmaker.Profile.UrlComponents;
  */
 public class PasswordMaker {
 
-    private static Pattern urlRegex = Pattern
-                                      .compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
+    private static Pattern urlRegex = Pattern.compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
 
     /**
      * Maps an array of characters to another character set.
@@ -153,8 +152,7 @@ public class PasswordMaker {
             } else {
                 subDomain = "";
             }
-            final boolean hasSubDomain = uriComponents
-                                         .contains(UrlComponents.Subdomain) && dnDot != -1;
+            final boolean hasSubDomain = uriComponents.contains(UrlComponents.Subdomain) && dnDot != -1;
             if (hasSubDomain) {
                 retVal.append(subDomain);
             }
@@ -184,9 +182,8 @@ public class PasswordMaker {
      * @throws Exception
      *             if something bad happened.
      */
-    public static SecureCharArray makePassword(SecureCharArray masterPassword,
-            Profile profile, final String inputText)
-    throws PasswordGenerationException {
+    public static SecureCharArray makePassword(SecureCharArray masterPassword, Profile profile, final String inputText)
+        throws PasswordGenerationException {
 
         LeetLevel leetLevel = profile.getLeetLevel();
         int length = profile.getLength();
@@ -275,8 +272,7 @@ public class PasswordMaker {
      * @throws Exception
      *             if we ran out of donuts.
      */
-    private static SecureCharArray hashTheData(SecureCharArray masterPassword,
-            SecureCharArray data, Profile profile) throws Exception {
+    private static SecureCharArray hashTheData(SecureCharArray masterPassword, SecureCharArray data, Profile profile) throws Exception {
         SecureCharArray output = new SecureCharArray();
         SecureCharArray secureIteration = new SecureCharArray();
         SecureCharArray intermediateOutput = null;
@@ -338,8 +334,7 @@ public class PasswordMaker {
      * @throws Exception
      *             if something bad happened.
      */
-    private static SecureCharArray runAlgorithm(SecureCharArray masterPassword,
-            SecureCharArray data, Profile profile) throws Exception {
+    private static SecureCharArray runAlgorithm(SecureCharArray masterPassword, SecureCharArray data, Profile profile) throws Exception {
         SecureCharArray output = null;
         SecureCharArray digestChars = null;
         SecureByteArray masterPasswordBytes = null;
@@ -349,10 +344,19 @@ public class PasswordMaker {
             masterPasswordBytes = new SecureByteArray(masterPassword.getData());
             dataBytes = new SecureByteArray(data.getData());
 
-            dataBytes.prepend(masterPasswordBytes); // TODO - This only happens if it is not HMAC
-
-            MessageDigest md = MessageDigest.getInstance(profile.getAlgorithm().getName(), "SC");
-            digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
+            if (profile.isHMAC()) {
+                Mac mac;
+                String algoName = "HMAC" + profile.getAlgorithm().getName();
+                mac = Mac.getInstance(algoName, "SC");
+                mac.init(new SecretKeySpec(masterPasswordBytes.getData(), algoName));
+                mac.reset();
+                mac.update(dataBytes.getData());
+                digestChars = new SecureCharArray(mac.doFinal());
+            } else {
+                dataBytes.prepend(masterPasswordBytes);
+                MessageDigest md = MessageDigest.getInstance(profile.getAlgorithm().getName(), "SC");
+                digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
+            }
 
             output = rstr2any(digestChars.getData(), profile.getCompleteCharacterSet());
         } catch (Exception e) {

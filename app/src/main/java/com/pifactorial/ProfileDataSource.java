@@ -21,6 +21,7 @@ public class ProfileDataSource {
                                           ProfileSqLiteHelper.COLUMN_NAME,
                                           ProfileSqLiteHelper.COLUMN_USERNAME,
                                           ProfileSqLiteHelper.COLUMN_ALGORITHM,
+                                          ProfileSqLiteHelper.COLUMN_ISHMAC,
                                           ProfileSqLiteHelper.COLUMN_LENGTH,
                                           ProfileSqLiteHelper.COLUMN_LEET_TYPE,
                                           ProfileSqLiteHelper.COLUMN_LEET_LEVEL,
@@ -59,6 +60,7 @@ public class ProfileDataSource {
         values.put(ProfileSqLiteHelper.COLUMN_NAME, profile.getName());
         values.put(ProfileSqLiteHelper.COLUMN_USERNAME, profile.getUsername());
         values.put(ProfileSqLiteHelper.COLUMN_ALGORITHM, profile.getAlgorithm().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_ISHMAC, profile.isHMAC().toString());
         values.put(ProfileSqLiteHelper.COLUMN_LENGTH, Integer.toString(profile.getLength()));
         values.put(ProfileSqLiteHelper.COLUMN_LEET_TYPE, profile.getLeetType().toString());
         values.put(ProfileSqLiteHelper.COLUMN_LEET_LEVEL, profile.getLeetLevel().toString());
@@ -128,22 +130,23 @@ public class ProfileDataSource {
             profile.setName(cursor.getString(1));
             profile.setUsername(cursor.getString(2));
             profile.setAlgorithm(cursor.getString(3));
-            profile.setLength(cursor.getInt(4));
-            profile.setLeetType(cursor.getString(5));
-            profile.setLeetLevel(cursor.getInt(6));
-            profile.setModifier(cursor.getString(7));
-            profile.setPrefix(cursor.getString(8));
-            profile.setSuffix(cursor.getString(9));
+            profile.setIsHMAC(Boolean.parseBoolean(cursor.getString(4)));
+            profile.setLength(cursor.getInt(5));
+            profile.setLeetType(cursor.getString(6));
+            profile.setLeetLevel(cursor.getInt(7));
+            profile.setModifier(cursor.getString(8));
+            profile.setPrefix(cursor.getString(9));
+            profile.setSuffix(cursor.getString(10));
 
-            profile.setUrlCompomentProtocol(Boolean.parseBoolean(cursor.getString(10)));
-            profile.setUrlComponentSubDomain(Boolean.parseBoolean(cursor.getString(11)));
-            profile.setUrlComponentDomain(Boolean.parseBoolean(cursor.getString(12)));
-            profile.setUrlComponentPortParameters(Boolean.parseBoolean(cursor.getString(13)));
+            profile.setUrlCompomentProtocol(Boolean.parseBoolean(cursor.getString(11)));
+            profile.setUrlComponentSubDomain(Boolean.parseBoolean(cursor.getString(12)));
+            profile.setUrlComponentDomain(Boolean.parseBoolean(cursor.getString(13)));
+            profile.setUrlComponentPortParameters(Boolean.parseBoolean(cursor.getString(14)));
 
-            profile.setCharSetUppercase(Boolean.parseBoolean(cursor.getString(14)));
-            profile.setCharSetLowercase(Boolean.parseBoolean(cursor.getString(15)));
-            profile.setCharSetNumbers(Boolean.parseBoolean(cursor.getString(16)));
-            profile.setCharSetSymbols(Boolean.parseBoolean(cursor.getString(17)));
+            profile.setCharSetUppercase(Boolean.parseBoolean(cursor.getString(15)));
+            profile.setCharSetLowercase(Boolean.parseBoolean(cursor.getString(16)));
+            profile.setCharSetNumbers(Boolean.parseBoolean(cursor.getString(17)));
+            profile.setCharSetSymbols(Boolean.parseBoolean(cursor.getString(18)));
 
         } catch (Exception e) {
             e.printStackTrace();
