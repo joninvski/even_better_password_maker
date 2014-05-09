@@ -14,11 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_name_label"
-            android:layout_marginTop="4dp"
+            android:layout_margin="4dp"
             style="?android:attr/listSeparatorTextViewStyle" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content" >
 
             <Spinner
@@ -41,11 +42,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_url_components_label"
-            android:layout_marginTop="14dp"
+            android:layout_margin="4dp"
             style="?android:attr/listSeparatorTextViewStyle" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content" >
 
             <CheckBox
@@ -73,6 +75,7 @@
         <CheckBox
             android:id="@+id/cb_url_port"
             android:layout_width="wrap_content"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content"
             android:text="@string/profile_port" />
 
@@ -81,12 +84,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_hash_algorithm"
-            android:layout_marginTop="14dp"
+            android:layout_margin="4dp"
             style="?android:attr/listSeparatorTextViewStyle" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content" >
 
             <Spinner
@@ -108,7 +112,7 @@
             android:id="@+id/lbPasswordLenght"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_margin="4dp"
             style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/label_password_length" />
 
@@ -117,11 +121,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:layout_margin="4dp"
             android:inputType="number" />
 
         <TextView
             android:id="@+id/lbPasswordCharacters"
-            android:layout_marginTop="14dp"
+            android:layout_margin="4dp"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,6 +134,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content" >
 
             <CheckBox
@@ -146,11 +152,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content" >
 
             <CheckBox
                 android:id="@+id/cb_char_number"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_number" />
 
