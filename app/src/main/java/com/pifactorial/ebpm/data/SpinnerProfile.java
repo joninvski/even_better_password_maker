@@ -1,4 +1,4 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.data;
 
 public class SpinnerProfile {
     private final String a;

@@ -1,4 +1,4 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.exception;
 
 public class ProfileNotFound extends Exception {
 

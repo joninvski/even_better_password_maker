@@ -3,13 +3,13 @@ package com.pifactorial.test;
 import android.test.ActivityInstrumentationTestCase2;
 
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.pifactorial.EntryActivity;
+import com.pifactorial.ebpm.ui.activity.EntryActivity;
 
 import com.robotium.solo.*;
 
 import com.squareup.spoon.Spoon;
-import android.widget.TextView;
 
 public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryActivity> {
     private Solo solo;
@@ -27,7 +27,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         int timeout = 5000;
 
         // Wait for activity: 'course.labs.fragmentslab.MainActivity'
-        assertTrue("MainActivity not found", solo.waitForActivity(com.pifactorial.EntryActivity.class, timeout));
+        assertTrue("MainActivity not found", solo.waitForActivity(EntryActivity.class, timeout));
 
         EntryActivity activity = getActivity();
         Spoon.screenshot(activity, "initial_state");
@@ -37,7 +37,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         int timeout = 5000;
 
         // Wait for activity: 'course.labs.fragmentslab.MainActivity'
-        assertTrue("MainActivity not found", solo.waitForActivity(com.pifactorial.EntryActivity.class, timeout));
+        assertTrue("MainActivity not found", solo.waitForActivity(EntryActivity.class, timeout));
 
         EntryActivity activity = getActivity();
 

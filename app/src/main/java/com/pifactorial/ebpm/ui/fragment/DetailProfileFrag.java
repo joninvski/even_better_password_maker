@@ -1,4 +1,4 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.ui.fragment;
 
 import android.app.AlertDialog;
 
@@ -33,12 +33,19 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.pifactorial.AddProfileDialogFragment.AddProfileDialogListener;
+import com.pifactorial.ebpm.core.Constants;
+import com.pifactorial.ebpm.data.ProfileDataSource;
+import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
+import com.pifactorial.ebpm.exception.ProfileNotFound;
+import com.pifactorial.ebpm.ui.activity.EntryActivity;
+import com.pifactorial.ebpm.ui.fragment.AddProfileDialogFragment.AddProfileDialogListener;
+import com.pifactorial.ebpm.util.ManagePreferences;
+import com.pifactorial.R;
 
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
-import android.widget.Toast;
 
 public class DetailProfileFrag extends Fragment implements
     OnItemSelectedListener, AddProfileDialogListener {

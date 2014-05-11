@@ -1,16 +1,21 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.data;
+
+import android.content.ContentValues;
+import android.content.Context;
+
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+import android.util.Log;
+
+import com.pifactorial.ebpm.core.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.daveware.passwordmaker.Profile;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import com.pifactorial.ebpm.exception.ProfileNotFound;
 
 public class ProfileDataSource {
 

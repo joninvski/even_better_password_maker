@@ -1,10 +1,11 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.util;
 
 import android.annotation.TargetApi;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import com.pifactorial.ebpm.core.Constants;
 
 import android.os.Build;
 
@@ -16,13 +17,13 @@ public class ManagePreferences {
 
     public ManagePreferences(Context context) {
         c = context;
-        mPrefs = c.getSharedPreferences(c.getString(R.string.SharedPreferencesName), Context.MODE_PRIVATE);
+        mPrefs = c.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void setLastSelectedProfile(int last_selected) {
         final Editor editor = mPrefs.edit();
-        editor.putInt(c.getString(R.string.LastSelectedProfile), last_selected);
+        editor.putInt(Constants.LAST_SELECTED_PROFILE, last_selected);
         if(sdk_version < Build.VERSION_CODES.GINGERBREAD) {
             editor.commit();
         } else {
@@ -42,12 +43,12 @@ public class ManagePreferences {
     }
 
     public int getLastSelectedProfile() {
-        final int last_profile_selected = mPrefs.getInt(c.getString(R.string.LastSelectedProfile), 0);
+        final int last_profile_selected = mPrefs.getInt(Constants.LAST_SELECTED_PROFILE, 0);
         return last_profile_selected;
     }
 
     public String getLastURL() {
-        final String lastURL = mPrefs.getString("LastURL", c.getString(R.string.http));
+        final String lastURL = mPrefs.getString(Constants.LAST_URL, "http://");
         return lastURL;
     }
 }

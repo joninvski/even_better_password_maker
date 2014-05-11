@@ -1,9 +1,10 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import com.pifactorial.ebpm.core.Constants;
 
 public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 

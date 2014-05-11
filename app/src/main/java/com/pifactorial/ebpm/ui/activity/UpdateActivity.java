@@ -1,7 +1,8 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import com.pifactorial.R;
 
 public class UpdateActivity extends FragmentActivity {
 

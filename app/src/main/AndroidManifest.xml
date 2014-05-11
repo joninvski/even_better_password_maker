@@ -15,28 +15,24 @@
         android:uiOptions="splitActionBarWhenNarrow"
         android:theme="@style/Theme.AppCompat" >
         <activity
-            android:name="EntryActivity"
+            android:name="com.pifactorial.ebpm.ui.activity.EntryActivity"
             android:label="Even Better Password Maker" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:label="@string/act_send" >
                 <action android:name="android.intent.action.SEND" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity
-            android:name="UpdateActivity"
+            android:name="com.pifactorial.ebpm.ui.activity.UpdateActivity"
             android:exported="false"
             android:label="Update Profile" >
             <intent-filter>
-                <action android:name="com.pifactorial.UPDATE" />
-
+                <action android:name="com.pifactorial.ebpm.UPDATE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -1,4 +1,4 @@
-package com.pifactorial;
+package com.pifactorial.ebpm.ui.activity;
 
 import android.annotation.TargetApi;
 
@@ -39,6 +39,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.pifactorial.ebpm.core.Constants;
+import com.pifactorial.ebpm.data.ProfileDataSource;
+import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
+import com.pifactorial.ebpm.util.ManagePreferences;
+import com.pifactorial.R;
 
 import java.security.Security;
 

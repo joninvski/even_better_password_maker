@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.pifactorial.*;
 import com.squareup.spoon.Spoon;
 import com.robotium.solo.*;
+import com.pifactorial.ebpm.ui.activity.UpdateActivity;
 
 public class UpdateActivityTest extends ActivityInstrumentationTestCase2<UpdateActivity> {
     private Solo solo;
@@ -23,7 +24,7 @@ public class UpdateActivityTest extends ActivityInstrumentationTestCase2<UpdateA
 
         // Wait for activity: 'course.labs.fragmentslab.MainActivity'
         assertTrue("Update activity not found", solo.waitForActivity(
-                       com.pifactorial.UpdateActivity.class, timeout));
+                       UpdateActivity.class, timeout));
 
         UpdateActivity activity = getActivity();
         Spoon.screenshot(activity, "update_activity_start");
