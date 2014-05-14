@@ -183,7 +183,7 @@ public class PasswordMaker {
      *             if something bad happened.
      */
     public static SecureCharArray makePassword(SecureCharArray masterPassword, Profile profile, final String inputText)
-        throws PasswordGenerationException {
+    throws PasswordGenerationException {
 
         LeetLevel leetLevel = profile.getLeetLevel();
         int length = profile.getLength();

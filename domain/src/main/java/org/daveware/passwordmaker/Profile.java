@@ -513,7 +513,7 @@ public final class Profile {
         this.algorithm = AlgorithmType.fromRdfString(algorithmString);
     }
 
-    public Boolean isHMAC(){
+    public Boolean isHMAC() {
         return this.isHMAC;
     }
 }

@@ -264,7 +264,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
             Log.d(Constants.LOG, "Pressed the go button");
             final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
 
-            try{
+            try {
                 Uri uri = Uri.parse(etURL.getText().toString());
                 myWebLink.setData(uri);
                 startActivity(myWebLink);

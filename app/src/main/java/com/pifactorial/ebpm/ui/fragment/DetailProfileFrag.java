@@ -197,7 +197,7 @@ public class DetailProfileFrag extends Fragment implements
     }
 
     public boolean validateProfileInput() {
-        try{
+        try {
             int value = Integer.parseInt(mPasswordLenght.getText().toString());
             if (value <= 0) {
                 Toast.makeText(getActivity(), "Password length cannot be less than 1", Toast.LENGTH_SHORT).show();
@@ -222,7 +222,7 @@ public class DetailProfileFrag extends Fragment implements
         case R.id.actionBtnSave:
             Log.d(Constants.LOG, "Clicked the save button");
 
-            if(!validateProfileInput()){
+            if(!validateProfileInput()) {
                 break;
             }
 
