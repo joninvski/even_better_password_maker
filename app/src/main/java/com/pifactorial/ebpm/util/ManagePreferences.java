@@ -20,26 +20,34 @@ public class ManagePreferences {
         mPrefs = c.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void setLastSelectedProfile(int last_selected) {
         final Editor editor = mPrefs.edit();
         editor.putInt(Constants.LAST_SELECTED_PROFILE, last_selected);
         if(sdk_version < Build.VERSION_CODES.GINGERBREAD) {
-            editor.commit();
+            commit(editor);
         } else {
-            editor.apply();
+            apply(editor);
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void setLastURL(String lastUrl) {
         final Editor editor = mPrefs.edit();
         editor.putString("LastURL", lastUrl);
         if(sdk_version < Build.VERSION_CODES.GINGERBREAD) {
-            editor.commit();
+            commit(editor);
         } else {
-            editor.apply();
+            apply(editor);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
+    private void commit(Editor e) {
+        e.commit();
+    }
+
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    private void apply(Editor e) {
+        e.apply();
     }
 
     public int getLastSelectedProfile() {
