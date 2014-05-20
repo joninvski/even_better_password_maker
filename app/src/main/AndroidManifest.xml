@@ -16,7 +16,9 @@
         android:theme="@style/Theme.AppCompat" >
         <activity
             android:name="com.pifactorial.ebpm.ui.activity.EntryActivity"
-            android:label="Even Better Password Maker" >
+            android:label="Even Better Password Maker"
+            android:windowSoftInputMode="stateHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,6 +32,7 @@
         <activity
             android:name="com.pifactorial.ebpm.ui.activity.UpdateActivity"
             android:exported="false"
+            android:windowSoftInputMode="stateHidden"
             android:label="Update Profile" >
             <intent-filter>
                 <action android:name="com.pifactorial.ebpm.UPDATE" />
