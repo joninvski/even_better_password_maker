@@ -4,7 +4,7 @@
     <string name="mpw">Master-Password</string>
     <string name="url">URL</string>
     <string name="act_send">Generate password</string>
-    <string name="http">http://</string>
+    <string name="http" translatable="false">http://</string>
     <string name="profile_protocol">Protocol</string>
     <string name="profile_subdomain">Subdomain</string>
     <string name="profile_domain">Domain</string>
