@@ -3,12 +3,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.1'
+        classpath 'com.android.tools.build:gradle:0.10.+'
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.9.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
     }
 
 }
 
+apply plugin: 'android-sdk-manager'
 apply plugin: 'android'
 apply plugin: 'spoon'
 
@@ -31,7 +33,7 @@ dependencies {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     lintOptions {
         abortOnError false
