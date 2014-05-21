@@ -124,7 +124,7 @@ public class DetailProfileFrag extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.detail_profile, container, false);
+        View view = inflater.inflate(R.layout.frag_detail_profile, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
 
         mProfiles = (Spinner) view.findViewById(R.id.spProfiles);

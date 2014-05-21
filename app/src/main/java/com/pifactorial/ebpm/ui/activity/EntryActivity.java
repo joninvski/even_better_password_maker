@@ -80,7 +80,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main);
+        setContentView(R.layout.act_entry);
 
         // Let's get the window controls
         textOutputPass = (TextView) findViewById(R.id.tvResultPass);

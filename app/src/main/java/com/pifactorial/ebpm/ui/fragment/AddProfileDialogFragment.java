@@ -43,7 +43,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_dialog_add_profile, container, false);
+        final View v = inflater.inflate(R.layout.frag_add_profile_dialog, container, false);
         mEditText = (EditText) v.findViewById(R.id.txt_profile_name);
 
         getDialog().setTitle(getString(R.string.new_profile));
