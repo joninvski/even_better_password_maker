@@ -24,7 +24,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
     }
 
     public void testEntryActivity() {
-        int timeout = 5000;
+        int timeout = 8000;
 
         // Wait for activity: 'course.labs.fragmentslab.MainActivity'
         assertTrue("MainActivity not found", solo.waitForActivity(EntryActivity.class, timeout));
@@ -34,7 +34,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
     }
 
     public void testDefaultPass() {
-        int timeout = 5000;
+        int timeout = 8000;
 
         // Wait for activity: 'course.labs.fragmentslab.MainActivity'
         assertTrue("MainActivity not found", solo.waitForActivity(EntryActivity.class, timeout));
