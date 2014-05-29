@@ -1,26 +1,21 @@
-[![screenshot](https://travis-ci.org/joninvski/even_better_password_maker.png?branch=master "Even Better Password Maker Screenshot")](https://github.com/joninvski/even_better_password_maker)
+Even Better Passwork Maker
+==========================
+
 [![Build Status](https://travis-ci.org/joninvski/even_better_password_maker.svg?branch=master)](https://travis-ci.org/joninvski/even_better_password_maker)
 
 Attribution
-===========
+-----------
 
 Part of the code was based on passwordmaker-je.
 https://code.google.com/p/passwordmaker-je/
 
 Kudos to the dev of the project
 
-Instructions
-============
-
-Note: Do not forget to set ANDROID_HOME variable.
-
 Compile
 -------
 
-    # Optional
-    ANDROID_HOME=/home/.../android/sdk; export ANDROID_HOME
+    ANDROID_HOME=/home/.../android/sdk; export ANDROID_HOME # Optional
     ./gradlew assemble
-
 
 Install on device
 -----------------
@@ -53,12 +48,12 @@ Unit tests
 ----------
 
     # Run the unit tests of the domain subproject
-   ./gradlew :domain:test # Check the results in _domain/build/reports/tests/index.html_
+    ./gradlew :domain:test # Check the results in _domain/build/reports/tests/index.html_
 
 Create apk for market
 ---------------------
 
-./release.sh ~/path_to_keystore
+    ./release.sh ~/path_to_keystore
 
 License
 -------
