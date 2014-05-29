@@ -2,6 +2,7 @@
 .. image:: https://travis-ci.org/joninvski/even_better_password_maker.png?branch=master
    :target: http://travis-ci.org/joninvski/even_better_password_maker
 
+[![Build Status](https://travis-ci.org/joninvski/even_better_password_maker.svg?branch=master)](https://travis-ci.org/joninvski/even_better_password_maker)
 
 Attribution
 ===========
