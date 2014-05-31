@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.pifactorial.ebpm.ui.activity.EntryActivity;
 
-import com.robotium.solo.*;
+import com.robotium.solo.Solo;
 
 import com.squareup.spoon.Spoon;
 

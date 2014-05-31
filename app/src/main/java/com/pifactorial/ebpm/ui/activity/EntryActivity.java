@@ -2,13 +2,8 @@ package com.pifactorial.ebpm.ui.activity;
 
 import android.annotation.TargetApi;
 
-import android.app.Activity;
-
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
@@ -18,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 
@@ -29,7 +23,6 @@ import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MenuItem;
 import android.view.View;
 

@@ -1,9 +1,9 @@
 package com.pifactorial.test;
 
 import android.test.ActivityInstrumentationTestCase2;
-import com.pifactorial.*;
+import com.pifactorial.UpdateActivity;
 import com.squareup.spoon.Spoon;
-import com.robotium.solo.*;
+import com.robotium.solo.Solo;
 import com.pifactorial.ebpm.ui.activity.UpdateActivity;
 
 public class UpdateActivityTest extends ActivityInstrumentationTestCase2<UpdateActivity> {
