@@ -138,16 +138,17 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
+                android:id="@+id/cb_char_upper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cb_pass_characters_uppercase" />
+
+            <CheckBox
                 android:id="@+id/cb_char_lower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_lowercase" />
 
-            <CheckBox
-                android:id="@+id/cb_char_upper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_pass_characters_uppercase" />
         </LinearLayout>
 
         <LinearLayout
