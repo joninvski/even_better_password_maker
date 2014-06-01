@@ -377,7 +377,7 @@ public final class Profile {
         }
     }
 
-    public Boolean getUrlCompomentProtocol() {
+    public Boolean getUrlComponentProtocol() {
         return getUrlComponents().contains(UrlComponents.Protocol);
     }
 
@@ -393,7 +393,7 @@ public final class Profile {
         return getUrlComponents().contains(UrlComponents.PortPathAnchorQuery);
     }
 
-    public void setUrlCompomentProtocol(boolean isSet) {
+    public void setUrlComponentProtocol(boolean isSet) {
         if(isSet)
             addUrlComponentProtocol();
         else

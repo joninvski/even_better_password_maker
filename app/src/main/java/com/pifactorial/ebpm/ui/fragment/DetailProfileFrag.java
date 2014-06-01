@@ -83,7 +83,7 @@ public class DetailProfileFrag extends Fragment implements
         final String profileName = datasource.getProfileName(profileCursor);
         final Profile p = datasource.getProfileByName(profileName);
 
-        mUrlProtocol.setChecked(p.getUrlCompomentProtocol());
+        mUrlProtocol.setChecked(p.getUrlComponentProtocol());
         mUrlSubdomain.setChecked(p.getUrlComponentSubDomain());
         mUrlDomain.setChecked(p.getUrlComponentDomain());
         mUrlPort.setChecked(p.getUrlComponentPortParameters());
@@ -293,7 +293,7 @@ public class DetailProfileFrag extends Fragment implements
         String profileName = datasource.createProfileFromCursor(cursor).getName();
 
         p.setName(profileName);
-        p.setUrlCompomentProtocol(mUrlProtocol.isChecked());
+        p.setUrlComponentProtocol(mUrlProtocol.isChecked());
         p.setUrlComponentSubDomain(mUrlSubdomain.isChecked());
         p.setUrlComponentDomain(mUrlDomain.isChecked());
         p.setUrlComponentPortParameters(mUrlPort.isChecked());

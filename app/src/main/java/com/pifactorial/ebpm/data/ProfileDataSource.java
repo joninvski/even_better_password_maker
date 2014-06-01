@@ -72,7 +72,7 @@ public class ProfileDataSource {
         values.put(ProfileSqLiteHelper.COLUMN_MODIFIER, profile.getModifier());
         values.put(ProfileSqLiteHelper.COLUMN_PREFIX, profile.getPrefix());
         values.put(ProfileSqLiteHelper.COLUMN_SUFFIX, profile.getSuffix());
-        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL, profile.getUrlCompomentProtocol().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PROTOCOL, profile.getUrlComponentProtocol().toString());
         values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_SUBDOMAIN, profile.getUrlComponentSubDomain().toString());
         values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_DOMAIN, profile.getUrlComponentDomain().toString());
         values.put(ProfileSqLiteHelper.COLUMN_URL_COMPONENT_PORT_PARAMETERS, profile.getUrlComponentPortParameters().toString());
@@ -143,7 +143,7 @@ public class ProfileDataSource {
             profile.setPrefix(cursor.getString(9));
             profile.setSuffix(cursor.getString(10));
 
-            profile.setUrlCompomentProtocol(Boolean.parseBoolean(cursor.getString(11)));
+            profile.setUrlComponentProtocol(Boolean.parseBoolean(cursor.getString(11)));
             profile.setUrlComponentSubDomain(Boolean.parseBoolean(cursor.getString(12)));
             profile.setUrlComponentDomain(Boolean.parseBoolean(cursor.getString(13)));
             profile.setUrlComponentPortParameters(Boolean.parseBoolean(cursor.getString(14)));
