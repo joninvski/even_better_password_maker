@@ -292,6 +292,13 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
             EntryActivity.this.startActivity(myIntent);
             break;
 
+        case R.id.about:
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","trindade.joao@gmail.com", null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[evenbetterpassmaker] - Feedback");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_text_body));
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email_chooser)));
+            break;
+
         default:
             return super.onOptionsItemSelected(item);
         }
