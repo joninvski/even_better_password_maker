@@ -32,7 +32,7 @@ public class ManagePreferences {
 
     public void setLastURL(String lastUrl) {
         final Editor editor = mPrefs.edit();
-        editor.putString("LastURL", lastUrl);
+        editor.putString(Constants.LAST_URL, lastUrl);
         if(sdk_version < Build.VERSION_CODES.GINGERBREAD) {
             commit(editor);
         } else {

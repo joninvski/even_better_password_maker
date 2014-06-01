@@ -65,7 +65,7 @@ public class CharacterSet {
     }
 
     public static CharacterSet getDefaultCharacterset() {
-        return new CharacterSet(new String[] {UPPERCASE, LOWERCASE});
+        return new CharacterSet(new String[] {UPPERCASE, LOWERCASE, NUMERIC, SPECIAL_CHARS});
     }
 
     public Boolean contains(String s) {
