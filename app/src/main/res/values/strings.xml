@@ -12,6 +12,7 @@
     <string name="profile_hash_algorithm">Hash Algorithm</string>
     <string name="profile_name_label">Profile Name</string>
     <string name="profile_url_components_label">Url components</string>
+    <string name="custom_symbols">Custom Symbols</string>
 
     <string-array name="hash_algorithms_string_array" translatable="false">
         <item>MD4</item>

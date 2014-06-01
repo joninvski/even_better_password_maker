@@ -60,6 +60,7 @@ public class DetailProfileFrag extends Fragment implements
     protected CheckBox mCharNumber;
     protected CheckBox mCharSymbols;
     protected Button mProfileAdd;
+    protected EditText mCustomSymbols;
 
     private ProfileDataSource datasource;
     private ManagePreferences mPrefs;
@@ -91,6 +92,7 @@ public class DetailProfileFrag extends Fragment implements
         mCharUpper.setChecked(p.hasCharSetUppercase());
         mCharNumber.setChecked(p.hasCharSetNumbers());
         mCharSymbols.setChecked(p.hasCharSetSymbols());
+        mCustomSymbols.setText(p.hasCharSetCustom());
         mPasswordLenght.setText(Integer.toString(p.getLength()));
 
         mIsHMAC.setChecked(p.isHMAC());
@@ -137,6 +139,7 @@ public class DetailProfileFrag extends Fragment implements
         mCharUpper = (CheckBox) view.findViewById(R.id.cb_char_upper);
         mCharNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
         mCharSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
+        mCustomSymbols = (EditText) view.findViewById(R.id.et_custom_symbols_input);
 
         mProfileAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

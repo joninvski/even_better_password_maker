@@ -465,8 +465,12 @@ public final class Profile {
         return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
     }
 
-    public Boolean hasCharSetNumbers() {
-        return this.characterSet.contains(CharacterSet.NUMERIC);
+    public Boolean hasCharSetCus() {
+        return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
+    }
+
+    public Boolean hasCharSetCustom() {
+        return this.characterSet.contains(CharacterSet.CUSTOM);
     }
 
     public void setCharSetUppercase(boolean isSet) {

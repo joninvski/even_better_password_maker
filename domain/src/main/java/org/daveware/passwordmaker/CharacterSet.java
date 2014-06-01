@@ -35,7 +35,8 @@ public class CharacterSet {
         UPPERCASE,
         LOWERCASE,
         NUMERIC,
-        SPECIAL_CHARS
+        SPECIAL_CHARS,
+        CUSTOM
     };
 
     public CharacterSet() {
