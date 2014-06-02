@@ -17,14 +17,9 @@
         android:title="@string/buttonProfiles"
         yourapp:showAsAction="collapseActionView">
     </item>
-    <!-- <item -->
-        <!--     android:id="@+id/actionBtnAbout" -->
-        <!--     android:title="@string/buttonAbout" -->
-        <!--     android:showAsAction="collapseActionView"> -->
-        <!--     <menu> -->
-            <!--         <item android:id="@+id/item1" android:title="License"/> -->
-            <!--         <item android:id="@+id/item2" android:title="Developer"/> -->
-            <!--     </menu> -->
-        <!-- </item> -->
+    <item android:id="@+id/about"
+        android:title="@string/about"
+        android:showAsAction="collapseActionView">
+    </item>
 
 </menu>

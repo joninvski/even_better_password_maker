@@ -43,5 +43,8 @@
     <string name="new_profile">New Profile</string>
     <string name="toast_profile_created">profile created</string>
     <string name="hmac">HMAC</string>
+    <string name="about">Feedback</string>
+    <string name="feedback_text_body">This is the feedback for the Even Better Password Maker app:\n\n</string>
+    <string name="send_email_chooser">Send email&#8230;</string>
 
 </resources>
