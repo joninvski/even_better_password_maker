@@ -42,8 +42,8 @@ android {
     }
 
     defaultConfig {
-        versionCode 17
-        versionName "0.8-BETA"
+        versionCode 18
+        versionName "0.9-BETA"
         minSdkVersion 7
         targetSdkVersion 19
     }
