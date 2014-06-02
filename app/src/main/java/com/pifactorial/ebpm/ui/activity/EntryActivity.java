@@ -168,7 +168,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         // Apply the adapter to the spinner
         spProfiles.setAdapter(adapter);
 
-        // Now let's get the default profile
+        // Now let's get the last selected profile
         final int last_selected = mPrefs.getLastSelectedProfile();
         spProfiles.setSelection(last_selected);
     }

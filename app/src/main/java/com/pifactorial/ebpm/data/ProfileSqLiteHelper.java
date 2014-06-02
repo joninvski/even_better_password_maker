@@ -34,8 +34,11 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CHAR_SET_SYMBOLS              = "char_set_symbols";
     public static final String COLUMN_CHAR_SET_COSTUM               = "char_set_costum";
 
+    // Advanced options
+    public static final String COLUMN_JOIN_TOP_LEVEL                = "advanced_join_top_level";
+
     private static final String DATABASE_NAME = "profiles.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
@@ -59,7 +62,8 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
             + COLUMN_CHAR_SET_LOWERCASE            + " boolean not null, "
             + COLUMN_CHAR_SET_NUMBERS              + " boolean not null, "
             + COLUMN_CHAR_SET_SYMBOLS              + " boolean not null, "
-            + COLUMN_CHAR_SET_COSTUM               + " text not null "
+            + COLUMN_CHAR_SET_COSTUM               + " text not null, "
+            + COLUMN_JOIN_TOP_LEVEL                + " boolean default 1"
             + ");";
 
     public ProfileSqLiteHelper(Context context) {
@@ -79,8 +83,15 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
         final int FIRST_DB_VERSION_WITH_HMAC = 2;
         if(oldVersion < FIRST_DB_VERSION_WITH_HMAC )
         {
-            db.execSQL("ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " + COLUMN_ISHMAC + " DEFAULT 0;");
-            db.execSQL("UPDATE " + TABLE_PROFILES + " SET " + COLUMN_ISHMAC + "=" + "0;");
+            db.execSQL("ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " + COLUMN_ISHMAC + " DEFAULT 'true';");
+            db.execSQL("UPDATE " + TABLE_PROFILES + " SET " + COLUMN_ISHMAC + "=" + "'false';");
+        }
+
+        final int FIRST_DB_VERSION_WITH_JOIN_TOP_LEVEL = 3;
+        if(oldVersion < FIRST_DB_VERSION_WITH_JOIN_TOP_LEVEL)
+        {
+            db.execSQL("ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " + COLUMN_JOIN_TOP_LEVEL + " DEFAULT 'true';");
+            db.execSQL("UPDATE " + TABLE_PROFILES + " SET " + COLUMN_JOIN_TOP_LEVEL + "=" + "'true';");
         }
     }
 }

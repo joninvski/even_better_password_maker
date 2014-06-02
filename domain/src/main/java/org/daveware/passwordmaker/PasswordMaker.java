@@ -143,7 +143,8 @@ public class PasswordMaker {
 
         if (domainText != null) {
 
-            final String topDomainText = calculateDomain(domainText);
+            final Boolean joinSpecialTopDomains = profile.getJoinTopLevel();
+            final String topDomainText = calculateDomain(domainText, joinSpecialTopDomains);
             final String subDomainText = calculateSubDomain(domainText, topDomainText);
 
             final boolean hasSubDomain = uriComponents.contains(UrlComponents.Subdomain) && subDomainText != "";
@@ -171,10 +172,12 @@ public class PasswordMaker {
         return subdomain;
     }
 
-    private static String calculateTopDomain(String domainText) {
-        for(String topDomain : TOPLEVELDOMAINS) {
-            if(domainText.endsWith(topDomain)) {
-                return topDomain;
+    private static String calculateTopDomain(String domainText, Boolean joinSpecialTopDomains) {
+        if(joinSpecialTopDomains) {
+            for(String topDomain : TOPLEVELDOMAINS) {
+                if(domainText.endsWith(topDomain)) {
+                    return topDomain;
+                }
             }
         }
 
@@ -195,8 +198,8 @@ public class PasswordMaker {
         return middleDomain;
     }
 
-    private static String calculateDomain(String domainText) {
-        String top = calculateTopDomain(domainText);
+    private static String calculateDomain(String domainText, Boolean joinSpecialTopDomains) {
+        String top = calculateTopDomain(domainText, joinSpecialTopDomains);
         String middle = calculateMiddleDomain(domainText, top);
 
         if (middle != "")

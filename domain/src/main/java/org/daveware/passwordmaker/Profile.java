@@ -54,6 +54,7 @@ public final class Profile {
     private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
     private String costumChars                   = "";
     private Boolean isHMAC                       = false;
+    private Boolean joinTopLevel                 = true;
 
     public Profile() {
         this.name = DEFAULT_NAME;
@@ -84,7 +85,8 @@ public final class Profile {
      */
     public Profile(String name, String username, AlgorithmType algorithm,
                    int length, CharacterSet characterSet, LeetType leetType,
-                   LeetLevel leetLevel, String modifier, String prefix, String suffix, boolean isHMAC)
+                   LeetLevel leetLevel, String modifier, String prefix, String suffix,
+                   boolean isHMAC, Boolean joinTopLevel)
     throws Exception {
         this.name = name;
         this.username = username;
@@ -97,6 +99,7 @@ public final class Profile {
         this.prefix = prefix;
         this.suffix = suffix;
         this.isHMAC = isHMAC;
+        this.joinTopLevel = joinTopLevel;
     }
 
     /**
@@ -120,6 +123,7 @@ public final class Profile {
         this.prefix = a.prefix;
         this.suffix = a.suffix;
         this.isHMAC = a.isHMAC;
+        this.joinTopLevel = a.joinTopLevel;
 
         // The documentation says EnumSet.copyOf() will fail on empty sets.
         if (a.urlComponents.isEmpty() == false)
@@ -143,6 +147,14 @@ public final class Profile {
 
     public void setName(String s) {
         name = s;
+    }
+
+    public Boolean getJoinTopLevel() {
+        return this.joinTopLevel;
+    }
+
+    public void setJoinTopLevel(Boolean b) {
+        this.joinTopLevel = b;
     }
 
     /**
@@ -352,7 +364,7 @@ public final class Profile {
 
     @Override
     public String toString() {
-        return this.name + ": "              + this.algorithm                 + "\n"
+        return this.name + ": "    + this.algorithm                 + "\n"
                + "Username: "      + this.username                  + "\n"
                + "Alghorithm: "    + this.algorithm                 + "\n"
                + "Lenght: "        + Integer.toString(this.length)  + "\n"
@@ -363,14 +375,16 @@ public final class Profile {
                + "Prefix: "        + this.prefix                    + "\n"
                + "Suffix: "        + this.suffix                    + "\n"
                + "UrlComponents: " + this.urlComponents             + "\n"
-               + "CostumChars: "   + this.costumChars;
+               + "CostumChars: "   + this.costumChars               + "\n"
+               + "isHMAC: "        + this.isHMAC                    + "\n"
+               + "joinTopLevel: "  + this.joinTopLevel;
     }
 
     public static Profile getDefaultProfile() {
         try {
             return new Profile(DEFAULT_NAME, "", AlgorithmType.MD5, 8,
                                CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
-                               "", "", "", false);
+                               "", "", "", false, true);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -499,6 +513,10 @@ public final class Profile {
 
     public String getCharSetCostum() {
         return this.costumChars;
+    }
+
+    public void setCharSetCostum(String costum) {
+        this.costumChars = costum;
     }
 
     public void setLeetLevel(int intLevel) {

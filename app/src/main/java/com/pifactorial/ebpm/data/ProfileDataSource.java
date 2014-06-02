@@ -41,7 +41,8 @@ public class ProfileDataSource {
                                           ProfileSqLiteHelper.COLUMN_CHAR_SET_LOWERCASE,
                                           ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS,
                                           ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS,
-                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM
+                                          ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM,
+                                          ProfileSqLiteHelper.COLUMN_JOIN_TOP_LEVEL
                                         };
 
     public ProfileDataSource(Context context) {
@@ -81,6 +82,7 @@ public class ProfileDataSource {
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS, profile.hasCharSetNumbers().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS, profile.hasCharSetSymbols().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_COSTUM, profile.getCharSetCostum().toString());
+        values.put(ProfileSqLiteHelper.COLUMN_JOIN_TOP_LEVEL, profile.getJoinTopLevel().toString());
 
         long insertId = database.insert(ProfileSqLiteHelper.TABLE_PROFILES, null, values);
 
@@ -152,6 +154,8 @@ public class ProfileDataSource {
             profile.setCharSetLowercase(Boolean.parseBoolean(cursor.getString(16)));
             profile.setCharSetNumbers(Boolean.parseBoolean(cursor.getString(17)));
             profile.setCharSetSymbols(Boolean.parseBoolean(cursor.getString(18)));
+            profile.setCharSetCostum(cursor.getString(19));
+            profile.setJoinTopLevel(Boolean.parseBoolean(cursor.getString(20)));
 
         } catch (Exception e) {
             e.printStackTrace();

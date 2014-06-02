@@ -60,6 +60,7 @@ public class DetailProfileFrag extends Fragment implements
     protected CheckBox mCharNumber;
     protected CheckBox mCharSymbols;
     protected Button mProfileAdd;
+    protected CheckBox mJoinTopLevelDomain;
 
     private ProfileDataSource datasource;
     private ManagePreferences mPrefs;
@@ -92,6 +93,7 @@ public class DetailProfileFrag extends Fragment implements
         mCharNumber.setChecked(p.hasCharSetNumbers());
         mCharSymbols.setChecked(p.hasCharSetSymbols());
         mPasswordLenght.setText(Integer.toString(p.getLength()));
+        mJoinTopLevelDomain.setChecked(p.getJoinTopLevel());
 
         mIsHMAC.setChecked(p.isHMAC());
 
@@ -137,6 +139,7 @@ public class DetailProfileFrag extends Fragment implements
         mCharUpper = (CheckBox) view.findViewById(R.id.cb_char_upper);
         mCharNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
         mCharSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
+        mJoinTopLevelDomain = (CheckBox) view.findViewById(R.id.cb_top_domains);
 
         mProfileAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -302,6 +305,7 @@ public class DetailProfileFrag extends Fragment implements
         p.setCharSetUppercase(mCharUpper.isChecked());
         p.setCharSetNumbers(mCharNumber.isChecked());
         p.setCharSetSymbols(mCharSymbols.isChecked());
+        p.setJoinTopLevel(mJoinTopLevelDomain.isChecked());
         p.setLength(Integer.parseInt(mPasswordLenght.getText().toString()));
 
         final String algorithm_string = mHashAlg.getSelectedItem().toString();
