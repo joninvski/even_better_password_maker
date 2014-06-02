@@ -21,6 +21,8 @@
         <item>RIPEMD160</item>
     </string-array>
 
+    <string name="top_domains">Join special domains (e.g. co.uk)</string>
+    <string name="advanced_options">Advanced options</string>
     <string name="label_password_length">Password length</string>
     <string name="label_pass_characters">Password Characters</string>
     <string name="cb_pass_characters_lowercase">lowercase</string>
