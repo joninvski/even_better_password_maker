@@ -19,13 +19,11 @@ apply plugin: 'android-cq'
 // TODO: This is just a hack. Use a real maven rep when it exists
 repositories {
     mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
+    maven { url 'http://dl.bintray.com/joninvski/android-libs' }
 }
 
 dependencies {
-     compile 'doesnotmatter:chromaHashView:0@aar'
+     compile 'org.michaelevans.chromahashview:ChromeHashView:0.1'
      compile 'com.android.support:support-v4:19.1.+'
      compile 'com.android.support:appcompat-v7:19.1.+'
      compile project(':domain')
