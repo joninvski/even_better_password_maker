@@ -167,8 +167,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_pass_characters_symbols" />
-
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_margin="4dp"
+            android:ellipsize="end"
+            android:layout_height="wrap_content" >
+            <CheckBox
+                android:id="@+id/cb_custom_symbols_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/custom_symbols"  />
+
+            <EditText
+                android:id="@+id/et_custom_symbols_input"
+                android:layout_width="match_parent"
+                android:hint="@string/custom_symbols_hint"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -177,35 +195,13 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/advanced_options" />
 
+
         <CheckBox
             android:id="@+id/cb_top_domains"
             android:layout_margin="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/top_domains" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_margin="4dp"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/tv_custom_symbols_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/custom_symbols"  />
-
-            <CheckBox
-                android:id="@+id/cb_custom_symbols_active"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/et_custom_symbols_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
