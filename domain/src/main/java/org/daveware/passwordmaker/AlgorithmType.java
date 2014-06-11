@@ -26,7 +26,7 @@ import java.util.Locale;
  *
  * @author Dave Marotti
  */
-public class AlgorithmType implements Comparable<AlgorithmType> {
+public final class AlgorithmType implements Comparable<AlgorithmType> {
 
     private static final String TAG = AlgorithmType.class.getName();
 

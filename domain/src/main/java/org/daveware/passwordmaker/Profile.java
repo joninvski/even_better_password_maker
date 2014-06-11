@@ -38,7 +38,7 @@ public final class Profile {
         Protocol, Subdomain, Domain, PortPathAnchorQuery
     }
 
-    public static int DEFAULT_LENGTH = 8;
+    public static final int DEFAULT_LENGTH = 8;
     public static final String DEFAULT_NAME = "Default";
 
     private String name                          = "";

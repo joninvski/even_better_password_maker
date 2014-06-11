@@ -22,13 +22,13 @@ package org.daveware.passwordmaker;
  *
  * @author Dave Marotti
  */
-public class LeetType implements Comparable<LeetType> {
-    public static LeetType NONE     = new LeetType(0, "None", "off");
-    public static LeetType BEFORE   = new LeetType(1, "Before", "before-hashing");
-    public static LeetType AFTER    = new LeetType(2, "After", "after-hashing");
-    public static LeetType BOTH     = new LeetType(3, "Both", "both");
+public final class LeetType implements Comparable<LeetType> {
+    public static final LeetType NONE     = new LeetType(0, "None", "off");
+    public static final LeetType BEFORE   = new LeetType(1, "Before", "before-hashing");
+    public static final LeetType AFTER    = new LeetType(2, "After", "after-hashing");
+    public static final LeetType BOTH     = new LeetType(3, "Both", "both");
 
-    public static LeetType [] TYPES = { NONE, BEFORE, AFTER, BOTH };
+    public static final LeetType [] TYPES = { NONE, BEFORE, AFTER, BOTH };
 
     int type = 0;
     String name = "";

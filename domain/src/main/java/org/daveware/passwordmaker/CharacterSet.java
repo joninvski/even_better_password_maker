@@ -21,7 +21,7 @@ package org.daveware.passwordmaker;
  * Some preset encodings which can be used.
  * @author Dave Marotti
  */
-public class CharacterSet {
+public final class CharacterSet {
 
     public static final String NUMERIC = "0123456789";
     public static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -33,7 +33,7 @@ public class CharacterSet {
     private String mCustomCharset = "";
     private boolean mIsCustomCharsetActive = false;
 
-    public static String [] CHARSETS = {
+    public static final String [] CHARSETS = {
         UPPERCASE,
         LOWERCASE,
         NUMERIC,

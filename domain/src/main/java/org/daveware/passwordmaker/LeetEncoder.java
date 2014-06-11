@@ -24,8 +24,11 @@ package org.daveware.passwordmaker;
  *
  * @author Dave Marotti
  */
-public class LeetEncoder {
-    static String [][] LEVELS = {
+public final class LeetEncoder {
+
+    private LeetEncoder() { /* Do nothing */ }
+
+    private static final String [][] LEVELS = {
         {
             "4", "b", "c", "d", "3", "f", "g", "h", "i", "j", "k", "1",
             "m", "n", "0", "p", "9", "r", "s", "7", "u", "v", "w", "x",

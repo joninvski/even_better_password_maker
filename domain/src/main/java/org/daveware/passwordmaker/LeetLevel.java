@@ -22,7 +22,7 @@ package org.daveware.passwordmaker;
  *
  * @author Dave Marotti
  */
-public class LeetLevel implements Comparable<LeetLevel> {
+public final class LeetLevel implements Comparable<LeetLevel> {
     public static final LeetLevel LEVEL1 = new LeetLevel(1);
     public static final LeetLevel LEVEL2 = new LeetLevel(2);
     public static final LeetLevel LEVEL3 = new LeetLevel(3);
@@ -38,9 +38,6 @@ public class LeetLevel implements Comparable<LeetLevel> {
     };
 
     private int level = 1;
-
-    private LeetLevel() {
-    }
 
     private LeetLevel(int l) {
         level = l;

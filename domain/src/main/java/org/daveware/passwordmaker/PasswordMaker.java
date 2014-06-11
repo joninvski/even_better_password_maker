@@ -35,9 +35,11 @@ import org.daveware.passwordmaker.Profile.UrlComponents;
  *
  * @author Dave Marotti
  */
-public class PasswordMaker {
+public final class PasswordMaker {
 
     private static Pattern urlRegex = Pattern.compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
+
+    private PasswordMaker() {/* Do nothing */}
 
     /**
      * Maps an array of characters to another character set.
