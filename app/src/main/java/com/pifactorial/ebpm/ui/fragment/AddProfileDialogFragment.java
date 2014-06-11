@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
+
+import butterknife.InjectView;
+
 import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.R;
 
@@ -28,7 +32,9 @@ import java.util.Locale;
 public class AddProfileDialogFragment extends DialogFragment implements
     OnEditorActionListener {
 
-    private EditText mEditText;
+    @InjectView(R.id.txt_profile_name) EditText mEditText;
+    @InjectView(R.id.ok_add_profile) Button buttonOk;
+
     private DialogFragment mAddProfileDialogFragment;
 
     public interface AddProfileDialogListener {
@@ -44,7 +50,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.frag_add_profile_dialog, container, false);
-        mEditText = (EditText) v.findViewById(R.id.txt_profile_name);
+        ButterKnife.inject(this, v);
 
         getDialog().setTitle(getString(R.string.new_profile));
 
@@ -54,7 +60,6 @@ public class AddProfileDialogFragment extends DialogFragment implements
         mEditText.setOnEditorActionListener(this);
 
         // Let's get the button and insert the callback
-        final Button buttonOk = (Button) v.findViewById(R.id.ok_add_profile);
         buttonOk.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -39,6 +39,10 @@ import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
 import com.pifactorial.ebpm.util.ManagePreferences;
 import com.pifactorial.R;
 
+import butterknife.ButterKnife;
+
+import butterknife.InjectView;
+
 import java.security.Security;
 
 import org.daveware.passwordmaker.PasswordGenerationException;
@@ -57,10 +61,10 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
     }
 
     // Views
-    private EditText etURL;
-    private ChromaHashView etMasterPass;
-    private TextView textOutputPass;
-    private Spinner spProfiles;
+    @InjectView(R.id.etURL) EditText etURL;
+    @InjectView(R.id.etMasterPass) ChromaHashView etMasterPass;
+    @InjectView(R.id.tvResultPass) TextView textOutputPass;
+    @InjectView(R.id.spProfiles) Spinner spProfiles;
 
     // Other
     private ProfileDataSource datasource;
@@ -75,13 +79,9 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
         setContentView(R.layout.act_entry);
 
-        // Let's get the window controls
-        textOutputPass = (TextView) findViewById(R.id.tvResultPass);
-        etURL          = (EditText) findViewById(R.id.etURL);
-        etMasterPass   = (ChromaHashView) findViewById(R.id.etMasterPass);
-        spProfiles     = (Spinner) findViewById(R.id.spProfiles);
-
         sdk_version = android.os.Build.VERSION.SDK_INT;
+
+        ButterKnife.inject(this);
 
         setActionBar();
 

@@ -391,6 +391,18 @@ public final class Profile {
         }
     }
 
+    public String getCustomCharset() {
+        return characterSet.getCustomCharset();
+    }
+
+    public Boolean isCustomCharsetActive() {
+        return this.characterSet.isCustomCharsetActive();
+    }
+
+    public void setCharSetCustomActive(boolean active) {
+        characterSet.setCustomCharsetActive(active);
+    }
+
     public Boolean getUrlComponentProtocol() {
         return getUrlComponents().contains(UrlComponents.Protocol);
     }
@@ -475,12 +487,12 @@ public final class Profile {
         return this.characterSet.contains(CharacterSet.LOWERCASE);
     }
 
-    public Boolean hasCharSetSymbols() {
-        return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
-    }
-
     public Boolean hasCharSetNumbers() {
         return this.characterSet.contains(CharacterSet.NUMERIC);
+    }
+
+    public Boolean hasCharSetSymbols() {
+        return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
     }
 
     public void setCharSetUppercase(boolean isSet) {
@@ -509,6 +521,10 @@ public final class Profile {
             characterSet.setNumbers();
         else
             characterSet.removeNumbers();
+    }
+
+    public void setCustomChars(String costumChars) {
+           characterSet.setCostumChars(costumChars);
     }
 
     public String getCharSetCostum() {

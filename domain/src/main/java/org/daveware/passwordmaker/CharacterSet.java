@@ -23,13 +23,15 @@ package org.daveware.passwordmaker;
  */
 public class CharacterSet {
 
-    public static String NUMERIC = "0123456789";
-    public static String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
-    public static String SPECIAL_CHARS = "`~!@#$%^&*()_-+={}|[]\\:\";'<>?,./";
-    public static String EMPTY = "";
+    public static final String NUMERIC = "0123456789";
+    public static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+    public static final String SPECIAL_CHARS = "`~!@#$%^&*()_-+={}|[]\\:\";'<>?,./";
+    public static final String EMPTY = "";
 
-    private String charset = "";
+    private String mCharset = "";
+    private String mCustomCharset = "";
+    private boolean mIsCustomCharsetActive = false;
 
     public static String [] CHARSETS = {
         UPPERCASE,
@@ -38,30 +40,44 @@ public class CharacterSet {
         SPECIAL_CHARS
     };
 
+
+
     public CharacterSet() {
-        this.charset = EMPTY;
+        this.mCharset = EMPTY;
     }
 
     public CharacterSet(String charset) {
-        this.charset = charset;
+        this.mCharset = charset;
     }
 
     public CharacterSet(String[] charset_array) {
         for (String c : charset_array)
-            charset += c;
+            mCharset += c;
     }
 
     public String getChars() {
-        return charset;
+        return mCharset + mCustomCharset;
+    }
+
+    public String getCustomCharset() {
+        return mCustomCharset;
+    }
+
+    public boolean isCustomCharsetActive() {
+        return mIsCustomCharsetActive;
+    }
+
+    public void setCustomCharsetActive(boolean value) {
+        mIsCustomCharsetActive = value;
     }
 
     public void join(String new_charset) {
-        charset += new_charset;
+        mCharset += new_charset;
     }
 
     public void join(String[] charset_array) {
         for (String c : charset_array)
-            charset += c;
+            mCharset += c;
     }
 
     public static CharacterSet getDefaultCharacterset() {
@@ -69,7 +85,7 @@ public class CharacterSet {
     }
 
     public Boolean contains(String s) {
-        return this.charset.contains(s);
+        return mCharset.contains(s);
     }
 
     public void setUppercase() {
@@ -88,8 +104,12 @@ public class CharacterSet {
         append(NUMERIC);
     }
 
+    public void setCostumChars(String costumChars) {
+        append(costumChars);
+    }
+
     private void append(String s) {
-        charset += s;
+        mCharset += s;
     }
 
     public void removeUppercase() {
@@ -103,7 +123,7 @@ public class CharacterSet {
     private void remove(String s) {
         char[] ca = s.toCharArray();
         for (char c : ca) {
-            charset = charset.replace(""+c, "");
+            mCharset = mCharset.replace(""+c, "");
         }
     }
 
@@ -116,11 +136,11 @@ public class CharacterSet {
     }
 
     public int length() {
-        return charset.length();
+        return mCharset.length();
     }
 
     @Override
     public String toString() {
-        return this.charset;
+        return mCharset;
     }
 }

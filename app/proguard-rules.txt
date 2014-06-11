@@ -19,3 +19,7 @@
 -dontwarn org.joda.convert.**
 -dontwarn javax.naming.**
 -keep class org.spongycastle.**
+
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}
