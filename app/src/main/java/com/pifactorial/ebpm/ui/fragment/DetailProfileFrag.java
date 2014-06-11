@@ -32,6 +32,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
+
+import butterknife.InjectView;
+
 import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.data.ProfileDataSource;
 import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
@@ -47,21 +51,21 @@ import org.daveware.passwordmaker.Profile;
 public class DetailProfileFrag extends Fragment implements
     OnItemSelectedListener, AddProfileDialogListener {
 
-    protected Spinner mProfiles;
-    protected CheckBox mIsHMAC;
-    protected CheckBox mUrlProtocol;
-    protected CheckBox mUrlSubdomain;
-    protected CheckBox mUrlDomain;
-    protected CheckBox mUrlPort;
-    protected Spinner mHashAlg;
-    protected EditText mPasswordLenght;
-    protected CheckBox mCharLower;
-    protected CheckBox mCharUpper;
-    protected CheckBox mCharNumber;
-    protected CheckBox mCharSymbols;
-    protected Button mProfileAdd;
-    protected EditText mCustomChars;
-    protected CheckBox mCustomCharsActive;
+    @InjectView(R.id.spProfiles) Spinner mProfiles;
+    @InjectView(R.id.btAddProfile) Button mProfileAdd;
+    @InjectView(R.id.cb_url_protocol) CheckBox mUrlProtocol;
+    @InjectView(R.id.cb_isHMAC) CheckBox mIsHMAC;
+    @InjectView(R.id.cb_url_subdomain) CheckBox mUrlSubdomain;
+    @InjectView(R.id.cb_url_domain) CheckBox mUrlDomain;
+    @InjectView(R.id.cb_url_port) CheckBox mUrlPort;
+    @InjectView(R.id.sp_hash_alg) Spinner mHashAlg;
+    @InjectView(R.id.etPassLenght) EditText mPasswordLenght;
+    @InjectView(R.id.cb_char_lower) CheckBox mCharLower;
+    @InjectView(R.id.cb_char_upper) CheckBox mCharUpper;
+    @InjectView(R.id.cb_char_number) CheckBox mCharNumber;
+    @InjectView(R.id.cb_char_symbols) CheckBox mCharSymbols;
+    @InjectView(R.id.et_custom_symbols_input) EditText mCustomChars;
+    @InjectView(R.id.cb_custom_symbols_active) CheckBox mCustomCharsActive;
 
     private ProfileDataSource datasource;
     private ManagePreferences mPrefs;
@@ -72,10 +76,12 @@ public class DetailProfileFrag extends Fragment implements
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+
         datasource = new ProfileDataSource(getActivity());
         datasource.open();
         mPrefs = new ManagePreferences(getActivity());
     }
+
 
     private void updateProfileOnGui() throws ProfileNotFound {
         final int last_profile_selected = mPrefs.getLastSelectedProfile();
@@ -125,24 +131,10 @@ public class DetailProfileFrag extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_detail_profile, container, false);
-        super.onCreateView(inflater, container, savedInstanceState);
+        final View view = inflater.inflate(R.layout.frag_detail_profile, container, false);
+        ButterKnife.inject(this, view);
 
-        mProfiles = (Spinner) view.findViewById(R.id.spProfiles);
-        mProfileAdd = (Button) view.findViewById(R.id.btAddProfile);
-        mUrlProtocol = (CheckBox) view.findViewById(R.id.cb_url_protocol);
-        mIsHMAC = (CheckBox) view.findViewById(R.id.cb_isHMAC);
-        mUrlSubdomain = (CheckBox) view.findViewById(R.id.cb_url_subdomain);
-        mUrlDomain = (CheckBox) view.findViewById(R.id.cb_url_domain);
-        mUrlPort = (CheckBox) view.findViewById(R.id.cb_url_port);
-        mHashAlg = (Spinner) view.findViewById(R.id.sp_hash_alg);
-        mPasswordLenght = (EditText) view.findViewById(R.id.etPassLenght);
-        mCharLower = (CheckBox) view.findViewById(R.id.cb_char_lower);
-        mCharUpper = (CheckBox) view.findViewById(R.id.cb_char_upper);
-        mCharNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
-        mCharSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
-        mCustomChars = (EditText) view.findViewById(R.id.et_custom_symbols_input);
-        mCustomCharsActive = (CheckBox) view.findViewById(R.id.cb_custom_symbols_active);
+        super.onCreateView(inflater, container, savedInstanceState);
 
         mProfileAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
