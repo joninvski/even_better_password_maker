@@ -100,35 +100,6 @@ public final class Profile {
     }
 
     /**
-     * Copies the settings (not including children or ID) from another profile
-     *
-     * LEAVE THIS FUNCTION HERE so it's easy to see if new members are ever
-     * added so I don't forget to update it.
-     *
-     * @param a
-     *            The other profile to copy from.
-     */
-    public void copySettings(Profile a) {
-        this.name = a.name;
-        this.username = a.username;
-        this.algorithm = a.algorithm;
-        this.length = a.length;
-        this.characterSet = a.characterSet;
-        this.leetType = a.leetType;
-        this.leetLevel = a.leetLevel;
-        this.modifier = a.modifier;
-        this.prefix = a.prefix;
-        this.suffix = a.suffix;
-        this.isHMAC = a.isHMAC;
-
-        // The documentation says EnumSet.copyOf() will fail on empty sets.
-        if (a.urlComponents.isEmpty() == false)
-            this.urlComponents = EnumSet.copyOf(a.urlComponents);
-        else
-            this.urlComponents = defaultUrlComponents();
-    }
-
-    /**
      * Gets the default set of UrlComponents (empty set).
      *
      * @return
@@ -377,6 +348,18 @@ public final class Profile {
         }
     }
 
+    public String getCustomCharset() {
+        return characterSet.getCustomCharset();
+    }
+
+    public Boolean isCustomCharsetActive() {
+        return this.characterSet.isCustomCharsetActive();
+    }
+
+    public void setCharSetCustomActive(boolean active) {
+        characterSet.setCustomCharsetActive(active);
+    }
+
     public Boolean getUrlComponentProtocol() {
         return getUrlComponents().contains(UrlComponents.Protocol);
     }
@@ -461,16 +444,12 @@ public final class Profile {
         return this.characterSet.contains(CharacterSet.LOWERCASE);
     }
 
+    public Boolean hasCharSetNumbers() {
+        return this.characterSet.contains(CharacterSet.NUMERIC);
+    }
+
     public Boolean hasCharSetSymbols() {
         return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
-    }
-
-    public Boolean hasCharSetCus() {
-        return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
-    }
-
-    public Boolean hasCharSetCustom() {
-        return this.characterSet.contains(CharacterSet.CUSTOM);
     }
 
     public void setCharSetUppercase(boolean isSet) {
@@ -499,6 +478,10 @@ public final class Profile {
             characterSet.setNumbers();
         else
             characterSet.removeNumbers();
+    }
+
+    public void setCustomChars(String costumChars) {
+           characterSet.setCostumChars(costumChars);
     }
 
     public String getCharSetCostum() {

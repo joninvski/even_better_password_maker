@@ -60,7 +60,8 @@ public class DetailProfileFrag extends Fragment implements
     protected CheckBox mCharNumber;
     protected CheckBox mCharSymbols;
     protected Button mProfileAdd;
-    protected EditText mCustomSymbols;
+    protected EditText mCustomChars;
+    protected CheckBox mCustomCharsActive;
 
     private ProfileDataSource datasource;
     private ManagePreferences mPrefs;
@@ -92,8 +93,9 @@ public class DetailProfileFrag extends Fragment implements
         mCharUpper.setChecked(p.hasCharSetUppercase());
         mCharNumber.setChecked(p.hasCharSetNumbers());
         mCharSymbols.setChecked(p.hasCharSetSymbols());
-        mCustomSymbols.setText(p.hasCharSetCustom());
+        mCustomChars.setText(p.getCustomCharset());
         mPasswordLenght.setText(Integer.toString(p.getLength()));
+        mCustomCharsActive.setChecked(p.isCustomCharsetActive());
 
         mIsHMAC.setChecked(p.isHMAC());
 
@@ -139,7 +141,8 @@ public class DetailProfileFrag extends Fragment implements
         mCharUpper = (CheckBox) view.findViewById(R.id.cb_char_upper);
         mCharNumber = (CheckBox) view.findViewById(R.id.cb_char_number);
         mCharSymbols = (CheckBox) view.findViewById(R.id.cb_char_symbols);
-        mCustomSymbols = (EditText) view.findViewById(R.id.et_custom_symbols_input);
+        mCustomChars = (EditText) view.findViewById(R.id.et_custom_symbols_input);
+        mCustomCharsActive = (CheckBox) view.findViewById(R.id.cb_custom_symbols_active);
 
         mProfileAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -306,6 +309,8 @@ public class DetailProfileFrag extends Fragment implements
         p.setCharSetNumbers(mCharNumber.isChecked());
         p.setCharSetSymbols(mCharSymbols.isChecked());
         p.setLength(Integer.parseInt(mPasswordLenght.getText().toString()));
+        p.setCustomChars(mCustomChars.getText().toString());
+        p.setCharSetCustomActive(mCustomCharsActive.isChecked());
 
         final String algorithm_string = mHashAlg.getSelectedItem().toString();
         try {
