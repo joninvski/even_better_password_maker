@@ -28,11 +28,12 @@ package org.daveware.passwordmaker;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
+import java.io.Serializable;
 
 /**
  * Represents a profile for rules to generate passwords
  */
-public final class Profile {
+public final class Profile implements Serializable {
 
     public enum UrlComponents {
         Protocol, Subdomain, Domain, PortPathAnchorQuery

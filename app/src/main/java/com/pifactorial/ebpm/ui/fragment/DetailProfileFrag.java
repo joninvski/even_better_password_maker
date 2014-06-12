@@ -1,6 +1,7 @@
 package com.pifactorial.ebpm.ui.fragment;
-
 import android.app.AlertDialog;
+import android.view.inputmethod.InputMethodManager;
+
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,11 +10,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 
+import android.graphics.Color;
+
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SimpleCursorAdapter;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import android.util.Log;
 
@@ -21,13 +27,17 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
 
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -49,7 +59,7 @@ import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
 
 public class DetailProfileFrag extends Fragment implements
-    OnItemSelectedListener, AddProfileDialogListener {
+OnItemSelectedListener, AddProfileDialogListener {
 
     @InjectView(R.id.spProfiles) Spinner mProfiles;
     @InjectView(R.id.btAddProfile) Button mProfileAdd;
@@ -115,9 +125,9 @@ public class DetailProfileFrag extends Fragment implements
         // Populate a spinner with the profiles
         Cursor cursor = datasource.getAllProfilesCursor();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-            this.getActivity(), android.R.layout.simple_spinner_item,
-            cursor, new String[] { ProfileSqLiteHelper.COLUMN_NAME },
-            new int[] { android.R.id.text1 }, 0);
+                this.getActivity(), android.R.layout.simple_spinner_item,
+                cursor, new String[] { ProfileSqLiteHelper.COLUMN_NAME },
+                new int[] { android.R.id.text1 }, 0);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -149,7 +159,7 @@ public class DetailProfileFrag extends Fragment implements
 
         mProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView,
-                                       View selectedItemView, int position, long id) {
+                View selectedItemView, int position, long id) {
                 Log.d(Constants.LOG, "Choosen a new profile");
                 try {
                     final int last_selected = mProfiles.getSelectedItemPosition();
@@ -160,13 +170,48 @@ public class DetailProfileFrag extends Fragment implements
                 }
             }
 
+
             public void onNothingSelected(AdapterView<?> parentView) {
                 Log.i(Constants.LOG, "Nothing was selected on the profile spinner");
             }
         });
 
-        updateProfileSpinner();
+        mCustomCharsActive.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if ( isChecked ) {
+                    mCustomChars.setTextColor(Color.WHITE);
+                }
+                else{
+                    mCustomChars.setTextColor(Color.DKGRAY);
 
+                    // Hides the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mCustomChars.getWindowToken(), 0);
+                }
+            }
+        });
+
+        // Checks if the text for costum chars has changed and if so sets the checkbox
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCustomCharsActive.setChecked(true);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                return; // Do nothing
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                return; // Do nothing
+            }
+        };
+        mCustomChars.addTextChangedListener(watcher);
+
+        updateProfileSpinner();
 
         try {
             updateProfileOnGui();
@@ -175,6 +220,7 @@ public class DetailProfileFrag extends Fragment implements
         }
         return view;
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -215,53 +261,54 @@ public class DetailProfileFrag extends Fragment implements
 
         switch (item.getItemId()) {
 
-        case R.id.actionBtnSave:
-            Log.d(Constants.LOG, "Clicked the save button");
+            case R.id.actionBtnSave:
+                Log.d(Constants.LOG, "Clicked the save button");
 
-            if(!validateProfileInput()) {
-                break;
-            }
-
-            saveProfile();
-
-            // Now let's show an alert box
-            alertDialogBuilder = new AlertDialog.Builder(context);
-            // set title
-            alertDialogBuilder.setTitle("Profile Saved");
-            // alertDialogBuilder.setMessage("Profile has been saved");
-            alertDialogBuilder.setNeutralButton(android.R.string.ok,
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    Intent myIntent = new Intent(context, EntryActivity.class);
-                    DetailProfileFrag.this.startActivity(myIntent);
+                if(!validateProfileInput()) {
+                    break;
                 }
-            });
-            // create alert dialog
-            alertDialog = alertDialogBuilder.create();
-            // show it
-            alertDialog.show();
-            break;
 
-        case R.id.actionBtnDelete:
-            Log.d(Constants.LOG, "Clicked the delete button");
+                Profile p = getProfile();
+                saveProfile(p);
 
-            alertDialogBuilder = new AlertDialog.Builder(context);
+                // Now let's show an alert box
+                alertDialogBuilder = new AlertDialog.Builder(context);
+                // set title
+                alertDialogBuilder.setTitle("Profile Saved");
+                // alertDialogBuilder.setMessage("Profile has been saved");
+                alertDialogBuilder.setNeutralButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Intent myIntent = new Intent(context, EntryActivity.class);
+                                DetailProfileFrag.this.startActivity(myIntent);
+                            }
+                        });
+                // create alert dialog
+                alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+                break;
 
-            if(deleteProfile())
-                alertDialogBuilder.setTitle("Profile deleted");
-            else
-                alertDialogBuilder.setTitle("Default profile cannot be deleted");
+            case R.id.actionBtnDelete:
+                Log.d(Constants.LOG, "Clicked the delete button");
 
-            alertDialog = alertDialogBuilder.create();
-            mPrefs.setLastSelectedProfile(0);
-            updateProfileSpinner();
+                alertDialogBuilder = new AlertDialog.Builder(context);
 
-            // show it
-            alertDialog.show();
-            break;
+                if(deleteProfile())
+                    alertDialogBuilder.setTitle("Profile deleted");
+                else
+                    alertDialogBuilder.setTitle("Default profile cannot be deleted");
 
-        default:
-            return super.onOptionsItemSelected(item);
+                alertDialog = alertDialogBuilder.create();
+                mPrefs.setLastSelectedProfile(0);
+                updateProfileSpinner();
+
+                // show it
+                alertDialog.show();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
@@ -283,9 +330,7 @@ public class DetailProfileFrag extends Fragment implements
         }
     }
 
-    private void saveProfile() {
-        // set the default according to value
-        Log.d(Constants.LOG, "Clicked the save button");
+    private Profile getProfile() {
         Profile p = new Profile();
 
         SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
@@ -313,6 +358,10 @@ public class DetailProfileFrag extends Fragment implements
             e.printStackTrace();
         }
 
+        return p;
+    }
+
+    private void saveProfile(Profile p) {
         Log.d(Constants.LOG, "Saving profile: " + p);
         if (datasource.profileExists(p.getName())) {
             Log.i(Constants.LOG, "Profile already exists. Replacing it");
@@ -349,5 +398,11 @@ public class DetailProfileFrag extends Fragment implements
         datasource.insertProfile(defaultProfile);
         datasource.close();
         updateProfileSpinner();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("profile", getProfile());
     }
 }
