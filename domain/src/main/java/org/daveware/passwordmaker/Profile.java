@@ -33,7 +33,7 @@ import java.io.Serializable;
 /**
  * Represents a profile for rules to generate passwords
  */
-public final class Profile implements Serializable {
+public class Profile implements Serializable {
 
     public enum UrlComponents {
         Protocol, Subdomain, Domain, PortPathAnchorQuery

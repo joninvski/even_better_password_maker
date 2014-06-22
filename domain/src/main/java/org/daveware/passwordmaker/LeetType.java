@@ -17,12 +17,14 @@
  */
 package org.daveware.passwordmaker;
 
+import java.io.Serializable;
+
 /**
  * Object representing type of leet encoding.
  *
  * @author Dave Marotti
  */
-public final class LeetType implements Comparable<LeetType> {
+public final class LeetType implements Comparable<LeetType>, Serializable {
     public static final LeetType NONE     = new LeetType(0, "None", "off");
     public static final LeetType BEFORE   = new LeetType(1, "Before", "before-hashing");
     public static final LeetType AFTER    = new LeetType(2, "After", "after-hashing");

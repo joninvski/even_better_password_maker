@@ -92,14 +92,26 @@ OnItemSelectedListener, AddProfileDialogListener {
         mPrefs = new ManagePreferences(getActivity());
     }
 
-
-    private void updateProfileOnGui() throws ProfileNotFound {
+    private void updateLastSelectedProfileSpinner() {
         final int last_profile_selected = mPrefs.getLastSelectedProfile();
         mProfiles.setSelection(last_profile_selected);
+    }
 
+    private Profile getProfileInSpinner() {
         SQLiteCursor profileCursor = (SQLiteCursor) mProfiles.getSelectedItem();
-        final String profileName = datasource.getProfileName(profileCursor);
-        final Profile p = datasource.getProfileByName(profileName);
+        final String profileName = datasource.getNameFromProfileCursor(profileCursor);
+
+        try {
+            Profile p = datasource.getProfileByName(profileName);
+            return p;
+        }
+        catch (ProfileNotFound e) {
+            Log.e(Constants.LOG, "Profile displayed in spinner does not exist", e);
+            return Profile.getDefaultProfile();
+        }
+    }
+
+    private void updateProfileOnGui(Profile p) throws ProfileNotFound {
 
         mUrlProtocol.setChecked(p.getUrlComponentProtocol());
         mUrlSubdomain.setChecked(p.getUrlComponentSubDomain());
@@ -162,9 +174,14 @@ OnItemSelectedListener, AddProfileDialogListener {
                 View selectedItemView, int position, long id) {
                 Log.d(Constants.LOG, "Choosen a new profile");
                 try {
+                    // The profile in spinner has changed, save the last selected profile
                     final int last_selected = mProfiles.getSelectedItemPosition();
                     mPrefs.setLastSelectedProfile(last_selected);
-                    updateProfileOnGui();
+
+                    // Then update the various views
+                    final Profile p = getProfileInSpinner();
+                    updateLastSelectedProfileSpinner();
+                    updateProfileOnGui(p);
                 } catch (ProfileNotFound e) {
                     e.printStackTrace();
                 }
@@ -213,8 +230,19 @@ OnItemSelectedListener, AddProfileDialogListener {
 
         updateProfileSpinner();
 
+        Profile p;
+            Log.v(Constants.LOG, "Before");
+        if ((savedInstanceState != null) && (savedInstanceState.getSerializable("profile") != null)) {
+            p = (Profile) savedInstanceState.getSerializable("profile");
+            Log.v(Constants.LOG, "Instance saved");
+        }
+        else{
+            p = getProfileInSpinner();
+            updateLastSelectedProfileSpinner();
+        }
+
         try {
-            updateProfileOnGui();
+            updateProfileOnGui(p);
         } catch (ProfileNotFound e) {
             e.printStackTrace();
         }
@@ -268,7 +296,7 @@ OnItemSelectedListener, AddProfileDialogListener {
                     break;
                 }
 
-                Profile p = getProfile();
+                Profile p = getProfileConfiguration();
                 saveProfile(p);
 
                 // Now let's show an alert box
@@ -330,11 +358,12 @@ OnItemSelectedListener, AddProfileDialogListener {
         }
     }
 
-    private Profile getProfile() {
-        Profile p = new Profile();
+    private Profile getProfileConfiguration() {
 
         SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
-        String profileName = datasource.createProfileFromCursor(cursor).getName();
+        String profileName = datasource.getNameFromProfileCursor(cursor);
+
+        Profile p = new Profile();
 
         p.setName(profileName);
         p.setUrlComponentProtocol(mUrlProtocol.isChecked());
@@ -403,6 +432,6 @@ OnItemSelectedListener, AddProfileDialogListener {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("profile", getProfile());
+        outState.putSerializable("profile", getProfileConfiguration());
     }
 }

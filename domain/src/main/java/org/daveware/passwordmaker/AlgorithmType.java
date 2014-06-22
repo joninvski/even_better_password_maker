@@ -18,6 +18,7 @@
 package org.daveware.passwordmaker;
 
 import java.util.Locale;
+import java.io.Serializable;
 
 /**
  * Object representing an algorithm type.
@@ -26,7 +27,7 @@ import java.util.Locale;
  *
  * @author Dave Marotti
  */
-public final class AlgorithmType implements Comparable<AlgorithmType> {
+public final class AlgorithmType implements Comparable<AlgorithmType>, Serializable {
 
     private static final String TAG = AlgorithmType.class.getName();
 

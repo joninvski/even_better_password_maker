@@ -126,7 +126,7 @@ public class ProfileDataSource {
         return profiles;
     }
 
-    public String getProfileName(Cursor cursor) {
+    public String getNameFromProfileCursor(Cursor cursor) {
         return cursor.getString(1);
     }
 

@@ -16,7 +16,6 @@ apply plugin: 'android'
 apply plugin: 'spoon'
 apply plugin: 'android-cq'
 
-// TODO: This is just a hack. Use a real maven rep when it exists
 repositories {
     mavenCentral()
     maven { url 'http://dl.bintray.com/joninvski/android-libs' }
