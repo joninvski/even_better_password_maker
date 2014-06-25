@@ -53,7 +53,6 @@ public class Profile implements Serializable {
     private String prefix                        = "";
     private String suffix                        = "";
     private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
-    private String costumChars                   = "";
     private Boolean isHMAC                       = false;
     private Boolean joinTopLevel                 = true;
 
@@ -199,7 +198,7 @@ public class Profile implements Serializable {
      * @return the characterSet
      */
     public String getCompleteCharacterSet() {
-        return characterSet.toString().concat(costumChars);
+        return characterSet.getChars();
     }
 
     /**
@@ -376,7 +375,6 @@ public class Profile implements Serializable {
                + "Prefix: "        + this.prefix                    + "\n"
                + "Suffix: "        + this.suffix                    + "\n"
                + "UrlComponents: " + this.urlComponents             + "\n"
-               + "CostumChars: "   + this.costumChars               + "\n"
                + "isHMAC: "        + this.isHMAC                    + "\n"
                + "joinTopLevel: "  + this.joinTopLevel;
     }
@@ -397,7 +395,11 @@ public class Profile implements Serializable {
     }
 
     public Boolean isCustomCharsetActive() {
-        return this.characterSet.isCustomCharsetActive();
+        return characterSet.isCustomCharsetActive();
+    }
+
+    public void setCustomCharset(String customCharset) {
+        characterSet.setCustomCharset(customCharset);
     }
 
     public void setCharSetCustomActive(boolean active) {
@@ -524,16 +526,8 @@ public class Profile implements Serializable {
             characterSet.removeNumbers();
     }
 
-    public void setCustomChars(String costumChars) {
-           characterSet.setCostumChars(costumChars);
-    }
-
-    public String getCharSetCostum() {
-        return this.costumChars;
-    }
-
-    public void setCharSetCostum(String costum) {
-        this.costumChars = costum;
+    public String getCharSetCustom() {
+        return characterSet.getCustomCharset();
     }
 
     public void setLeetLevel(int intLevel) {

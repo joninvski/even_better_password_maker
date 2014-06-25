@@ -377,7 +377,7 @@ OnItemSelectedListener, AddProfileDialogListener {
         p.setCharSetSymbols(mCharSymbols.isChecked());
         p.setJoinTopLevel(mJoinTopLevelDomain.isChecked());
         p.setLength(Integer.parseInt(mPasswordLenght.getText().toString()));
-        p.setCustomChars(mCustomChars.getText().toString());
+        p.setCustomCharset(mCustomChars.getText().toString());
         p.setCharSetCustomActive(mCustomCharsActive.isChecked());
 
         final String algorithm_string = mHashAlg.getSelectedItem().toString();

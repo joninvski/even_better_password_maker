@@ -105,8 +105,8 @@ public final class CharacterSet implements Serializable {
         append(NUMERIC);
     }
 
-    public void setCostumChars(String costumChars) {
-        append(costumChars);
+    public void setCustomCharset(String customChars) {
+        mCustomCharset = customChars;
     }
 
     private void append(String s) {
@@ -142,6 +142,6 @@ public final class CharacterSet implements Serializable {
 
     @Override
     public String toString() {
-        return mCharset;
+        return getChars();
     }
 }
