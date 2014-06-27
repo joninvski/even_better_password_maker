@@ -13,7 +13,8 @@
         android:icon="@drawable/pwm"
         android:label="Even Better Password Maker"
         android:uiOptions="splitActionBarWhenNarrow"
-        android:theme="@style/Theme.AppCompat" >
+        android:theme="@style/Theme.AppCompat"
+        android:name=".ebpm.EBPMakerApp" >
         <activity
             android:name="com.pifactorial.ebpm.ui.activity.EntryActivity"
             android:label="Even Better Password Maker"

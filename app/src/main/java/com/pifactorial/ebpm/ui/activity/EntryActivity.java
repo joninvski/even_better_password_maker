@@ -19,8 +19,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import android.util.Log;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,15 +31,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
+
+import butterknife.InjectView;
+
 import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.data.ProfileDataSource;
 import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
 import com.pifactorial.ebpm.util.ManagePreferences;
 import com.pifactorial.R;
-
-import butterknife.ButterKnife;
-
-import butterknife.InjectView;
 
 import java.security.Security;
 
@@ -53,6 +51,8 @@ import org.daveware.passwordmaker.SecureCharArray;
 import org.michaelevans.chromahashview.ChromaHashView;
 
 import org.spongycastle.jce.provider.BouncyCastleProvider;
+
+import timber.log.Timber;
 
 public class EntryActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -105,8 +105,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
-                Log.i(Constants.LOG,
-                      "Strange, nothing was selected on the profile spinner");
+                Timber.i("Strange, nothing was selected on the profile spinner");
             }
         });
 
@@ -183,7 +182,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
             break;
 
         default:
-            Log.e(Constants.LOG, "Some unexpected view was pressed");
+            Timber.e("Some unexpected view was pressed");
             break;
         }
     }
@@ -194,7 +193,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
                 final SecureCharArray result = getPassword();
                 textOutputPass.setText(new String(result.getData()));     // Show the generated password
             } catch (PasswordGenerationException e) {
-                Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
+                Timber.e("Error in generating the new password: %s", e);
             }
         } else {
             textOutputPass.setText("");
@@ -205,7 +204,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         // Get spinner profile
         final SQLiteCursor profileCursor = (SQLiteCursor) spProfiles.getSelectedItem();
         final Profile profile = datasource.createProfileFromCursor(profileCursor);
-        Log.d(Constants.LOG, "Profile fetched \n" + profile.toString());
+        Timber.d("Profile fetched: %s \n", profile.toString());
 
         // Use the profile and master password to get the generated password
         final SecureCharArray master = new SecureCharArray(etMasterPass.getText().toString());
@@ -219,9 +218,9 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
         // Check if there is no profile
         if (datasource.getAllProfiles().size() < 1) {
-            Log.d(Constants.LOG, "No profile in DB was found");
+            Timber.d("No profile in DB was found");
             final Profile defaultProfile = Profile.getDefaultProfile();
-            Log.d(Constants.LOG, "Inserting default profile: " + defaultProfile);
+            Timber.d("Inserting default profile: %s", defaultProfile);
             datasource.insertProfile(defaultProfile);
         }
 
@@ -254,7 +253,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         switch (item.getItemId()) {
 
         case R.id.actionBtnGo:
-            Log.d(Constants.LOG, "Pressed the go button");
+            Timber.d("Pressed the go button");
             final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
 
             try {
@@ -263,31 +262,31 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
                 startActivity(myWebLink);
             }
             catch (NullPointerException e) {
-                Log.e(Constants.LOG, "Url string is empty" + e.getMessage());
+                Timber.e("Url string is empty %s", e.getMessage());
                 Toast.makeText(getApplicationContext(), "Url string is empty", Toast.LENGTH_SHORT).show();
             }
             catch (android.content.ActivityNotFoundException e) {
-                Log.e(Constants.LOG, "Unable to generate uri" + e.getMessage());
+                Timber.e("Unable to generate uri %s", e.getMessage());
                 Toast.makeText(getApplicationContext(), "Invalid URI", Toast.LENGTH_SHORT).show();
             }
             break;
 
         case R.id.actionBtnCopy:
-            Log.d(Constants.LOG, "Clicked item Copy");
+            Timber.d("Clicked item Copy");
 
             try {
                 final SecureCharArray generatedPassword = getPassword();
                 String pass = new String(generatedPassword.getData());
                 copyPassToClipBoard(pass);
             } catch (PasswordGenerationException e) {
-                Log.e(Constants.LOG, "Error in generating the new password" + e.getMessage());
+                Timber.e("Error in generating the new password %s", e.getMessage());
                 Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
             }
 
             break;
 
         case R.id.actionBtnProfiles:
-            Log.d(Constants.LOG, "Clicked Profiles");
+            Timber.d("Clicked Profiles");
             final Intent myIntent = new Intent(EntryActivity.this, UpdateActivity.class);
             EntryActivity.this.startActivity(myIntent);
             break;
@@ -338,7 +337,7 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
     @Override
     protected void onStop() {
-        Log.d(Constants.LOG, "on Stopping");
+        Timber.d("on Stopping");
         super.onStop();
     }
 
