@@ -148,9 +148,6 @@ public final class PasswordMaker {
             final String subDomainText = calculateSubDomain(domainText, topDomainText);
 
             final boolean hasSubDomain = uriComponents.contains(UrlComponents.Subdomain) && !subDomainText.isEmpty();
-            System.out.print("Top: " + topDomainText);
-            System.out.println(" " + uriComponents.contains(UrlComponents.Domain));
-            System.out.print("Middle: " + subDomainText);
 
             if (hasSubDomain) {
                 retVal.append(subDomainText);
