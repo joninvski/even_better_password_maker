@@ -42,7 +42,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         EntryActivity activity = getActivity();
 
         // Choose default on the spinner
-        boolean actual = solo.searchText("Default");
+        boolean actual = solo.waitForText("Default");
         assertEquals("Spinner text not found", true, actual);
 
         solo.pressSpinnerItem(0, 1);
@@ -58,8 +58,8 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         solo.enterText(etMasterPass, "abc");
 
         // Check the generated password does not show up
-        actual = solo.searchText("Click to show/hide");
-        assertEquals("password is showing before clicking",true, actual);
+        actual = solo.waitForText("Click to show/hide");
+        assertEquals("password is showing before clicking", true, actual);
         Spoon.screenshot(activity, "BeforeClickGeneratedPassword");
 
         // CLick on the password text
@@ -67,17 +67,17 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         solo.clickOnView(tvResultPass);
 
         // check the generated password shows up
-        actual = solo.searchText("Click to show/hide");
+        actual = solo.waitForText("Click to show/hide");
         assertEquals("password text field still showing default message", false, actual);
 
-        actual = solo.searchText("FDyXQbFs");
+        actual = solo.waitForText("Jb6uZjZ@");
         assertEquals("password is not showing after click", true, actual);
         Spoon.screenshot(activity, "AfterClickGeneratedPassword");
 
         // Click again and the pass has to disappear
         solo.clickOnView(tvResultPass);
         Spoon.screenshot(activity, "AfterSecondClickGeneratedPassword");
-        actual = solo.searchText("Click to show/hide");
+        actual = solo.waitForText("Click to show/hide");
         assertEquals("password text field still showing password after click", true, actual);
     }
 }

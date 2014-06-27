@@ -55,6 +55,18 @@ Create apk for market
 
     ./release.sh ~/path_to_keystore
 
+Libraries Used
+--------------
+
+- [Robotium](http://code.google.com/p/robotium/)
+- Square's [Spoon](http://square.github.io/spoon/)
+- Jake Wharton's [Butterknife](http://jakewharton.github.io/butterknife/)
+- Michael Evan's [Chromehashview](https://github.com/MichaelEvans/ChromaHashView)
+- Google's [Android Support Library v4](http://developer.android.com/reference/android/support/v4/app/package-summary.html)
+- Google's [Android Support AppCompact v7](https://developer.android.com/reference/android/support/v7/appcompat/package-summary.html)
+- [Joda Time](http://www.joda.org/joda-time/)
+- Roberto Tyley's [Spongy Castle](http://rtyley.github.io/spongycastle/) - bouncy castle replacement for android
+
 License
 -------
 

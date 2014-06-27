@@ -1,7 +1,6 @@
 package com.pifactorial.test;
 
 import android.test.ActivityInstrumentationTestCase2;
-import com.pifactorial.UpdateActivity;
 import com.squareup.spoon.Spoon;
 import com.robotium.solo.Solo;
 import com.pifactorial.ebpm.ui.activity.UpdateActivity;

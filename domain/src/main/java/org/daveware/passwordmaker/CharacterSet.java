@@ -16,12 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.daveware.passwordmaker;
+import java.io.Serializable;
 
 /**
  * Some preset encodings which can be used.
  * @author Dave Marotti
  */
-public final class CharacterSet {
+public final class CharacterSet implements Serializable {
 
     public static final String NUMERIC = "0123456789";
     public static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -104,8 +105,8 @@ public final class CharacterSet {
         append(NUMERIC);
     }
 
-    public void setCostumChars(String costumChars) {
-        append(costumChars);
+    public void setCustomCharset(String customChars) {
+        mCustomCharset = customChars;
     }
 
     private void append(String s) {
@@ -141,6 +142,6 @@ public final class CharacterSet {
 
     @Override
     public String toString() {
-        return mCharset;
+        return getChars();
     }
 }

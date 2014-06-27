@@ -51,8 +51,6 @@ public final class PasswordMaker {
      *            The array of characters to map.
      * @param encoding
      *            The list of characters to map to.
-     * @param trim
-     *            Whether to trim leading zeros ... I think.
      * @return The mapped string.
      * @throws Exception
      *             On odd length!?
@@ -144,12 +142,16 @@ public final class PasswordMaker {
         }
 
         if (domainText != null) {
-
+            /* TODO fix this problem with subdomain and google.com */
             final Boolean joinSpecialTopDomains = profile.getJoinTopLevel();
             final String topDomainText = calculateDomain(domainText, joinSpecialTopDomains);
             final String subDomainText = calculateSubDomain(domainText, topDomainText);
 
-            final boolean hasSubDomain = uriComponents.contains(UrlComponents.Subdomain) && subDomainText != "";
+            final boolean hasSubDomain = uriComponents.contains(UrlComponents.Subdomain) && !subDomainText.isEmpty();
+            System.out.print("Top: " + topDomainText);
+            System.out.println(" " + uriComponents.contains(UrlComponents.Domain));
+            System.out.print("Middle: " + subDomainText);
+
             if (hasSubDomain) {
                 retVal.append(subDomainText);
             }
@@ -170,6 +172,11 @@ public final class PasswordMaker {
         int lengthToRemove = topDomainText.length();
         int rightmostSubdomainIndex = domainText.length() - lengthToRemove;
         String subdomain = domainText.substring(0, rightmostSubdomainIndex);
+
+        if (subdomain.length() > 0) {
+            if(subdomain.charAt(subdomain.length() - 1) == '.')
+                subdomain = subdomain.substring(0, subdomain.length() - 1);
+        }
 
         return subdomain;
     }
@@ -192,12 +199,16 @@ public final class PasswordMaker {
     private static String calculateMiddleDomain(String domainText, String top) {
         int lengthToRemove = top.length() + 1; // The +1 is for the dot
         int rightmostSubdomainIndex = domainText.length() - lengthToRemove;
-        String domainAndSubDomain = domainText.substring(0, rightmostSubdomainIndex);
+        try{
+            String domainAndSubDomain = domainText.substring(0, rightmostSubdomainIndex);
+            int lastDot = domainAndSubDomain.lastIndexOf('.');
+            String middleDomain = domainAndSubDomain.substring(lastDot + 1);
 
-        int lastDot = domainAndSubDomain.lastIndexOf('.');
-        String middleDomain = domainAndSubDomain.substring(lastDot + 1);
-
-        return middleDomain;
+            return middleDomain;
+        }
+        catch (StringIndexOutOfBoundsException e){
+            return "";
+        }
     }
 
     private static String calculateDomain(String domainText, Boolean joinSpecialTopDomains) {

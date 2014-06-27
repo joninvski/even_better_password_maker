@@ -17,12 +17,14 @@
  */
 package org.daveware.passwordmaker;
 
+import java.io.Serializable;
+
 /**
  * Object representing a level of leet encoding.
  *
  * @author Dave Marotti
  */
-public final class LeetLevel implements Comparable<LeetLevel> {
+public final class LeetLevel implements Comparable<LeetLevel>, Serializable {
     public static final LeetLevel LEVEL1 = new LeetLevel(1);
     public static final LeetLevel LEVEL2 = new LeetLevel(2);
     public static final LeetLevel LEVEL3 = new LeetLevel(3);
