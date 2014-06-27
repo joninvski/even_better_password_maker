@@ -7,15 +7,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import android.util.Log;
-
 import com.pifactorial.ebpm.core.Constants;
+import com.pifactorial.ebpm.exception.ProfileNotFound;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.daveware.passwordmaker.Profile;
-import com.pifactorial.ebpm.exception.ProfileNotFound;
+
+import timber.log.Timber;
 
 public class ProfileDataSource {
 
@@ -59,7 +59,7 @@ public class ProfileDataSource {
     }
 
     public Profile insertProfile(Profile profile) {
-        Log.d(Constants.LOG, "Inserting new profile");
+        Timber.d("Inserting new profile");
 
         // Prepare the contentor to insert values
         ContentValues values = new ContentValues();
@@ -83,7 +83,7 @@ public class ProfileDataSource {
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_NUMBERS, profile.hasCharSetNumbers().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_SYMBOLS, profile.hasCharSetSymbols().toString());
         values.put(ProfileSqLiteHelper.COLUMN_CHAR_SET_CUSTOM, profile.getCharSetCustom().toString());
-        Log.d(Constants.LOG, "INSERTING MANEL " + profile.getCharSetCustom());
+        Timber.d("INSERTING MANEL " + profile.getCharSetCustom());
         values.put(ProfileSqLiteHelper.COLUMN_HAS_CHAR_SET_CUSTOM, profile.isCustomCharsetActive().toString());
         values.put(ProfileSqLiteHelper.COLUMN_JOIN_TOP_LEVEL, profile.getJoinTopLevel().toString());
 
@@ -100,7 +100,7 @@ public class ProfileDataSource {
     }
 
     public void deleteProfile(Profile profile) {
-        Log.i(Constants.LOG, "Deleting profile: " + profile);
+        Timber.i("Deleting profile: %s", profile);
         String name = profile.getName();
 
         database.delete(ProfileSqLiteHelper.TABLE_PROFILES,
@@ -169,13 +169,13 @@ public class ProfileDataSource {
     }
 
     public Profile getProfileByName(String profileName) throws ProfileNotFound {
-        Log.d(Constants.LOG, "Searching for profile by name: " + profileName);
+        Timber.d("Searching for profile by name: ", profileName);
         List<Profile> listProfiles = getAllProfiles();
 
         for(Profile p : listProfiles) {
 
             if(p.getName().equals(profileName)) {
-                Log.d(Constants.LOG, "Found profile " + p.getName());
+                Timber.d("Found profile %s", p.getName());
                 return p;
             }
         }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
-import android.util.Log;
-
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -28,6 +26,8 @@ import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.R;
 
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class AddProfileDialogFragment extends DialogFragment implements
     OnEditorActionListener {
@@ -81,7 +81,7 @@ public class AddProfileDialogFragment extends DialogFragment implements
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
-            Log.d(Constants.LOG, "Finished dialog");
+            Timber.d("Finished dialog");
 
             createNewProfileAndDismissDialog();
             this.dismiss();

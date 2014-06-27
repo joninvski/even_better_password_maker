@@ -1,7 +1,5 @@
 package com.pifactorial.ebpm.ui.fragment;
 import android.app.AlertDialog;
-import android.view.inputmethod.InputMethodManager;
-
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,8 +19,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import android.util.Log;
-
+import android.view.inputmethod.InputMethodManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,6 +55,8 @@ import com.pifactorial.R;
 import org.daveware.passwordmaker.AlgorithmType;
 import org.daveware.passwordmaker.Profile;
 
+import timber.log.Timber;
+
 public class DetailProfileFrag extends Fragment implements
 OnItemSelectedListener, AddProfileDialogListener {
 
@@ -83,7 +82,7 @@ OnItemSelectedListener, AddProfileDialogListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.v(Constants.LOG, "Detail Profile creation started");
+        Timber.v("Detail Profile creation started");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -106,7 +105,7 @@ OnItemSelectedListener, AddProfileDialogListener {
             return p;
         }
         catch (ProfileNotFound e) {
-            Log.e(Constants.LOG, "Profile displayed in spinner does not exist", e);
+            Timber.e("Profile displayed in spinner does not exist", e);
             return Profile.getDefaultProfile();
         }
     }
@@ -130,7 +129,7 @@ OnItemSelectedListener, AddProfileDialogListener {
 
         String[] androidStrings = getResources().getStringArray(R.array.hash_algorithms_string_array);
         mHashAlg.setSelection(java.util.Arrays.asList(androidStrings).indexOf(p.getAlgorithm().getName()));
-        Log.d(Constants.LOG, "Profile loaded");
+        Timber.d("Profile loaded");
     }
 
     public void updateProfileSpinner() {
@@ -161,7 +160,7 @@ OnItemSelectedListener, AddProfileDialogListener {
 
         mProfileAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.i(Constants.LOG, "Clicked add profile button");
+                Timber.i("Clicked add profile button");
                 // Watch for button clicks.
                 final FragmentManager fm = getFragmentManager();
                 final AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
@@ -172,7 +171,7 @@ OnItemSelectedListener, AddProfileDialogListener {
         mProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView,
                 View selectedItemView, int position, long id) {
-                Log.d(Constants.LOG, "Choosen a new profile");
+                Timber.d("Choosen a new profile");
                 try {
                     // The profile in spinner has changed, save the last selected profile
                     final int last_selected = mProfiles.getSelectedItemPosition();
@@ -189,7 +188,7 @@ OnItemSelectedListener, AddProfileDialogListener {
 
 
             public void onNothingSelected(AdapterView<?> parentView) {
-                Log.i(Constants.LOG, "Nothing was selected on the profile spinner");
+                Timber.i("Nothing was selected on the profile spinner");
             }
         });
 
@@ -231,10 +230,9 @@ OnItemSelectedListener, AddProfileDialogListener {
         updateProfileSpinner();
 
         Profile p;
-            Log.v(Constants.LOG, "Before");
         if ((savedInstanceState != null) && (savedInstanceState.getSerializable("profile") != null)) {
             p = (Profile) savedInstanceState.getSerializable("profile");
-            Log.v(Constants.LOG, "Instance saved");
+            Timber.v("Instance saved");
         }
         else{
             p = getProfileInSpinner();
@@ -261,7 +259,7 @@ OnItemSelectedListener, AddProfileDialogListener {
     };
 
     public int getShownIndex() {
-        Log.v(Constants.LOG, "Get shown index = ");
+        Timber.v("Get shown index = ");
 
         return getArguments().getInt("index", 0);
     }
@@ -290,7 +288,7 @@ OnItemSelectedListener, AddProfileDialogListener {
         switch (item.getItemId()) {
 
             case R.id.actionBtnSave:
-                Log.d(Constants.LOG, "Clicked the save button");
+                Timber.d("Clicked the save button");
 
                 if(!validateProfileInput()) {
                     break;
@@ -318,7 +316,7 @@ OnItemSelectedListener, AddProfileDialogListener {
                 break;
 
             case R.id.actionBtnDelete:
-                Log.d(Constants.LOG, "Clicked the delete button");
+                Timber.d("Clicked the delete button");
 
                 alertDialogBuilder = new AlertDialog.Builder(context);
 
@@ -345,10 +343,10 @@ OnItemSelectedListener, AddProfileDialogListener {
         SQLiteCursor cursor = (SQLiteCursor) mProfiles.getSelectedItem();
         Profile profile = datasource.createProfileFromCursor(cursor);
 
-        Log.d(Constants.LOG, "Deleting the profile with name " + profile.getName());
+        Timber.d("Deleting the profile with name %s", profile.getName());
 
         if(profile.getName().equals(Profile.DEFAULT_NAME)) {
-            Log.i(Constants.LOG, "Could not delete as it was the default");
+            Timber.i("Could not delete as it was the default");
             return false;
         }
 
@@ -391,12 +389,12 @@ OnItemSelectedListener, AddProfileDialogListener {
     }
 
     private void saveProfile(Profile p) {
-        Log.d(Constants.LOG, "Saving profile: " + p);
+        Timber.d("Saving profile %s", p);
         if (datasource.profileExists(p.getName())) {
-            Log.i(Constants.LOG, "Profile already exists. Replacing it");
+            Timber.i("Profile already exists. Replacing it");
             datasource.replaceProfile(p);
         } else {
-            Log.d(Constants.LOG, "Inserting new profile");
+            Timber.d("Inserting new profile");
             datasource.insertProfile(p);
         }
     }

@@ -1,10 +1,13 @@
 package com.pifactorial.ebpm.data;
 
 import android.content.Context;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
 import com.pifactorial.ebpm.core.Constants;
+
+import timber.log.Timber;
 
 public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 
@@ -75,13 +78,13 @@ public class ProfileSqLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        Log.d(Constants.LOG, "Creating database: " + DATABASE_CREATE);
+        Timber.d("Creating database: %s", DATABASE_CREATE);
         database.execSQL(DATABASE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(ProfileSqLiteHelper.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion);
+        Timber.w("Upgrading database from version %s to %s", oldVersion, newVersion);
 
         final int FIRST_DB_VERSION_WITH_HMAC = 2;
         if(oldVersion < FIRST_DB_VERSION_WITH_HMAC )
