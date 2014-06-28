@@ -71,7 +71,6 @@
             android:clickable="true"
             android:gravity="center"
             android:hint="@string/text_show_password_hint"
-            android:onClick="onClick"
             android:paddingBottom="10dp"
             android:paddingTop="20dp"
             android:textIsSelectable="false"

@@ -30,11 +30,8 @@ import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,6 +39,14 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 
 import butterknife.InjectView;
+
+import butterknife.OnCheckedChanged;
+
+import butterknife.OnClick;
+
+import butterknife.OnItemSelected;
+
+import butterknife.OnTextChanged;
 
 import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.data.ProfileDataSource;
@@ -57,8 +62,7 @@ import org.daveware.passwordmaker.Profile;
 
 import timber.log.Timber;
 
-public class DetailProfileFrag extends Fragment implements
-OnItemSelectedListener, AddProfileDialogListener {
+public class DetailProfileFrag extends Fragment implements AddProfileDialogListener {
 
     @InjectView(R.id.spProfiles) Spinner mProfiles;
     @InjectView(R.id.btAddProfile) Button mProfileAdd;
@@ -151,81 +155,57 @@ OnItemSelectedListener, AddProfileDialogListener {
         mProfiles.setSelection(last_selected);
     }
 
+    @OnClick(R.id.btAddProfile)
+    public void onClickAddProfile() {
+        Timber.i("Clicked add profile button");
+        final FragmentManager fm = getFragmentManager();
+        final AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
+        editNameDialog.show(fm, "fragment_edit_name");
+    }
+
+    @OnItemSelected(R.id.spProfiles)
+    protected void onProfileItemSpinnerChanged() {
+        Timber.d("Choosen a new profile");
+        try {
+            // The profile in spinner has changed, save the last selected profile
+            final int last_selected = mProfiles.getSelectedItemPosition();
+            mPrefs.setLastSelectedProfile(last_selected);
+
+            // Then update the various views
+            final Profile p = getProfileInSpinner();
+            updateLastSelectedProfileSpinner();
+            updateProfileOnGui(p);
+        } catch (ProfileNotFound e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @OnCheckedChanged(R.id.cb_custom_symbols_active)
+    protected void onCustumCheckboxChecked(boolean isChecked) {
+        if ( isChecked ) {
+            mCustomChars.setTextColor(Color.WHITE);
+        }
+
+        else {
+            mCustomChars.setTextColor(Color.DKGRAY);
+            // Hides the keyboard
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mCustomChars.getWindowToken(), 0);
+        }
+    }
+
+    @OnTextChanged(R.id.et_custom_symbols_input)
+    void onTextChanged(CharSequence text) {
+        mCustomCharsActive.setChecked(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.frag_detail_profile, container, false);
         ButterKnife.inject(this, view);
 
         super.onCreateView(inflater, container, savedInstanceState);
-
-        mProfileAdd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Timber.i("Clicked add profile button");
-                // Watch for button clicks.
-                final FragmentManager fm = getFragmentManager();
-                final AddProfileDialogFragment editNameDialog = new AddProfileDialogFragment();
-                editNameDialog.show(fm, "fragment_edit_name");
-            }
-        });
-
-        mProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parentView,
-                View selectedItemView, int position, long id) {
-                Timber.d("Choosen a new profile");
-                try {
-                    // The profile in spinner has changed, save the last selected profile
-                    final int last_selected = mProfiles.getSelectedItemPosition();
-                    mPrefs.setLastSelectedProfile(last_selected);
-
-                    // Then update the various views
-                    final Profile p = getProfileInSpinner();
-                    updateLastSelectedProfileSpinner();
-                    updateProfileOnGui(p);
-                } catch (ProfileNotFound e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-                Timber.i("Nothing was selected on the profile spinner");
-            }
-        });
-
-        mCustomCharsActive.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if ( isChecked ) {
-                    mCustomChars.setTextColor(Color.WHITE);
-                }
-                else{
-                    mCustomChars.setTextColor(Color.DKGRAY);
-
-                    // Hides the keyboard
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mCustomChars.getWindowToken(), 0);
-                }
-            }
-        });
-
-        // Checks if the text for costum chars has changed and if so sets the checkbox
-        TextWatcher watcher = new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCustomCharsActive.setChecked(true);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                return; // Do nothing
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                return; // Do nothing
-            }
-        };
-        mCustomChars.addTextChangedListener(watcher);
 
         updateProfileSpinner();
 
@@ -403,14 +383,6 @@ OnItemSelectedListener, AddProfileDialogListener {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.profile_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        // TODO Auto-generated method stub
-    }
-
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
     }
 
     @Override

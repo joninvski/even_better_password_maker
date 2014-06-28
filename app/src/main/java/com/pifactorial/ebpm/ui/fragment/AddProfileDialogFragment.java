@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 
 import butterknife.InjectView;
 
+import butterknife.OnClick;
+
 import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.R;
 
@@ -59,24 +61,18 @@ public class AddProfileDialogFragment extends DialogFragment implements
         getDialog().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         mEditText.setOnEditorActionListener(this);
 
-        // Let's get the button and insert the callback
-        buttonOk.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNewProfileAndDismissDialog();
-                mAddProfileDialogFragment.dismiss();
-            }
-        });
-
-        final Button buttonCancel = (Button) v.findViewById(R.id.cancel_add_profile);
-        buttonCancel.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAddProfileDialogFragment.dismiss();
-            }
-        });
-
         return v;
+    }
+
+    @OnClick(R.id.ok_add_profile)
+    public void onClickOk() {
+        createNewProfileAndDismissDialog();
+        mAddProfileDialogFragment.dismiss();
+    }
+
+    @OnClick(R.id.cancel_add_profile)
+    public void onClickCancel() {
+        mAddProfileDialogFragment.dismiss();
     }
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

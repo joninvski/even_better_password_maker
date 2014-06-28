@@ -25,7 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,7 +32,10 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 
+import butterknife.OnClick;
+
 import butterknife.InjectView;
+import butterknife.OnItemSelected;
 
 import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.data.ProfileDataSource;
@@ -54,7 +56,7 @@ import org.spongycastle.jce.provider.BouncyCastleProvider;
 
 import timber.log.Timber;
 
-public class EntryActivity extends ActionBarActivity implements View.OnClickListener {
+public class EntryActivity extends ActionBarActivity {
 
     static {
         Security.addProvider(new BouncyCastleProvider());
@@ -94,22 +96,6 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
 
         mPrefs = new ManagePreferences(this);
 
-        // Let's create the callback when the spinner changes.
-        // We just want to store in the last selected preference the selected value
-        spProfiles.setOnItemSelectedListener(new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parentView,
-                                       View selectedItemView, int position, long id) {
-
-                final int last_selected = spProfiles.getSelectedItemPosition();
-                mPrefs.setLastSelectedProfile(last_selected);
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-                Timber.i("Strange, nothing was selected on the profile spinner");
-            }
-        });
-
-
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -131,6 +117,12 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         // Change the passwords as the text views are changed
         etURL.addTextChangedListener(watcher);
         etMasterPass.addTextChangedListener(watcher);
+    }
+
+    @OnItemSelected(R.id.spProfiles)
+    protected void onProfileItemSelected() {
+        final int last_selected = spProfiles.getSelectedItemPosition();
+        mPrefs.setLastSelectedProfile(last_selected);
     }
 
     private void setActionBar() {
@@ -172,19 +164,11 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         spProfiles.setSelection(last_selected);
     }
 
-    public void onClick(View v) {
-        switch (v.getId()) {
 
-        case R.id.tvResultPass:
-            mPassVisible = !mPassVisible;
-            updatePassword();
-
-            break;
-
-        default:
-            Timber.e("Some unexpected view was pressed");
-            break;
-        }
+    @OnClick(R.id.tvResultPass)
+    public void clickedMasterPass() {
+        mPassVisible = !mPassVisible;
+        updatePassword();
     }
 
     private void updatePassword() {
@@ -252,54 +236,54 @@ public class EntryActivity extends ActionBarActivity implements View.OnClickList
         // Handle item selection
         switch (item.getItemId()) {
 
-        case R.id.actionBtnGo:
-            Timber.d("Pressed the go button");
-            final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+            case R.id.actionBtnGo:
+                Timber.d("Pressed the go button");
+                final Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
 
-            try {
-                Uri uri = Uri.parse(etURL.getText().toString());
-                myWebLink.setData(uri);
-                startActivity(myWebLink);
-            }
-            catch (NullPointerException e) {
-                Timber.e("Url string is empty %s", e.getMessage());
-                Toast.makeText(getApplicationContext(), "Url string is empty", Toast.LENGTH_SHORT).show();
-            }
-            catch (android.content.ActivityNotFoundException e) {
-                Timber.e("Unable to generate uri %s", e.getMessage());
-                Toast.makeText(getApplicationContext(), "Invalid URI", Toast.LENGTH_SHORT).show();
-            }
-            break;
+                try {
+                    Uri uri = Uri.parse(etURL.getText().toString());
+                    myWebLink.setData(uri);
+                    startActivity(myWebLink);
+                }
+                catch (NullPointerException e) {
+                    Timber.e("Url string is empty %s", e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Url string is empty", Toast.LENGTH_SHORT).show();
+                }
+                catch (android.content.ActivityNotFoundException e) {
+                    Timber.e("Unable to generate uri %s", e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Invalid URI", Toast.LENGTH_SHORT).show();
+                }
+                break;
 
-        case R.id.actionBtnCopy:
-            Timber.d("Clicked item Copy");
+            case R.id.actionBtnCopy:
+                Timber.d("Clicked item Copy");
 
-            try {
-                final SecureCharArray generatedPassword = getPassword();
-                String pass = new String(generatedPassword.getData());
-                copyPassToClipBoard(pass);
-            } catch (PasswordGenerationException e) {
-                Timber.e("Error in generating the new password %s", e.getMessage());
-                Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
-            }
+                try {
+                    final SecureCharArray generatedPassword = getPassword();
+                    String pass = new String(generatedPassword.getData());
+                    copyPassToClipBoard(pass);
+                } catch (PasswordGenerationException e) {
+                    Timber.e("Error in generating the new password %s", e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Error generating password", Toast.LENGTH_SHORT).show();
+                }
 
-            break;
+                break;
 
-        case R.id.actionBtnProfiles:
-            Timber.d("Clicked Profiles");
-            final Intent myIntent = new Intent(EntryActivity.this, UpdateActivity.class);
-            EntryActivity.this.startActivity(myIntent);
-            break;
+            case R.id.actionBtnProfiles:
+                Timber.d("Clicked Profiles");
+                final Intent myIntent = new Intent(EntryActivity.this, UpdateActivity.class);
+                EntryActivity.this.startActivity(myIntent);
+                break;
 
-        case R.id.about:
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","trindade.joao@gmail.com", null));
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[evenbetterpassmaker] - Feedback");
-            emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_text_body));
-            startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email_chooser)));
-            break;
+            case R.id.about:
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","trindade.joao@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[evenbetterpassmaker] - Feedback");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_text_body));
+                startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email_chooser)));
+                break;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
