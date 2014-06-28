@@ -57,7 +57,11 @@ public final class CharacterSet implements Serializable {
     }
 
     public String getChars() {
-        return mCharset + mCustomCharset;
+        if(mIsCustomCharsetActive)
+            return mCharset + mCustomCharset;
+        else {
+            return mCharset;
+        }
     }
 
     public String getCustomCharset() {
