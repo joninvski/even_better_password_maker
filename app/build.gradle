@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.10.+'
@@ -17,35 +17,25 @@ apply plugin: 'spoon'
 apply plugin: 'android-cq'
 
 repositories {
-    mavenCentral()
+    jcenter()
     maven { url 'http://dl.bintray.com/joninvski/android-libs' }
-}
-
-dependencies {
-     compile 'org.michaelevans.chromahashview:ChromeHashView:0.1'
-     compile 'com.android.support:support-v4:19.1.+'
-     compile 'com.android.support:appcompat-v7:19.1.+'
-     compile 'com.jakewharton:butterknife:5.1.0'
-     compile 'com.jakewharton.timber:timber:2.4.+'
-     compile project(':domain')
-     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.+'
-     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.+'
 }
 
 android {
 
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion parent.ext.compileSdkVersion
+    buildToolsVersion parent.ext.buildToolsVersion
 
     lintOptions {
         abortOnError false
     }
 
     defaultConfig {
-        versionCode 20
-        versionName "0.10-BETA"
-        minSdkVersion 7
-        targetSdkVersion 19
+        versionCode parent.ext.versionCode
+        versionName parent.ext.versionName
+
+        minSdkVersion parent.ext.minSdkVersion
+        targetSdkVersion parent.ext.targetSdkVersion
     }
 
     signingConfigs {
@@ -58,7 +48,6 @@ android {
             signingConfig signingConfigs.release
             runProguard true
             proguardFile 'proguard-rules.txt'
-            proguardFile getDefaultProguardFile('proguard-android.txt')
         }
     }
 
@@ -72,5 +61,16 @@ android {
     } else {
         android.buildTypes.release.signingConfig = null
     }
+}
+
+dependencies {
+     compile 'org.michaelevans.chromahashview:ChromeHashView:0.1'
+     compile parent.ext.libraries.supportv4
+     compile parent.ext.libraries.appcompat
+     compile parent.ext.libraries.butterknife
+     compile parent.ext.libraries.timber
+     compile project(':domain')
+     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.+'
+     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.+'
 }
 
