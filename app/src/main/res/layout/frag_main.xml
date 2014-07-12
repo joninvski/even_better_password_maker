@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/labelProfile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/profile"
+            android:textSize="23sp" />
+
+        <Spinner
+            android:id="@+id/spProfiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/labelURL"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/url"
+            android:textSize="23sp" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/etURL"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textUri"
+            android:text="@string/http"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/labelMasterPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="12dp"
+            android:text="@string/mpw"
+            android:textSize="23sp" >
+        </TextView>
+
+        <org.michaelevans.chromahashview.ChromaHashView
+            android:id="@+id/etMasterPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:text=""
+            android:textSize="18sp" >
+        </org.michaelevans.chromahashview.ChromaHashView>
+
+        <TextView
+            android:id="@+id/tvResultPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:hint="@string/text_show_password_hint"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
+            android:textIsSelectable="false"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+</ScrollView>

@@ -66,12 +66,8 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         TextView tvResultPass = (TextView) solo.getView(com.pifactorial.R.id.tvResultPass);
         solo.clickOnView(tvResultPass);
 
-        // check the generated password shows up
-        actual = solo.waitForText("Click to show/hide");
-        assertEquals("password text field still showing default message", false, actual);
-
         actual = solo.waitForText("Jb6uZjZ@");
-        assertEquals("password is not showing after click", true, actual);
+        assertEquals("correct password is not showing after click", true, actual);
         Spoon.screenshot(activity, "AfterClickGeneratedPassword");
 
         // Click again and the pass has to disappear
