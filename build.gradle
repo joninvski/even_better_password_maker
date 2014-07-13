@@ -40,4 +40,3 @@ ext.libraries = [
         butterknife    : 'com.jakewharton:butterknife:5.0.+',
         timber         :'com.jakewharton.timber:timber:2.4.+'
 ]
-

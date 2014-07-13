@@ -13,7 +13,6 @@
         yourapp:showAsAction="always">
     </item>
     <item android:id="@+id/about"
-        android:title="@string/about"
-        android:showAsAction="collapseActionView">
+        yourapp:title="@string/about" >
     </item>
 </menu>
