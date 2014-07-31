@@ -24,7 +24,6 @@ import butterknife.InjectView;
 
 import butterknife.OnClick;
 
-import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.R;
 
 import java.util.Locale;

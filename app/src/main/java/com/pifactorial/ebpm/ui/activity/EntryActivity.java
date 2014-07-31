@@ -1,24 +1,16 @@
 package com.pifactorial.ebpm.ui.activity;
 
-import android.net.Uri;
-
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-import butterknife.InjectView;
-
-import butterknife.OnItemSelected;
+import com.pifactorial.ebpm.ui.fragment.MainFragment;
+import com.pifactorial.R;
 
 import java.security.Security;
 
-import timber.log.Timber;
-import android.app.Activity;
 import org.spongycastle.jce.provider.BouncyCastleProvider;
-import com.pifactorial.R;
-import android.support.v7.app.ActionBarActivity;
-import android.view.MenuInflater;
-import android.view.Menu;
-import com.pifactorial.ebpm.ui.fragment.MainFragment;
+
+import timber.log.Timber;
 
 public class EntryActivity extends ActionBarActivity {
 

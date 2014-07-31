@@ -1,35 +1,22 @@
 package com.pifactorial.ebpm.ui.fragment;
 import android.app.AlertDialog;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-
 import android.graphics.Color;
-
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SimpleCursorAdapter;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-
 import android.view.inputmethod.InputMethodManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnTouchListener;
-
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,18 +24,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
-
 import butterknife.InjectView;
-
 import butterknife.OnCheckedChanged;
-
 import butterknife.OnClick;
-
 import butterknife.OnItemSelected;
-
 import butterknife.OnTextChanged;
 
-import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.data.ProfileDataSource;
 import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
 import com.pifactorial.ebpm.exception.ProfileNotFound;

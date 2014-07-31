@@ -1,11 +1,8 @@
 package com.pifactorial.ebpm.data;
 
 import android.content.Context;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.pifactorial.ebpm.core.Constants;
 
 import timber.log.Timber;
 

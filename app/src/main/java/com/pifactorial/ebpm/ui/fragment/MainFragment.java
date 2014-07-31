@@ -1,42 +1,37 @@
 package com.pifactorial.ebpm.ui.fragment;
 
 import android.annotation.TargetApi;
-
 import android.content.ClipData;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-
-import android.content.ClipData;
-import android.content.Intent;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
-
+import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
-import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.data.ProfileDataSource;
 import com.pifactorial.ebpm.data.ProfileSqLiteHelper;
+import com.pifactorial.ebpm.ui.activity.UpdateActivity;
 import com.pifactorial.ebpm.util.ManagePreferences;
 import com.pifactorial.R;
 
@@ -44,21 +39,9 @@ import org.daveware.passwordmaker.PasswordGenerationException;
 import org.daveware.passwordmaker.PasswordMaker;
 import org.daveware.passwordmaker.Profile;
 import org.daveware.passwordmaker.SecureCharArray;
-
-import org.spongycastle.jce.provider.BouncyCastleProvider;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.os.Bundle;
-import butterknife.InjectView;
-import butterknife.OnItemSelected;
-import android.os.Build;
 import org.michaelevans.chromahashview.ChromaHashView;
-import android.support.v4.app.Fragment;
-import android.widget.Button;
+
 import timber.log.Timber;
-import android.net.Uri;
-import com.pifactorial.ebpm.ui.activity.EntryActivity;
-import com.pifactorial.ebpm.ui.activity.UpdateActivity;
 
 public class MainFragment extends Fragment {
 

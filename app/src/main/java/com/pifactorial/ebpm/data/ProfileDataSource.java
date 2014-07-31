@@ -2,12 +2,10 @@ package com.pifactorial.ebpm.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.pifactorial.ebpm.core.Constants;
 import com.pifactorial.ebpm.exception.ProfileNotFound;
 
 import java.util.ArrayList;
