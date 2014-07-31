@@ -9,7 +9,6 @@
         android:smallScreens="true" />
 
     <application
-        android:allowBackup="True"
         android:icon="@drawable/pwm"
         android:label="Even Better Password Maker"
         android:uiOptions="splitActionBarWhenNarrow"

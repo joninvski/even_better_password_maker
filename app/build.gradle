@@ -3,8 +3,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
-        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.10.+'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
         classpath 'com.github.nrudenko:gradle-android-cq-plugin:0.1+'
     }
@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-     compile 'org.michaelevans.chromahashview:ChromeHashView:0.1'
+     compile 'org.michaelevans.chromahashview:ChromaHashView:0.2'
      compile parent.ext.libraries.supportv4
      compile parent.ext.libraries.appcompat
      compile parent.ext.libraries.butterknife

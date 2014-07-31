@@ -35,8 +35,7 @@ public class EntryActivity extends ActionBarActivity {
 
         setContentView(R.layout.act_entry);
 
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, MainFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MainFragment.newInstance()).commit();
 
         sdk_version = android.os.Build.VERSION.SDK_INT;
     }
