@@ -6,17 +6,9 @@ import android.support.v7.app.ActionBarActivity;
 import com.pifactorial.ebpm.ui.fragment.MainFragment;
 import com.pifactorial.R;
 
-import java.security.Security;
-
-import org.spongycastle.jce.provider.BouncyCastleProvider;
-
 import timber.log.Timber;
 
 public class EntryActivity extends ActionBarActivity {
-
-    static {
-        Security.addProvider(new BouncyCastleProvider());
-    }
 
     private int sdk_version;
 

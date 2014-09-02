@@ -1,12 +1,23 @@
 package com.pifactorial.ebpm;
 
 import android.app.Application;
-import timber.log.Timber;
 
-import static timber.log.Timber.DebugTree;
 import com.pifactorial.BuildConfig;
 
+import org.spongycastle.jce.provider.BouncyCastleProvider;
+
+import static timber.log.Timber.DebugTree;
+
+import timber.log.Timber;
+import java.security.Security;
+
 public class EBPMakerApp extends Application {
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
+
+
   @Override public void onCreate() {
     super.onCreate();
 

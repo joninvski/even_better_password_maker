@@ -17,6 +17,8 @@
  */
 package org.daveware.passwordmaker;
 
+import java.security.NoSuchProviderException;
+
 /**
  * Provides an array capable of erasing the contents upon request.
  *
@@ -40,30 +42,30 @@ public class SecureByteArray {
         data = new byte[0];
     }
 
-    public SecureByteArray(int size) {
+    public SecureByteArray( int size ) {
         data = new byte[size];
-        for(int i=0; i<size; i++)
+        for( int i=0; i<size; i++ )
             data[i] = 0;
     }
 
-    public SecureByteArray(byte [] bytes) {
+    public SecureByteArray( byte [] bytes ) {
         data = new byte[bytes.length];
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             data[i] = bytes[i];
     }
 
-    public SecureByteArray(char [] chars) {
+    public SecureByteArray( char [] chars ) {
         data = new byte[chars.length];
-        for(int i=0; i<data.length; i++)
-            data[i] = (byte)chars[i];
+        for( int i=0; i<data.length; i++ )
+            data[i] = ( byte )chars[i];
 
         // TODO: This might not be the best way to convert from char to byte as
         // there may be weird character encodings.  Maybe char & 0x7F ?
     }
 
-    public SecureByteArray(SecureByteArray copy) {
+    public SecureByteArray( SecureByteArray copy ) {
         data = new byte[copy.size()];
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             data[i] = copy.data[i];
     }
 
@@ -72,7 +74,7 @@ public class SecureByteArray {
      *
      * @param str The string object to get the data from.
      */
-    public SecureByteArray(String str) {
+    public SecureByteArray( String str ) {
         // TODO: does this include the null? We don't want the null...
         // FIXME:
         // XXX:
@@ -83,14 +85,13 @@ public class SecureByteArray {
      * Appends another SecureByteArray to this one.
      *
      * @param arr The array to append.
-     * @throws Exception Upon size problems. (lol)
+     * @throws PasswordGenerationException Upon size problems. (lol)
      */
-    public void append(SecureByteArray arr)
-    throws Exception {
+    public void append( SecureByteArray arr ) throws NoSuchProviderException, PasswordGenerationException {
         int oldSize = size();
-        resize(data.length + arr.data.length, true);
+        resize( data.length + arr.data.length, true );
 
-        for(int i=oldSize, arrI=0; i<data.length; i++, arrI++)
+        for( int i=oldSize, arrI=0; i<data.length; i++, arrI++ )
             data[i] = arr.data[arrI++];
     }
 
@@ -101,8 +102,8 @@ public class SecureByteArray {
      * @param a2 The second object to combine.
      * @return The new object.
      */
-    static SecureByteArray combine(SecureByteArray a1, SecureByteArray a2) {
-        return new SecureByteArray(a1.size() + a2.size());
+    static SecureByteArray combine( SecureByteArray a1, SecureByteArray a2 ) {
+        return new SecureByteArray( a1.size() + a2.size() );
     }
 
     /**
@@ -114,11 +115,11 @@ public class SecureByteArray {
      * back to 0.
      */
     public void erase() {
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             data[i] = -42;
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             data[i] = 0x55;
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             data[i] = 0x00;
     }
 
@@ -128,12 +129,12 @@ public class SecureByteArray {
      * @return The byte at the index.
      * @throws ArrayIndexOutOfBoundsException Upon bad index.
      */
-    public byte getByteAt(int index)
+    public byte getByteAt( int index )
     throws ArrayIndexOutOfBoundsException {
-        if(index >= 0 && index < data.length)
+        if( index >= 0 && index < data.length )
             return data[index];
         else
-            throw new ArrayIndexOutOfBoundsException(index);
+            throw new ArrayIndexOutOfBoundsException( index );
     }
 
     /**
@@ -148,22 +149,21 @@ public class SecureByteArray {
      * Prepends this array with another SecureByteArray.
      *
      * @param arr The array to prepend.
-     * @throws Exception Upon size problems. (lol)
+     * @throws EPasswordGenerationException Upon size problems. (lol)
      */
-    public void prepend(SecureByteArray arr)
-    throws Exception {
+    public void prepend( SecureByteArray arr ) throws PasswordGenerationException {
         byte [] olddata = new byte[data.length];
 
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             olddata[i] = data[i];
 
-        resize(size() + arr.size(), false);
+        resize( size() + arr.size(), false );
 
-        for(int i=0; i<arr.data.length; i++)
+        for( int i=0; i<arr.data.length; i++ )
             data[i] = arr.data[i];
-        for(int i=arr.data.length; i<data.length; i++)
+        for( int i=arr.data.length; i<data.length; i++ )
             data[i] = olddata[i - arr.data.length];
-        for(int i=0; i<olddata.length; i++) {
+        for( int i=0; i<olddata.length; i++ ) {
             olddata[i] = 0x55;
             olddata[i] = -42;
             olddata[i] = 0x0;
@@ -175,16 +175,15 @@ public class SecureByteArray {
      * the array as needed.
      *
      * @param arr The copy to use.
-     * @throws Exception
+     * @throws PasswordGenerationException
      */
-    public void replace(SecureByteArray arr)
-    throws Exception {
+    public void replace( SecureByteArray arr ) throws PasswordGenerationException {
         erase();
 
-        if(data.length != arr.data.length)
+        if( data.length != arr.data.length )
             data = new byte[arr.data.length];
 
-        for(int i=0; i<data.length; i++)
+        for( int i=0; i<data.length; i++ )
             data[i] = arr.data[i];
     }
 
@@ -193,25 +192,24 @@ public class SecureByteArray {
      *
      * @param size The new size of the array. This must be 1 or larger.
      * @param retainData Whether or not to keep the old data.
-     * @throws Exception If the size is 0 or less.
+     * @throws PasswordGenerationException If the size is 0 or less.
      */
-    public void resize(int size, boolean retainData)
-    throws Exception {
-        if(size < 0)
-            throw new Exception("Invalid array size");
+    public void resize( int size, boolean retainData ) throws PasswordGenerationException {
+        if( size < 0 )
+            throw new PasswordGenerationException( "Invalid array size" );
 
         byte [] newData = new byte[size];
 
-        if(retainData==true) {
-            int limit = (size <= data.length) ? size : data.length;
-            for(int i=0; i<size; i++) {
-                if(i < limit)
+        if( retainData==true ) {
+            int limit = ( size <= data.length ) ? size : data.length;
+            for( int i=0; i<size; i++ ) {
+                if( i < limit )
                     newData[i] = data[i];
                 else
                     newData[i] = 0;
             }
         } else {
-            for(int i=0; i<size; i++)
+            for( int i=0; i<size; i++ )
                 newData[i] = 0;
         }
 
@@ -226,12 +224,12 @@ public class SecureByteArray {
      * @param c The byte to set.
      * @throws ArrayIndexOutOfBoundsException Upon bad index.
      */
-    public void setByteAt(int index, byte c)
+    public void setByteAt( int index, byte c )
     throws ArrayIndexOutOfBoundsException {
-        if(index >= 0 && index < data.length)
+        if( index >= 0 && index < data.length )
             data[index] = c;
         else
-            throw new ArrayIndexOutOfBoundsException(index);
+            throw new ArrayIndexOutOfBoundsException( index );
     }
 
     /**

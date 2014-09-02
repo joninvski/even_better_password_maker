@@ -27,6 +27,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
 
 import org.daveware.passwordmaker.Profile.UrlComponents;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.InvalidKeyException;
 
 
 /**
@@ -37,9 +40,11 @@ import org.daveware.passwordmaker.Profile.UrlComponents;
  */
 public final class PasswordMaker {
 
-    private static Pattern urlRegex = Pattern.compile("([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*");
+    private static Pattern urlRegex = Pattern.compile( "([^:\\/\\/]*:\\/\\/)?([^:\\/]*)([^#]*).*" );
 
-    private PasswordMaker() {/* Do nothing */}
+    private PasswordMaker() {
+        /* Do nothing */
+    }
 
     /**
      * Maps an array of characters to another character set.
@@ -52,11 +57,8 @@ public final class PasswordMaker {
      * @param encoding
      *            The list of characters to map to.
      * @return The mapped string.
-     * @throws Exception
-     *             On odd length!?
      */
-    public static SecureCharArray rstr2any(char[] input, String encoding)
-        throws Exception {
+    public static SecureCharArray rstr2any( char[] input, String encoding ) throws PasswordGenerationException {
         int length = input.length;
         int divisor;
         int full_length;
@@ -69,35 +71,35 @@ public final class PasswordMaker {
         SecureCharArray output = new SecureCharArray();
 
         // can't handle odd lengths
-        if ((length % 2) != 0) {
+        if ( ( length % 2 ) != 0 ) {
             return output;
         }
 
         divisor = encoding.length();
-        dividend_length = (int) Math.ceil((double) length / 2.0);
+        dividend_length = ( int ) Math.ceil( ( double ) length / 2.0 );
         dividend = new int[dividend_length];
-        for (i = 0; i < dividend_length; i++) {
-            dividend[i] = (((int) input[i * 2]) << 8) | ((int) input[i * 2 + 1]);
+        for ( i = 0; i < dividend_length; i++ ) {
+            dividend[i] = ( ( ( int ) input[i * 2] ) << 8 ) | ( ( int ) input[i * 2 + 1] );
         }
 
-        full_length = (int) Math.ceil(
-                (double) length * 8 /
-                (Math.log((double) encoding.length()) / Math.log((double) 2)));
+        full_length = ( int ) Math.ceil(
+                          ( double ) length * 8 /
+                          ( Math.log( ( double ) encoding.length() ) / Math.log( ( double ) 2 ) ) );
         remainders = new int[full_length];
 
-        for (j = 0; j < full_length; j++) {
+        for ( j = 0; j < full_length; j++ ) {
             int[] quotient;
             int quotient_length = 0;
             int qCounter = 0;
             int x = 0;
 
             quotient = new int[dividend_length];
-            for (i = 0; i < dividend_length; i++) {
+            for ( i = 0; i < dividend_length; i++ ) {
                 int q;
-                x = (x << 16) + dividend[i];
-                q = (int) Math.floor((double) x / divisor);
+                x = ( x << 16 ) + dividend[i];
+                q = ( int ) Math.floor( ( double ) x / divisor );
                 x -= q * divisor;
-                if (quotient_length > 0 || q > 0) {
+                if ( quotient_length > 0 || q > 0 ) {
                     quotient[qCounter++] = q;
                     quotient_length++;
                 }
@@ -107,112 +109,111 @@ public final class PasswordMaker {
             dividend = quotient;
         }
 
-        if (output.size() < full_length)
-            output.resize(full_length, false);
+        if ( output.size() < full_length )
+            output.resize( full_length, false );
 
-        for (i = full_length - 1; i >= 0; i--) {
-            output.setCharAt(outputPosition++, encoding.charAt(remainders[i]));
+        for ( i = full_length - 1; i >= 0; i-- ) {
+            output.setCharAt( outputPosition++, encoding.charAt( remainders[i] ) );
         }
 
         return output;
     }
 
-    public static final String getModifiedInputText(final String inputText,
-            final Profile profile) {
+    public static final String getModifiedInputText( final String inputText,
+            final Profile profile ) {
         final Set<UrlComponents> uriComponents = profile.getUrlComponents();
-        if (uriComponents.isEmpty()) {
+        if ( uriComponents.isEmpty() ) {
             return "";
         }
-        Matcher matcher = urlRegex.matcher(inputText);
-        if (!matcher.matches())
+        Matcher matcher = urlRegex.matcher( inputText );
+        if ( !matcher.matches() )
             return inputText;
-        String protocol = matcher.group(1);
-        String domainText = matcher.group(2);
-        String portPath = matcher.group(3);
-        if (protocol == null)
+        String protocol = matcher.group( 1 );
+        String domainText = matcher.group( 2 );
+        String portPath = matcher.group( 3 );
+        if ( protocol == null )
             protocol = "";
-        if (domainText == null)
+        if ( domainText == null )
             domainText = "";
-        if (portPath == null)
+        if ( portPath == null )
             portPath = "";
 
-        StringBuilder retVal = new StringBuilder(inputText.length());
-        if (uriComponents.contains(UrlComponents.Protocol) && protocol.length() > 0) {
-            retVal.append(protocol);
+        StringBuilder retVal = new StringBuilder( inputText.length() );
+        if ( uriComponents.contains( UrlComponents.Protocol ) && protocol.length() > 0 ) {
+            retVal.append( protocol );
         }
 
-        if (domainText != null) {
+        if ( domainText != null ) {
             /* TODO fix this problem with subdomain and google.com */
             final Boolean joinSpecialTopDomains = profile.getJoinTopLevel();
-            final String topDomainText = calculateDomain(domainText, joinSpecialTopDomains);
-            final String subDomainText = calculateSubDomain(domainText, topDomainText);
+            final String topDomainText = calculateDomain( domainText, joinSpecialTopDomains );
+            final String subDomainText = calculateSubDomain( domainText, topDomainText );
 
-            final boolean hasSubDomain = uriComponents.contains(UrlComponents.Subdomain) && !subDomainText.isEmpty();
+            final boolean hasSubDomain = uriComponents.contains( UrlComponents.Subdomain ) && !subDomainText.isEmpty();
 
-            if (hasSubDomain) {
-                retVal.append(subDomainText);
+            if ( hasSubDomain ) {
+                retVal.append( subDomainText );
             }
-            if (uriComponents.contains(UrlComponents.Domain)) {
-                if (hasSubDomain)
-                    retVal.append('.');
-                retVal.append(topDomainText);
+            if ( uriComponents.contains( UrlComponents.Domain ) ) {
+                if ( hasSubDomain )
+                    retVal.append( '.' );
+                retVal.append( topDomainText );
             }
         }
 
-        if (uriComponents.contains(UrlComponents.PortPathAnchorQuery) && portPath.length() > 0) {
-            retVal.append(portPath);
+        if ( uriComponents.contains( UrlComponents.PortPathAnchorQuery ) && portPath.length() > 0 ) {
+            retVal.append( portPath );
         }
         return retVal.toString();
     }
 
-    private static String calculateSubDomain(String domainText, String topDomainText) {
+    private static String calculateSubDomain( String domainText, String topDomainText ) {
         int lengthToRemove = topDomainText.length();
         int rightmostSubdomainIndex = domainText.length() - lengthToRemove;
-        String subdomain = domainText.substring(0, rightmostSubdomainIndex);
+        String subdomain = domainText.substring( 0, rightmostSubdomainIndex );
 
-        if (subdomain.length() > 0) {
-            if(subdomain.charAt(subdomain.length() - 1) == '.')
-                subdomain = subdomain.substring(0, subdomain.length() - 1);
+        if ( subdomain.length() > 0 ) {
+            if( subdomain.charAt( subdomain.length() - 1 ) == '.' )
+                subdomain = subdomain.substring( 0, subdomain.length() - 1 );
         }
 
         return subdomain;
     }
 
-    private static String calculateTopDomain(String domainText, Boolean joinSpecialTopDomains) {
-        if(joinSpecialTopDomains) {
-            for(String topDomain : TOPLEVELDOMAINS) {
-                if(domainText.endsWith(topDomain)) {
+    private static String calculateTopDomain( String domainText, Boolean joinSpecialTopDomains ) {
+        if( joinSpecialTopDomains ) {
+            for( String topDomain : TOPLEVELDOMAINS ) {
+                if( domainText.endsWith( topDomain ) ) {
                     return topDomain;
                 }
             }
         }
 
         // If it is not a special top domain then it is just the substring after the last dot
-        int lastDot = domainText.lastIndexOf('.');
-        String domain = domainText.substring(lastDot + 1);
+        int lastDot = domainText.lastIndexOf( '.' );
+        String domain = domainText.substring( lastDot + 1 );
         return domain;
     }
 
-    private static String calculateMiddleDomain(String domainText, String top) {
+    private static String calculateMiddleDomain( String domainText, String top ) {
         int lengthToRemove = top.length() + 1; // The +1 is for the dot
         int rightmostSubdomainIndex = domainText.length() - lengthToRemove;
-        try{
-            String domainAndSubDomain = domainText.substring(0, rightmostSubdomainIndex);
-            int lastDot = domainAndSubDomain.lastIndexOf('.');
-            String middleDomain = domainAndSubDomain.substring(lastDot + 1);
+        try {
+            String domainAndSubDomain = domainText.substring( 0, rightmostSubdomainIndex );
+            int lastDot = domainAndSubDomain.lastIndexOf( '.' );
+            String middleDomain = domainAndSubDomain.substring( lastDot + 1 );
 
             return middleDomain;
-        }
-        catch (StringIndexOutOfBoundsException e){
+        } catch ( StringIndexOutOfBoundsException e ) {
             return "";
         }
     }
 
-    private static String calculateDomain(String domainText, Boolean joinSpecialTopDomains) {
-        String top = calculateTopDomain(domainText, joinSpecialTopDomains);
-        String middle = calculateMiddleDomain(domainText, top);
+    private static String calculateDomain( String domainText, Boolean joinSpecialTopDomains ) {
+        String top = calculateTopDomain( domainText, joinSpecialTopDomains );
+        String middle = calculateMiddleDomain( domainText, top );
 
-        if (middle != "")
+        if ( middle != "" )
             return middle + '.' + top;
         else
             return top;
@@ -228,11 +229,9 @@ public final class PasswordMaker {
      * @param inputText
      *            The text to use as the input into the password maker algorithm
      * @return A SecureCharArray with the hashed data.
-     * @throws Exception
-     *             if something bad happened.
      */
-    public static SecureCharArray makePassword(SecureCharArray masterPassword, Profile profile, final String inputText)
-        throws PasswordGenerationException {
+    public static SecureCharArray makePassword( SecureCharArray masterPassword, Profile profile, final String inputText )
+    throws PasswordGenerationException {
 
         LeetLevel leetLevel = profile.getLeetLevel();
         int length = profile.getLength();
@@ -240,67 +239,68 @@ public final class PasswordMaker {
         SecureCharArray data = null;
 
         try {
-            if (profile.getCompleteCharacterSet().length() < 2)
-                throw new Exception(
-                        "profile contains a character set that is too short: " +
-                        profile.getCompleteCharacterSet());
+            if ( profile.getCompleteCharacterSet().length() < 2 )
+                throw new PasswordGenerationException(
+                    "profile contains a character set that is too short: " +
+                    profile.getCompleteCharacterSet() );
 
-            data = new SecureCharArray(getModifiedInputText(inputText, profile)
-                    + profile.getUsername() + profile.getModifier());
+            data = new SecureCharArray( getModifiedInputText( inputText, profile )
+            + profile.getUsername() + profile.getModifier() );
 
             // Use leet before hashing
-            if (profile.getLeetType() == LeetType.BEFORE
-                    || profile.getLeetType() == LeetType.BOTH) {
-                LeetEncoder.leetConvert(leetLevel, masterPassword);
-                LeetEncoder.leetConvert(leetLevel, data);
-                    }
+            if ( profile.getLeetType() == LeetType.BEFORE
+            || profile.getLeetType() == LeetType.BOTH ) {
+                LeetEncoder.leetConvert( leetLevel, masterPassword );
+                LeetEncoder.leetConvert( leetLevel, data );
+            }
 
             // Perform the actual hashing
-            output = hashTheData(masterPassword, data, profile);
+            output = hashTheData( masterPassword, data, profile );
 
             // Use leet after hashing
-            if (profile.getLeetType() == LeetType.AFTER
-                    || profile.getLeetType() == LeetType.BOTH) {
-                LeetEncoder.leetConvert(leetLevel, output);
-                    }
+            if ( profile.getLeetType() == LeetType.AFTER
+            || profile.getLeetType() == LeetType.BOTH ) {
+                LeetEncoder.leetConvert( leetLevel, output );
+            }
 
             // Apply the prefix
-            if (profile.getPrefix().length() > 0) {
+            if ( profile.getPrefix().length() > 0 ) {
                 SecureCharArray prefix = new SecureCharArray(
-                        profile.getPrefix());
-                output.prepend(prefix);
+                    profile.getPrefix() );
+                output.prepend( prefix );
                 prefix.erase();
             }
 
             // Handle the suffix
-            output.resize(length, true);
-            if (profile.getSuffix().length() > 0) {
+            output.resize( length, true );
+            if ( profile.getSuffix().length() > 0 ) {
                 SecureCharArray suffix = new SecureCharArray(
-                        profile.getSuffix());
+                    profile.getSuffix() );
 
                 // If the suffix is larger than the entire password (not smart),
                 // then
                 // just replace the output with a section of the suffix that
                 // fits
-                if (length < suffix.size()) {
-                    output.replace(suffix);
-                    output.resize(length, true);
+                if ( length < suffix.size() ) {
+                    output.replace( suffix );
+                    output.resize( length, true );
                 }
                 // Otherwise insert the prefix where it fits
                 else {
-                    output.resize(length - suffix.size(), true);
-                    output.append(suffix);
+                    output.resize( length - suffix.size(), true );
+                    output.append( suffix );
                 }
 
                 suffix.erase();
             }
-        } catch (Exception e) {
-            if (output != null)
+        } catch ( Exception e ) {
+            if ( output != null )
                 output.erase();
-            throw new PasswordGenerationException(e);
-        } finally {
+            throw new PasswordGenerationException( e );
+        }
+        finally {
             // not really needed... but here for completeness
-            if (data != null)
+            if ( data != null )
                 data.erase();
         }
 
@@ -318,10 +318,9 @@ public final class PasswordMaker {
      * @param profile
      *            A donut?
      * @return A suitable hash.
-     * @throws Exception
      *             if we ran out of donuts.
      */
-    private static SecureCharArray hashTheData(SecureCharArray masterPassword, SecureCharArray data, Profile profile) throws Exception {
+    private static SecureCharArray hashTheData( SecureCharArray masterPassword, SecureCharArray data, Profile profile ) throws PasswordGenerationException {
         SecureCharArray output = new SecureCharArray();
         SecureCharArray secureIteration = new SecureCharArray();
         SecureCharArray intermediateOutput = null;
@@ -330,39 +329,36 @@ public final class PasswordMaker {
         int length = profile.getLength();
 
         try {
-            while (output.size() < length) {
-                if (count == 0) {
-                    intermediateOutput = runAlgorithm(masterPassword, data,
-                            profile);
+            while ( output.size() < length ) {
+                if ( count == 0 ) {
+                    intermediateOutput = runAlgorithm( masterPassword, data,
+                                                       profile );
                 } else {
                     // add ye bit'o chaos
-                    secureIteration.replace(masterPassword);
-                    secureIteration.append(new SecureCharArray("\n"));
-                    secureIteration.append(new SecureCharArray(Integer
-                                .toString(count)));
+                    secureIteration.replace( masterPassword );
+                    secureIteration.append( new SecureCharArray( "\n" ) );
+                    secureIteration.append( new SecureCharArray( Integer
+                                            .toString( count ) ) );
 
-                    interIntermediateOutput = runAlgorithm(secureIteration,
-                            data, profile);
-                    intermediateOutput.append(interIntermediateOutput);
+                    interIntermediateOutput = runAlgorithm( secureIteration,
+                                                            data, profile );
+                    intermediateOutput.append( interIntermediateOutput );
                     interIntermediateOutput.erase();
 
                     secureIteration.erase();
                 }
-                output.append(intermediateOutput);
+                output.append( intermediateOutput );
                 intermediateOutput.erase();
 
                 count++;
             }
-        } catch (Exception e) {
-            if (output != null)
-                output.erase();
-            throw e;
-        } finally {
-            if (intermediateOutput != null)
+        }
+        finally {
+            if ( intermediateOutput != null )
                 intermediateOutput.erase();
-            if (interIntermediateOutput != null)
+            if ( interIntermediateOutput != null )
                 interIntermediateOutput.erase();
-            if (secureIteration != null)
+            if ( secureIteration != null )
                 secureIteration.erase();
         }
 
@@ -383,41 +379,47 @@ public final class PasswordMaker {
      * @throws Exception
      *             if something bad happened.
      */
-    private static SecureCharArray runAlgorithm(SecureCharArray masterPassword, SecureCharArray data, Profile profile) throws Exception {
+    private static SecureCharArray runAlgorithm( SecureCharArray masterPassword, SecureCharArray data, Profile profile ) throws PasswordGenerationException {
         SecureCharArray output = null;
         SecureCharArray digestChars = null;
         SecureByteArray masterPasswordBytes = null;
         SecureByteArray dataBytes = null;
 
         try {
-            masterPasswordBytes = new SecureByteArray(masterPassword.getData());
-            dataBytes = new SecureByteArray(data.getData());
+            masterPasswordBytes = new SecureByteArray( masterPassword.getData() );
+            dataBytes = new SecureByteArray( data.getData() );
 
-            if (profile.isHMAC()) {
+            if ( profile.isHMAC() ) {
                 Mac mac;
                 String algoName = "HMAC" + profile.getAlgorithm().getName();
-                mac = Mac.getInstance(algoName, "SC");
-                mac.init(new SecretKeySpec(masterPasswordBytes.getData(), algoName));
+                mac = Mac.getInstance( algoName, "SC" );
+                mac.init( new SecretKeySpec( masterPasswordBytes.getData(), algoName ) );
                 mac.reset();
-                mac.update(dataBytes.getData());
-                digestChars = new SecureCharArray(mac.doFinal());
+                mac.update( dataBytes.getData() );
+                digestChars = new SecureCharArray( mac.doFinal() );
             } else {
-                dataBytes.prepend(masterPasswordBytes);
-                MessageDigest md = MessageDigest.getInstance(profile.getAlgorithm().getName(), "SC");
-                digestChars = new SecureCharArray(md.digest(dataBytes.getData()));
+                dataBytes.prepend( masterPasswordBytes );
+                MessageDigest md = MessageDigest.getInstance( profile.getAlgorithm().getName(), "SC" );
+                digestChars = new SecureCharArray( md.digest( dataBytes.getData() ) );
             }
 
-            output = rstr2any(digestChars.getData(), profile.getCompleteCharacterSet());
-        } catch (Exception e) {
-            if (output != null)
-                output.erase();
-            throw e;
-        } finally {
-            if (masterPasswordBytes != null)
+            output = rstr2any( digestChars.getData(), profile.getCompleteCharacterSet() );
+        }
+        catch ( NoSuchAlgorithmException e ) {
+            throw new PasswordGenerationException(e);
+        }
+        catch ( NoSuchProviderException e ) {
+            throw new PasswordGenerationException(e);
+        }
+        catch ( InvalidKeyException e ) {
+            throw new PasswordGenerationException(e);
+        }
+        finally {
+            if ( masterPasswordBytes != null )
                 masterPasswordBytes.erase();
-            if (dataBytes != null)
+            if ( dataBytes != null )
                 dataBytes.erase();
-            if (digestChars != null)
+            if ( digestChars != null )
                 digestChars.erase();
         }
 

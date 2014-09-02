@@ -41,8 +41,6 @@ public final class CharacterSet implements Serializable {
         SPECIAL_CHARS
     };
 
-
-
     public CharacterSet() {
         this.mCharset = EMPTY;
     }

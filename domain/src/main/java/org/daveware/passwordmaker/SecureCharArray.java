@@ -40,27 +40,27 @@ public class SecureCharArray {
         data = new char[0];
     }
 
-    public SecureCharArray(int size) {
+    public SecureCharArray( int size ) {
         data = new char[size];
-        for (int i = 0; i < size; i++)
+        for ( int i = 0; i < size; i++ )
             data[i] = 0;
     }
 
-    public SecureCharArray(byte[] bytes) {
+    public SecureCharArray( byte[] bytes ) {
         data = new char[bytes.length];
-        for (int i = 0; i < data.length; i++)
-            data[i] = (char) (bytes[i] & 0xFF);
+        for ( int i = 0; i < data.length; i++ )
+            data[i] = ( char ) ( bytes[i] & 0xFF );
     }
 
-    public SecureCharArray(char[] chars) {
+    public SecureCharArray( char[] chars ) {
         data = new char[chars.length];
-        for (int i = 0; i < data.length; i++)
+        for ( int i = 0; i < data.length; i++ )
             data[i] = chars[i];
     }
 
-    public SecureCharArray(SecureCharArray copy) {
+    public SecureCharArray( SecureCharArray copy ) {
         data = new char[copy.size()];
-        for (int i = 0; i < data.length; i++)
+        for ( int i = 0; i < data.length; i++ )
             data[i] = copy.data[i];
     }
 
@@ -70,8 +70,8 @@ public class SecureCharArray {
      * @param str
      *            The string object to get the data from.
      */
-    public SecureCharArray(String str) {
-        if (str == null) {
+    public SecureCharArray( String str ) {
+        if ( str == null ) {
             str = "";
         }
         data = str.toCharArray();
@@ -82,14 +82,12 @@ public class SecureCharArray {
      *
      * @param arr
      *            The array to append.
-     * @throws Exception
-     *             Upon size problems. (lol)
      */
-    public void append(SecureCharArray arr) throws Exception {
+    public void append( SecureCharArray arr ) throws PasswordGenerationException {
         int oldSize = size();
-        resize(size() + arr.size(), true);
+        resize( size() + arr.size(), true );
 
-        for (int i = oldSize, arrI = 0; i < size(); i++, arrI++)
+        for ( int i = oldSize, arrI = 0; i < size(); i++, arrI++ )
             data[i] = arr.data[arrI];
     }
 
@@ -102,8 +100,8 @@ public class SecureCharArray {
      *            The second object to combine.
      * @return The new object.
      */
-    static SecureCharArray combine(SecureCharArray a1, SecureCharArray a2) {
-        return new SecureCharArray(a1.size() + a2.size());
+    static SecureCharArray combine( SecureCharArray a1, SecureCharArray a2 ) {
+        return new SecureCharArray( a1.size() + a2.size() );
     }
 
     /**
@@ -115,11 +113,11 @@ public class SecureCharArray {
      * back to 0.
      */
     public void erase() {
-        for (int i = 0; i < data.length; i++)
+        for ( int i = 0; i < data.length; i++ )
             data[i] = 0xAA;
-        for (int i = 0; i < data.length; i++)
+        for ( int i = 0; i < data.length; i++ )
             data[i] = 0x55;
-        for (int i = 0; i < data.length; i++)
+        for ( int i = 0; i < data.length; i++ )
             data[i] = 0x00;
     }
 
@@ -132,11 +130,11 @@ public class SecureCharArray {
      * @throws ArrayIndexOutOfBoundsException
      *             Upon bad index.
      */
-    public char getCharAt(int index) throws ArrayIndexOutOfBoundsException {
-        if (index >= 0 && index < data.length)
+    public char getCharAt( int index ) throws ArrayIndexOutOfBoundsException {
+        if ( index >= 0 && index < data.length )
             return data[index];
         else
-            throw new ArrayIndexOutOfBoundsException(index);
+            throw new ArrayIndexOutOfBoundsException( index );
     }
 
     /**
@@ -153,22 +151,22 @@ public class SecureCharArray {
      *
      * @param arr
      *            The array to prepend.
-     * @throws Exception
+     * @throws PasswordGenerationException
      *             Upon size problems. (lol)
      */
-    public void prepend(SecureCharArray arr) throws Exception {
+    public void prepend( SecureCharArray arr ) throws PasswordGenerationException {
         char[] olddata = new char[data.length];
 
-        for (int i = 0; i < olddata.length; i++)
+        for ( int i = 0; i < olddata.length; i++ )
             olddata[i] = data[i];
 
-        resize(size() + arr.size(), false);
+        resize( size() + arr.size(), false );
 
-        for (int i = 0; i < arr.data.length; i++)
+        for ( int i = 0; i < arr.data.length; i++ )
             data[i] = arr.data[i];
-        for (int i = arr.data.length; i < data.length; i++)
+        for ( int i = arr.data.length; i < data.length; i++ )
             data[i] = olddata[i - arr.data.length];
-        for (int i = 0; i < olddata.length; i++) {
+        for ( int i = 0; i < olddata.length; i++ ) {
             olddata[i] = 0x55;
             olddata[i] = 0xAA;
             olddata[i] = 0x0;
@@ -181,15 +179,14 @@ public class SecureCharArray {
      *
      * @param arr
      *            The copy to use.
-     * @throws Exception
      */
-    public void replace(SecureCharArray arr) throws Exception {
+    public void replace( SecureCharArray arr ) throws PasswordGenerationException {
         erase();
 
-        if (data.length != arr.data.length)
+        if ( data.length != arr.data.length )
             data = new char[arr.data.length];
 
-        for (int i = 0; i < data.length; i++)
+        for ( int i = 0; i < data.length; i++ )
             data[i] = arr.data[i];
     }
 
@@ -200,25 +197,23 @@ public class SecureCharArray {
      *            The new size of the array. This must be 1 or larger.
      * @param retainData
      *            Whether or not to keep the old data.
-     * @throws Exception
-     *             If the size is 0 or less.
      */
-    public void resize(int size, boolean retainData) throws Exception {
-        if (size < 0)
-            throw new Exception("Invalid array size");
+    public void resize( int size, boolean retainData ) throws PasswordGenerationException {
+        if ( size < 0 )
+            throw new PasswordGenerationException( "Invalid SecureChar Array size" );
 
         char[] newData = new char[size];
 
-        if (retainData == true) {
-            int limit = (size <= data.length) ? size : data.length;
-            for (int i = 0; i < limit; i++) {
-                if (i < limit)
+        if ( retainData == true ) {
+            int limit = ( size <= data.length ) ? size : data.length;
+            for ( int i = 0; i < limit; i++ ) {
+                if ( i < limit )
                     newData[i] = data[i];
                 else
                     newData[i] = 0;
             }
         } else {
-            for (int i = 0; i < size; i++)
+            for ( int i = 0; i < size; i++ )
                 newData[i] = 0;
         }
 
@@ -237,12 +232,12 @@ public class SecureCharArray {
      * @throws ArrayIndexOutOfBoundsException
      *             Upon bad index.
      */
-    public void setCharAt(int index, char c)
+    public void setCharAt( int index, char c )
     throws ArrayIndexOutOfBoundsException {
-        if (index >= 0 && index < data.length)
+        if ( index >= 0 && index < data.length )
             data[index] = c;
         else
-            throw new ArrayIndexOutOfBoundsException(index);
+            throw new ArrayIndexOutOfBoundsException( index );
     }
 
     /**
@@ -255,17 +250,17 @@ public class SecureCharArray {
     }
 
     // Use this purely for debug
-    // @Override
-    // public String toString() {
-    // 	String string = Integer.toString(data.length) + " <-- ";
-    // 	for (int i = 0; i < data.length; i++) {
-    // 		string = string + Character.toString(data[i]);
-    // 	}
-    // 	return string;
-    // }
-
     @Override
     public String toString() {
-        return String.format("This is a placeholder for a password. I will not show you the true one");
+        String string = Integer.toString( data.length ) + " <-- ";
+        for ( int i = 0; i < data.length; i++ ) {
+            string = string + Character.toString( data[i] );
+        }
+        return string;
     }
+
+    // @Override
+    // public String toString() {
+    //     return String.format("This is a placeholder for a password. I will not show you the true one");
+    // }
 }

@@ -42,29 +42,32 @@ public class Profile implements Serializable {
     public static final int DEFAULT_LENGTH = 8;
     public static final String DEFAULT_NAME = "Default";
 
-    private String name                          = "";
-    private String username                      = "";
-    private AlgorithmType algorithm              = AlgorithmType.MD5;
-    private int length                           = 8;
-    private CharacterSet characterSet            = new CharacterSet();
-    private LeetType leetType                    = LeetType.NONE;
-    private LeetLevel leetLevel                  = LeetLevel.LEVEL1;
-    private String modifier                      = "";
-    private String prefix                        = "";
-    private String suffix                        = "";
-    private EnumSet<UrlComponents> urlComponents = defaultUrlComponents();
-    private Boolean isHMAC                       = false;
-    private Boolean joinTopLevel                 = true;
+    private String name;
+    private String username;
+    private AlgorithmType algorithm;
+    private int length;
+    private CharacterSet characterSet;
+    private LeetType leetType;
+    private LeetLevel leetLevel;
+    private String modifier;
+    private String prefix;
+    private String suffix;
+    private EnumSet<UrlComponents> urlComponents;
+    private Boolean isHMAC;
+    private Boolean joinTopLevel;
 
     public Profile() {
         this.name = DEFAULT_NAME;
     }
 
     public Profile(String name) {
+        super();
         this.name = name;
+
     }
 
     public Profile(String name, String url, String username) {
+        super();
         this.name = name;
         this.username = username;
     }
