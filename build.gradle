@@ -32,14 +32,21 @@ ext {
 }
 
 ext.libraries = [
-        appcompat      : 'com.android.support:appcompat-v7:19.0.+',
-        supportv4      : 'com.android.support:support-v4:19.1.+',
-        butterknife    : 'com.jakewharton:butterknife:5.0.+',
-        timber         : 'com.jakewharton.timber:timber:2.4.+',
-        spongycastle   : 'com.madgag.spongycastle:prov:1.50.0.0',
-        jodatime       : 'joda-time:joda-time:2.3',
-        junit          : 'junit:junit:4.+',
-        chromahashview : 'org.michaelevans.chromahashview:ChromaHashView:0.2',
-        spoonclient    : 'com.squareup.spoon:spoon-client:1.1.+',
-        robotium       : 'com.jayway.android.robotium:robotium-solo:5.+'
+        androidtools_gradle : 'com.android.tools.build:gradle:0.12.+',
+        spoon_gradle        : 'com.stanfy.spoon:spoon-gradle-plugin:0.10.+',
+        sdkmanager_gradle   : 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+',
+        android_cq_gradle   : 'com.github.nrudenko:gradle-android-cq-plugin:0.1+',
+        appcompat           : 'com.android.support:appcompat-v7:19.0.+',
+        supportv4           : 'com.android.support:support-v4:19.1.+',
+        butterknife         : 'com.jakewharton:butterknife:5.0.+',
+        timber              : 'com.jakewharton.timber:timber:2.4.+',
+        spongycastle        : 'com.madgag.spongycastle:prov:1.50.0.0',
+        jodatime            : 'joda-time:joda-time:2.3',
+        junit               : 'junit:junit:4.+',
+        chromahashview      : 'org.michaelevans.chromahashview:ChromaHashView:0.2',
+        spoonclient         : 'com.squareup.spoon:spoon-client:1.1.+',
+        robotium            : 'com.jayway.android.robotium:robotium-solo:5.+',
+        robolectric         : 'org.robolectric:robolectric:2.3',
+        robolectric_gradle  : 'org.robolectric:robolectric-gradle-plugin:0.11.+'
 ]
+
