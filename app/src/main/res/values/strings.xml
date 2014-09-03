@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="mpw">Master-Password</string>
+    <string name="generated_pass_label">Generated Password</string>
     <string name="url">URL</string>
     <string name="act_send">Generate password</string>
     <string name="http" translatable="false">http://</string>
@@ -31,7 +31,7 @@
     <string name="cb_pass_characters_uppercase">uppercase</string>
     <string name="cb_pass_characters_number">numbers</string>
     <string name="cb_pass_characters_symbols">symbols</string>
-    <string name="text_show_password_hint">Click to show/hide</string>
+    <string name="text_show_password_hint">Show password</string>
     <string name="buttonCopy">Copy</string>
     <string name="buttonGo">Go</string>
     <string name="buttonProfiles">Profiles</string>
@@ -48,5 +48,6 @@
     <string name="about">Feedback</string>
     <string name="feedback_text_body">This is the feedback for the Even Better Password Maker app:\n\n</string>
     <string name="send_email_chooser">Send email&#8230;</string>
+    <string name="enter_master_pass">Enter master password</string>
 
 </resources>

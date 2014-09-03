@@ -44,6 +44,12 @@ Code quality
     # Checks if the code is accordings with the code style
     ./gradlew domain:check app:checktyle   # results in domain/build/reports/checkstyle/main.xml
 
+Robelectric tests
+-----------------
+
+    # Runs the roboelectric tests (do not need an emeulator)
+    ./gradlew :app:testDebug
+
 Unit tests
 ----------
 
