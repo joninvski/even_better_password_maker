@@ -418,14 +418,14 @@ public final class PasswordMaker {
             if ( profile.isHMAC() ) {
                 Mac mac;
                 String algoName = "HMAC" + profile.getAlgorithm().getName();
-                mac = Mac.getInstance( algoName, "SC" );
+                mac = Mac.getInstance( algoName, "BC" );
                 mac.init( new SecretKeySpec( masterPasswordBytes.getData(), algoName ) );
                 mac.reset();
                 mac.update( dataBytes.getData() );
                 digestChars = new SecureCharArray( mac.doFinal() );
             } else {
                 dataBytes.prepend( masterPasswordBytes );
-                MessageDigest md = MessageDigest.getInstance( profile.getAlgorithm().getName(), "SC" );
+                MessageDigest md = MessageDigest.getInstance( profile.getAlgorithm().getName(), "BC" );
                 digestChars = new SecureCharArray( md.digest( dataBytes.getData() ) );
             }
 
