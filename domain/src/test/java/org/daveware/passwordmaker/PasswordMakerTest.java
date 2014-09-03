@@ -60,10 +60,12 @@ public class PasswordMakerTest {
     @Test
     public void testGeneratePasswordLowercaseChars() throws PasswordGenerationException {
         Profile pLowercase = pDefault;
-        pLowercase.setCharacterSet(new CharacterSet(CharacterSet.LOWERCASE));
-        assertEquals("o9a4e1r5", PasswordMaker.makePassword(masterPassA, pLowercase, github).getData());
-
-        assertEquals("o9a4e1r5", PasswordMaker.makePassword(masterPassA, pLowercase, github).getData());
+        pLowercase.setCharSetLowercase(true);
+        pLowercase.setCharSetUppercase(false);
+        pLowercase.setCharSetNumbers(false);
+        pLowercase.setCharSetSymbols(false);
+        String pass = new String(PasswordMaker.makePassword(masterPassA, pLowercase, github).getData());
+        assertEquals("ccpvdyzg", pass);
     }
 
     @Test
