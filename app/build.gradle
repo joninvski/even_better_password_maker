@@ -3,18 +3,18 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
-        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.10.+'
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
-        classpath 'com.github.nrudenko:gradle-android-cq-plugin:0.1+'
+        classpath parent.ext.libraries.androidtools_gradle
+        classpath parent.ext.libraries.spoon_gradle
+        classpath parent.ext.libraries.sdkmanager_gradle
+        classpath parent.ext.libraries.android_cq_gradle
     }
-
 }
 
 apply plugin: 'android-sdk-manager'
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'spoon'
 apply plugin: 'android-cq'
+
 
 repositories {
     jcenter()
@@ -63,6 +63,8 @@ android {
     }
 }
 
+
+
 dependencies {
      compile parent.ext.libraries.chromahashview
      compile parent.ext.libraries.supportv4
@@ -72,5 +74,6 @@ dependencies {
      compile project(':domain')
      androidTestCompile parent.ext.libraries.spoonclient
      androidTestCompile parent.ext.libraries.robotium
+     androidTestCompile parent.ext.libraries.junit
 }
 
