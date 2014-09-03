@@ -57,6 +57,7 @@ public class Profile implements Serializable {
     private Boolean joinTopLevel;
 
     public Profile() {
+        copySettings(Profile.getDefaultProfile());
         this.name = DEFAULT_NAME;
     }
 
@@ -89,8 +90,7 @@ public class Profile implements Serializable {
     public Profile(String name, String username, AlgorithmType algorithm,
                    int length, CharacterSet characterSet, LeetType leetType,
                    LeetLevel leetLevel, String modifier, String prefix, String suffix,
-                   boolean isHMAC, Boolean joinTopLevel)
-    throws Exception {
+                   boolean isHMAC, Boolean joinTopLevel, EnumSet<UrlComponents> urlComponents) {
         this.name = name;
         this.username = username;
         this.algorithm = algorithm;
@@ -103,6 +103,7 @@ public class Profile implements Serializable {
         this.suffix = suffix;
         this.isHMAC = isHMAC;
         this.joinTopLevel = joinTopLevel;
+        this.urlComponents = urlComponents;
     }
 
     /**
@@ -132,7 +133,7 @@ public class Profile implements Serializable {
         if (a.urlComponents.isEmpty() == false)
             this.urlComponents = EnumSet.copyOf(a.urlComponents);
         else
-            this.urlComponents = defaultUrlComponents();
+            this.urlComponents = getDefaultUrlComponents();
     }
 
     /**
@@ -140,7 +141,7 @@ public class Profile implements Serializable {
      *
      * @return
      */
-    private static EnumSet<UrlComponents> defaultUrlComponents() {
+    private static EnumSet<UrlComponents> getDefaultUrlComponents() {
         return EnumSet.of(UrlComponents.Domain);
     }
 
@@ -383,14 +384,9 @@ public class Profile implements Serializable {
     }
 
     public static Profile getDefaultProfile() {
-        try {
             return new Profile(DEFAULT_NAME, "", AlgorithmType.MD5, 8,
                                CharacterSet.getDefaultCharacterset(), LeetType.NONE, LeetLevel.LEVEL1,
-                               "", "", "", false, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+                               "", "", "", false, true, getDefaultUrlComponents());
     }
 
     public String getCustomCharset() {
