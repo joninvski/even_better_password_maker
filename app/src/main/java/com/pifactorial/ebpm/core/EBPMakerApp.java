@@ -14,7 +14,7 @@ import java.security.Security;
 public class EBPMakerApp extends Application {
 
     static {
-        Security.addProvider(new BouncyCastleProvider());
+        // Security.addProvider(new BouncyCastleProvider());
     }
 
 

@@ -58,7 +58,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         solo.enterText(etMasterPass, "abc");
 
         // Check the generated password does not show up
-        actual = solo.waitForText("Click to show/hide");
+        actual = solo.waitForText("Show password");
         assertEquals("password is showing before clicking", true, actual);
         Spoon.screenshot(activity, "BeforeClickGeneratedPassword");
 
@@ -73,7 +73,7 @@ public class EntryActivityTest extends ActivityInstrumentationTestCase2<EntryAct
         // Click again and the pass has to disappear
         solo.clickOnView(tvResultPass);
         Spoon.screenshot(activity, "AfterSecondClickGeneratedPassword");
-        actual = solo.waitForText("Click to show/hide");
+        actual = solo.waitForText("Show password");
         assertEquals("password text field still showing password after click", true, actual);
     }
 }

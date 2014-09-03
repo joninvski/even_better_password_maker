@@ -28,11 +28,13 @@ public final class CharacterSet implements Serializable {
     public static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     public static final String SPECIAL_CHARS = "`~!@#$%^&*()_-+={}|[]\\:\";'<>?,./";
-    public static final String EMPTY = "";
 
-    private String mCharset = "";
     private String mCustomCharset = "";
     private boolean mIsCustomCharsetActive = false;
+    private boolean mIsNumericActive = false;
+    private boolean mIsUppercaseActive = false;
+    private boolean mIsLowercaseActive = false;
+    private boolean mIsSpecialCharsActive = false;
 
     public static final String [] CHARSETS = {
         UPPERCASE,
@@ -41,25 +43,27 @@ public final class CharacterSet implements Serializable {
         SPECIAL_CHARS
     };
 
-    public CharacterSet() {
-        this.mCharset = EMPTY;
-    }
-
-    public CharacterSet(String charset) {
-        this.mCharset = charset;
-    }
-
-    public CharacterSet(String[] charset_array) {
-        for (String c : charset_array)
-            mCharset += c;
-    }
+    public CharacterSet() { }
 
     public String getChars() {
-        if(mIsCustomCharsetActive)
-            return mCharset + mCustomCharset;
-        else {
-            return mCharset;
-        }
+        StringBuilder b = new StringBuilder();
+
+        if( mIsUppercaseActive )
+            b.append( UPPERCASE );
+
+        if( mIsLowercaseActive )
+            b.append( LOWERCASE );
+
+        if( mIsNumericActive )
+            b.append( NUMERIC );
+
+        if( mIsSpecialCharsActive )
+            b.append( SPECIAL_CHARS );
+
+        if( mIsCustomCharsetActive )
+            b.append( mCustomCharset );
+
+        return b.toString();
     }
 
     public String getCustomCharset() {
@@ -70,76 +74,70 @@ public final class CharacterSet implements Serializable {
         return mIsCustomCharsetActive;
     }
 
-    public void setCustomCharsetActive(boolean value) {
+    public void setCustomCharsetActive( boolean value ) {
         mIsCustomCharsetActive = value;
     }
 
-    public void join(String new_charset) {
-        mCharset += new_charset;
-    }
-
-    public void join(String[] charset_array) {
-        for (String c : charset_array)
-            mCharset += c;
-    }
-
     public static CharacterSet getDefaultCharacterset() {
-        return new CharacterSet(new String[] {UPPERCASE, LOWERCASE, NUMERIC, SPECIAL_CHARS});
+        CharacterSet charset = new CharacterSet();
+        charset.setUppercase();
+        charset.setLowercase();
+        charset.setNumbers();
+        charset.setSpecialChars();
+        return charset;
     }
 
-    public Boolean contains(String s) {
-        return mCharset.contains(s);
+
+    public boolean hasUppercase() {
+        return mIsUppercaseActive;
     }
 
     public void setUppercase() {
-        append(UPPERCASE);
+        mIsUppercaseActive = true;
+    }
+
+    public boolean hasLowercase() {
+        return mIsLowercaseActive;
     }
 
     public void setLowercase() {
-        append(LOWERCASE);
+        mIsLowercaseActive = true;
+    }
+
+    public boolean hasSpecialChars() {
+        return mIsSpecialCharsActive;
     }
 
     public void setSpecialChars() {
-        append(SPECIAL_CHARS);
+        mIsSpecialCharsActive = true;
+    }
+
+    public boolean hasNumbers() {
+        return mIsNumericActive;
     }
 
     public void setNumbers() {
-        append(NUMERIC);
+        mIsNumericActive = true;
     }
 
-    public void setCustomCharset(String customChars) {
-        mCustomCharset = customChars;
-    }
-
-    private void append(String s) {
-        mCharset += s;
+    public void setCustomCharset( String customChars ) {
+        mIsCustomCharsetActive = true;
     }
 
     public void removeUppercase() {
-        remove(UPPERCASE);
+        mIsUppercaseActive = false;
     }
 
     public void removeLowercase() {
-        remove(LOWERCASE);
-    }
-
-    private void remove(String s) {
-        char[] ca = s.toCharArray();
-        for (char c : ca) {
-            mCharset = mCharset.replace(""+c, "");
-        }
+        mIsLowercaseActive = false;
     }
 
     public void removeSpecialChars() {
-        remove(SPECIAL_CHARS);
+        mIsSpecialCharsActive = false;
     }
 
     public void removeNumbers() {
-        remove(NUMERIC);
-    }
-
-    public int length() {
-        return mCharset.length();
+        mIsNumericActive = false;
     }
 
     @Override

@@ -194,13 +194,6 @@ public class Profile implements Serializable {
     /**
      * @return the characterSet
      */
-    private CharacterSet getCharacterSet() {
-        return characterSet;
-    }
-
-    /**
-     * @return the characterSet
-     */
     public String getCompleteCharacterSet() {
         return characterSet.getChars();
     }
@@ -482,19 +475,19 @@ public class Profile implements Serializable {
     }
 
     public Boolean hasCharSetUppercase() {
-        return this.characterSet.contains(CharacterSet.UPPERCASE);
+        return characterSet.hasUppercase();
     }
 
     public Boolean hasCharSetLowercase() {
-        return this.characterSet.contains(CharacterSet.LOWERCASE);
+        return characterSet.hasLowercase();
     }
 
     public Boolean hasCharSetNumbers() {
-        return this.characterSet.contains(CharacterSet.NUMERIC);
+        return characterSet.hasNumbers();
     }
 
     public Boolean hasCharSetSymbols() {
-        return this.characterSet.contains(CharacterSet.SPECIAL_CHARS);
+        return characterSet.hasSpecialChars();
     }
 
     public void setCharSetUppercase(boolean isSet) {
