@@ -64,56 +64,82 @@ public final class PasswordMaker {
         int full_length;
         int[] dividend;
         int[] remainders;
+        int remainders_count = 0;
         int dividend_length;
         int i, j;
+        boolean trim = true; // Removed this in profile as I think it can never change
 
         int outputPosition = 0;
         SecureCharArray output = new SecureCharArray();
 
         // can't handle odd lengths
-        if ( ( length % 2 ) != 0 ) {
+        if ((length % 2) != 0) {
             return output;
         }
 
         divisor = encoding.length();
-        dividend_length = ( int ) Math.ceil( ( double ) length / 2.0 );
+        dividend_length = (int) Math.ceil((double) length / 2.0);
         dividend = new int[dividend_length];
-        for ( i = 0; i < dividend_length; i++ ) {
-            dividend[i] = ( ( ( int ) input[i * 2] ) << 8 ) | ( ( int ) input[i * 2 + 1] );
+        for (i = 0; i < dividend_length; i++) {
+            dividend[i] = (((int) input[i * 2]) << 8) | ((int) input[i * 2 + 1]);
         }
 
-        full_length = ( int ) Math.ceil(
-                          ( double ) length * 8 /
-                          ( Math.log( ( double ) encoding.length() ) / Math.log( ( double ) 2 ) ) );
+        full_length = (int) Math.ceil((double) length * 8 / (Math.log((double) encoding.length()) / Math.log((double) 2)));
         remainders = new int[full_length];
 
-        for ( j = 0; j < full_length; j++ ) {
-            int[] quotient;
-            int quotient_length = 0;
-            int qCounter = 0;
-            int x = 0;
+        if (trim) {
+            while (dividend_length > 0) {
+                // TODO: zero-out the quotient array each iteration at the end
+                int[] quotient;
+                int quotient_length = 0;
+                int qCounter = 0;
+                int x = 0;
 
-            quotient = new int[dividend_length];
-            for ( i = 0; i < dividend_length; i++ ) {
-                int q;
-                x = ( x << 16 ) + dividend[i];
-                q = ( int ) Math.floor( ( double ) x / divisor );
-                x -= q * divisor;
-                if ( quotient_length > 0 || q > 0 ) {
-                    quotient[qCounter++] = q;
-                    quotient_length++;
+                quotient = new int[dividend_length];
+                for (i = 0; i < dividend_length; i++) {
+                    int q;
+                    x = (x << 16) + dividend[i];
+                    q = (int) Math.floor((double) x / divisor);
+                    x -= q * divisor;
+                    if (quotient_length > 0 || q > 0) {
+                        quotient[qCounter++] = q;
+                        quotient_length++;
+                    }
                 }
+                remainders[remainders_count++] = x;
+                dividend_length = quotient_length;
+                dividend = quotient;
             }
-            remainders[j] = x;
-            dividend_length = quotient_length;
-            dividend = quotient;
+            full_length = remainders_count;
+        } else {
+            for (j = 0; j < full_length; j++) {
+                int[] quotient;
+                int quotient_length = 0;
+                int qCounter = 0;
+                int x = 0;
+
+                quotient = new int[dividend_length];
+                for (i = 0; i < dividend_length; i++) {
+                    int q;
+                    x = (x << 16) + dividend[i];
+                    q = (int) Math.floor((double) x / divisor);
+                    x -= q * divisor;
+                    if (quotient_length > 0 || q > 0) {
+                        quotient[qCounter++] = q;
+                        quotient_length++;
+                    }
+                }
+                remainders[j] = x;
+                dividend_length = quotient_length;
+                dividend = quotient;
+            }
         }
 
-        if ( output.size() < full_length )
-            output.resize( full_length, false );
+        if(output.size() < full_length)
+            output.resize(full_length, false);
 
-        for ( i = full_length - 1; i >= 0; i-- ) {
-            output.setCharAt( outputPosition++, encoding.charAt( remainders[i] ) );
+        for (i = full_length - 1; i >= 0; i--) {
+            output.setCharAt(outputPosition++, encoding.charAt(remainders[i]));
         }
 
         return output;
