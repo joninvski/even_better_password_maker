@@ -238,7 +238,7 @@ public class MainFragment extends Fragment {
 
         String masterPassword = mPrefs.getMasterPassword();
 
-        if( masterPassword != null && !masterPassword.isEmpty() ) {
+        if( masterPassword != null && !masterPassword.equals("") ) {
             etMasterPass.setText( masterPassword );
             etMasterPass.setSelection( etMasterPass.getText().length() ); // Puts the cursor at the end of the string
         } else {

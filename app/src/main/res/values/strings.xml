@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="generated_pass_label">Generated Password</string>
     <string name="url">URL</string>
     <string name="act_send">Generate password</string>
     <string name="http" translatable="false">http://</string>

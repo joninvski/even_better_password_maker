@@ -19,7 +19,7 @@
     </item>
     <item android:id="@+id/about"
         android:title="@string/about"
-        android:showAsAction="collapseActionView">
+        yourapp:showAsAction="collapseActionView">
     </item>
 
 </menu>

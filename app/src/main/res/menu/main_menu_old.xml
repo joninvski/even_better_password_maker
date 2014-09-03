@@ -13,6 +13,6 @@
         yourapp:showAsAction="always">
     </item>
     <item android:id="@+id/about"
-        yourapp:title="@string/about" >
+        android:title="@string/about" >
     </item>
 </menu>
