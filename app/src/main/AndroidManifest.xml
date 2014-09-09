@@ -10,14 +10,14 @@
 
     <application
         android:icon="@drawable/pwm"
-        android:label="Even Better Password Maker"
+        android:label="Even Better Pass Maker"
         android:uiOptions="splitActionBarWhenNarrow"
         android:theme="@style/Theme.AppCompat"
         android:allowBackup="false"
         android:name=".ebpm.EBPMakerApp" >
         <activity
             android:name="com.pifactorial.ebpm.ui.activity.EntryActivity"
-            android:label="Even Better Password Maker"
+            android:label="Even Better Pass Maker"
             android:windowSoftInputMode="stateHidden"
             >
             <intent-filter>
