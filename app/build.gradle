@@ -39,39 +39,37 @@ android {
     }
 
     signingConfigs {
-        release
+        release {
+            def Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+            def Properties keyProps = new Properties()
+            assert localProps['keystore.props.file'];
+            keyProps.load(new FileInputStream(file(localProps['keystore.props.file'])))
+            storeFile file(keyProps["store"])
+            keyAlias keyProps["alias"]
+            storePassword keyProps["storePass"]
+            keyPassword keyProps["pass"]
+        }
     }
 
     buildTypes {
-
         release {
             signingConfig signingConfigs.release
             runProguard true
             proguardFile 'proguard-rules.txt'
         }
     }
-
-    // specify signing properties on the command line
-    if (project.hasProperty('storeFile')) {
-        println 'Generating a signed package.'
-            android.signingConfigs.release.storeFile = file(storeFile)
-            android.signingConfigs.release.storePassword = storePassword
-            android.signingConfigs.release.keyAlias = keyAlias
-            android.signingConfigs.release.keyPassword = keyPassword
-    } else {
-        android.buildTypes.release.signingConfig = null
-    }
 }
 
 dependencies {
-     compile parent.ext.libraries.chromahashview
-     compile parent.ext.libraries.supportv4
-     compile parent.ext.libraries.appcompat
-     compile parent.ext.libraries.butterknife
-     compile parent.ext.libraries.timber
-     compile project(':domain')
-     androidTestCompile parent.ext.libraries.spoonclient
-     androidTestCompile parent.ext.libraries.robotium
-     androidTestCompile parent.ext.libraries.junit
+    compile parent.ext.libraries.chromahashview
+    compile parent.ext.libraries.supportv4
+    compile parent.ext.libraries.appcompat
+    compile parent.ext.libraries.butterknife
+    compile parent.ext.libraries.timber
+    compile project(':domain')
+    androidTestCompile parent.ext.libraries.spoonclient
+    androidTestCompile parent.ext.libraries.robotium
+    androidTestCompile parent.ext.libraries.junit
 }
 

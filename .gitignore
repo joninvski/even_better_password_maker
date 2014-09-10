@@ -4,3 +4,4 @@ debug.keystore
 local.properties
 .idea
 .iml
+keystore.properties
