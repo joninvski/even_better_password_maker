@@ -3,6 +3,8 @@ Even Better Passwork Maker
 
 [![Build Status](https://travis-ci.org/joninvski/even_better_password_maker.svg?branch=master)](https://travis-ci.org/joninvski/even_better_password_maker)
 
+<a href="https://play.google.com/store/apps/details?id=com.pifactorial"><img src="http://developer.android.com/images/brand/en_app_rgb_wo_45.png" alt="Play Store EBPM" width="180px"></a>
+
 Attribution
 -----------
 

@@ -63,16 +63,31 @@
         </LinearLayout>
 
 
-        <org.michaelevans.chromahashview.ChromaHashView
-            android:id="@+id/etMasterPass"
-            android:layout_width="fill_parent"
-            android:paddingTop="16dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/enter_master_pass"
-            android:ellipsize="start"
-            android:gravity="center_horizontal"
-            />
+            android:paddingTop="16dp"
+            android:orientation="horizontal" >
+
+            <org.michaelevans.chromahashview.ChromaHashView
+                android:id="@+id/etMasterPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:inputType="textPassword"
+                android:hint="@string/enter_master_pass"
+                android:ellipsize="start"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                />
+
+            <CheckBox
+                android:id="@+id/cbKeepPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tvResultPass"

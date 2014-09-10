@@ -50,6 +50,7 @@ public class MainFragment extends Fragment {
     @InjectView( R.id.etMasterPass ) ChromaHashView etMasterPass;
     @InjectView( R.id.tvResultPass ) TextView textOutputPass;
     @InjectView( R.id.spProfiles ) Spinner spProfiles;
+    @InjectView( R.id.cbKeepPass) Checkbox spProfiles;
 
     // Other
     private ProfileDataSource datasource;
@@ -302,7 +303,7 @@ public class MainFragment extends Fragment {
             break;
 
         case R.id.about:
-            Intent emailIntent = new Intent( Intent.ACTION_SENDTO, Uri.fromParts( "mailto","trindade.joao@gmail.com", null ) );
+            Intent emailIntent = new Intent( Intent.ACTION_SENDTO, Uri.fromParts( "mailto","trindade.joao+ebpm@gmail.com", null ) );
             emailIntent.putExtra( Intent.EXTRA_SUBJECT, "[evenbetterpassmaker] - Feedback" );
             emailIntent.putExtra( Intent.EXTRA_TEXT, getString( R.string.feedback_text_body ) );
             startActivity( Intent.createChooser( emailIntent, getString( R.string.send_email_chooser ) ) );
@@ -337,12 +338,16 @@ public class MainFragment extends Fragment {
         clipboard.setPrimaryClip( clip );
     }
 
-
     @Override
     public void onStop() {
         Timber.d( "on Stopping" );
-        mPrefs.eraseMasterPass();
         super.onStop();
     }
 
+    @Override
+    public void onDestroy() {
+        Timber.d( "on Destroy" );
+        mPrefs.eraseMasterPass();
+        super.onDestroy();
+    }
 }
