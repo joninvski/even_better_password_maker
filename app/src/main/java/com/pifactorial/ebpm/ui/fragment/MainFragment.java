@@ -19,6 +19,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ import org.daveware.passwordmaker.SecureCharArray;
 import org.michaelevans.chromahashview.ChromaHashView;
 
 import timber.log.Timber;
+import org.joda.time.DateTime;
 
 public class MainFragment extends Fragment {
 
@@ -50,7 +53,7 @@ public class MainFragment extends Fragment {
     @InjectView( R.id.etMasterPass ) ChromaHashView etMasterPass;
     @InjectView( R.id.tvResultPass ) TextView textOutputPass;
     @InjectView( R.id.spProfiles ) Spinner spProfiles;
-    @InjectView( R.id.cbKeepPass) Checkbox spProfiles;
+    @InjectView( R.id.cbKeepPass) CheckBox cbKeepPass;
 
     // Other
     private ProfileDataSource datasource;
@@ -76,11 +79,10 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState ) {
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.frag_main, container, false );
-
         ButterKnife.inject( this, view );
 
         sdk_version = android.os.Build.VERSION.SDK_INT;
@@ -114,6 +116,32 @@ public class MainFragment extends Fragment {
                 return; // Do nothing
             }
         };
+
+        cbKeepPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton group, boolean checked) {
+                Timber.d("Keep password: %s", checked);
+                String text;
+                int minutes = 5;
+
+                if (checked) {
+                    // Message to the user
+                    text = getString( R.string.keep_password ) + " " + minutes + " " + getString( R.string.minutes );
+                    mPrefs.setPasswordTime(DateTime.now().plusMinutes(minutes));
+                }
+
+                else {
+                    // Let's warn the user
+                    text = getString( R.string.do_not_keep_password );
+                    DateTime earliestDate = new DateTime(0); // This maps to 1970
+                    mPrefs.setPasswordTime(earliestDate);
+                    mPrefs.eraseMasterPass();
+                }
+
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
         // Change the passwords as the text views are changed
         etURL.addTextChangedListener( watcher );
@@ -209,6 +237,17 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        DateTime passTime = mPrefs.getPasswordTime();
+
+        if(DateTime.now().isAfter(passTime) || (new DateTime(0)).equals(passTime)) {
+            mPrefs.eraseMasterPass();
+            cbKeepPass.setChecked(false);
+        }
+        else {
+            cbKeepPass.setChecked(true);
+        }
+
 
         // Check if there is no profile
         if ( datasource.getAllProfiles().size() < 1 ) {
@@ -347,7 +386,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onDestroy() {
         Timber.d( "on Destroy" );
-        mPrefs.eraseMasterPass();
         super.onDestroy();
     }
 }

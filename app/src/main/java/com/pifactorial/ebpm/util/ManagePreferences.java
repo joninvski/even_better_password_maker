@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import org.joda.time.DateTime;
 
 import android.os.Build;
 
@@ -13,6 +14,7 @@ public class ManagePreferences {
     private static final String LAST_SELECTED_PROFILE = "LAST_PROFILE";
     private static final String LAST_URL = "LAST_URL";
     private static final String MASTER_PASS = "MASTER_PASS";
+    private static final String PASSWORD_SAVE_TIME = "PASSWORD_TIME";
     private static final String SHARED_PREFERENCES_NAME = "com.pifactorial.com.config";
 
     private SharedPreferences mPrefs;
@@ -87,5 +89,23 @@ public class ManagePreferences {
     public String getMasterPassword() {
         final String masterPass = mPrefs.getString(MASTER_PASS, "");
         return masterPass;
+    }
+
+    public void setPasswordTime(DateTime now) {
+        final Editor editor = mPrefs.edit();
+        long nowInMilis = now.getMillis();
+        editor.putLong(PASSWORD_SAVE_TIME,  nowInMilis );
+        if(sdk_version < Build.VERSION_CODES.GINGERBREAD) {
+            commit(editor);
+        } else {
+            apply(editor);
+        }
+    }
+
+    public DateTime getPasswordTime() {
+        long START_TIME = 0; // This maps to 1970
+        final DateTime datetime = new DateTime(mPrefs.getLong(PASSWORD_SAVE_TIME, 0 ));
+
+        return datetime;
     }
 }

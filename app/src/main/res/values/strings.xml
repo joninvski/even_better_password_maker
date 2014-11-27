@@ -13,6 +13,9 @@
     <string name="profile_url_components_label">Url components</string>
     <string name="custom_symbols">custom</string>
     <string name="custom_symbols_hint">Custom character set</string>
+    <string name="keep_password">Keeping password for </string>
+    <string name="do_not_keep_password">Do not keep password</string>
+    <string name="minutes">more minutes</string>
 
     <string-array name="hash_algorithms_string_array" translatable="false">
         <item>MD4</item>

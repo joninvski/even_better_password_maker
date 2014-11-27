@@ -67,6 +67,7 @@ dependencies {
     compile parent.ext.libraries.appcompat
     compile parent.ext.libraries.butterknife
     compile parent.ext.libraries.timber
+    compile parent.ext.libraries.jodatime
     compile project(':domain')
     androidTestCompile parent.ext.libraries.spoonclient
     androidTestCompile parent.ext.libraries.robotium

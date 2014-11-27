@@ -34,6 +34,8 @@ ext.libraries = [
         spoon_gradle        : 'com.stanfy.spoon:spoon-gradle-plugin:0.10.+',
         sdkmanager_gradle   : 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+',
         android_cq_gradle   : 'com.github.nrudenko:gradle-android-cq-plugin:0.1+',
+        hugo_gradle         : 'com.jakewharton.hugo:hugo-plugin:1.1.+',
+
         appcompat           : 'com.android.support:appcompat-v7:19.0.+',
         supportv4           : 'com.android.support:support-v4:19.1.+',
         butterknife         : 'com.jakewharton:butterknife:5.0.+',
@@ -47,4 +49,3 @@ ext.libraries = [
         robolectric         : 'org.robolectric:robolectric:2.3',
         robolectric_gradle  : 'org.robolectric:robolectric-gradle-plugin:0.11.+'
 ]
-
