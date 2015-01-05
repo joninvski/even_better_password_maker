@@ -24,24 +24,24 @@ ext {
     versionName = versionMajor + "." + versionMinor + "." + versionPatch
 
     minSdkVersion = 7
-    targetSdkVersion = 20
-    compileSdkVersion = 20
-    buildToolsVersion = '20.0.0'
+    targetSdkVersion = 21
+    compileSdkVersion = 21
+    buildToolsVersion = '21.1.1'
 }
 
 ext.libraries = [
-        androidtools_gradle : 'com.android.tools.build:gradle:0.12.+',
-        spoon_gradle        : 'com.stanfy.spoon:spoon-gradle-plugin:0.10.+',
+        androidtools_gradle : 'com.android.tools.build:gradle:1.0.+',
+        spoon_gradle        : 'com.stanfy.spoon:spoon-gradle-plugin:0.14.+',
         sdkmanager_gradle   : 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+',
         android_cq_gradle   : 'com.github.nrudenko:gradle-android-cq-plugin:0.1+',
         hugo_gradle         : 'com.jakewharton.hugo:hugo-plugin:1.1.+',
 
-        appcompat           : 'com.android.support:appcompat-v7:19.0.+',
-        supportv4           : 'com.android.support:support-v4:19.1.+',
+        appcompat           : 'com.android.support:appcompat-v7:21.0.+',
+        supportv4           : 'com.android.support:support-v4:21.0.+',
         butterknife         : 'com.jakewharton:butterknife:5.0.+',
         timber              : 'com.jakewharton.timber:timber:2.4.+',
         spongycastle        : 'com.madgag.spongycastle:prov:1.50.0.0',
-        jodatime            : 'joda-time:joda-time:2.3',
+        jodatime            : 'joda-time:joda-time:2.+',
         junit               : 'junit:junit:4.+',
         chromahashview      : 'org.michaelevans.chromahashview:ChromaHashView:0.2',
         spoonclient         : 'com.squareup.spoon:spoon-client:1.1.+',
